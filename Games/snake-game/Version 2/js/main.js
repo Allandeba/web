@@ -1,13 +1,12 @@
-import {} from "./input.js"
-import { getSnakeDirection } from "./snakeDirection.js"
+import {} from './input.js'
+import { snake } from './snake.js'
 
-addEventListener("keydown", (event) => {
-  console.log(getSnakeDirection())
-})
+function animate() {
+  setTimeout(() => {
+    requestAnimationFrame(animate)
 
-addEventListener("touchend", (event) => {
-  console.log(getSnakeDirection())
-})
-addEventListener("touchcancel", (event) => {
-  console.log(getSnakeDirection())
-})
+    snake.update()
+  }, 500)
+}
+
+animate()
