@@ -39,8 +39,8 @@ class Snake extends Sprite {
 
       CTX.drawImage(
         this.image,
-        SINGLE_IMAGE_WIDTH * CURRENT_FRAME_POSITION.x,
-        SINGLE_IMAGE_HEIGHT * CURRENT_FRAME_POSITION.y,
+        SINGLE_IMAGE_WIDTH * CURRENT_FRAME_POSITION.x * this.currentFrame,
+        SINGLE_IMAGE_HEIGHT * CURRENT_FRAME_POSITION.y * this.currentFrame,
         SINGLE_IMAGE_WIDTH,
         SINGLE_IMAGE_HEIGHT,
         snakeElement.x,
@@ -60,6 +60,17 @@ class Snake extends Sprite {
 
     super.update()
   }
+}
+
+export function isOnSnake(position, { ignoreHead = false } = {}) {
+  return snakeBody.some((snakeElement, index) => {
+    if (ignoreHead === true && index === 0) return false
+    return equalPositions(snakeElement, position)
+  })
+}
+
+function equalPositions(position1, position2) {
+  return position1.x === position2.x && position1.y === position2.y
 }
 
 export const snake = new Snake()
