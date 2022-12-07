@@ -203,9 +203,9 @@ function getDefaultSnakeDirection() {
 
 export function equalPositions(snakeElement, position) {
   let snakeElementTop = snakeElement.y
-  let snakeElementBottom = snakeElement.y + SNAKE_DISTANCE_MOVEMENT
+  let snakeElementBottom = snakeElement.y + SNAKE_DISTANCE_MOVEMENT / 2
   let snakeElementLeft = snakeElement.x
-  let snakeElementRight = snakeElement.x + SNAKE_DISTANCE_MOVEMENT
+  let snakeElementRight = snakeElement.x + SNAKE_DISTANCE_MOVEMENT / 2
 
   let foodTop = position.y
   let foodBottom = position.y + food.height
