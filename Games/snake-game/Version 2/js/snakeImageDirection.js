@@ -1,8 +1,19 @@
-import { snakeBody } from './snake.js'
+import { snake } from './snake.js'
 import { getSnakeDirection as getSnakeLastInputDirection } from './snakeInputDirection.js'
+import { food } from './food.js'
 
-const SNAKE_HEAD_MOVEMENT_DIRECTION = { up: 0, down: 1, left: 2, right: 3, curveRightUp: 4, curveRightDown: 5, curveLeftUp: 6, curveLeftDown: 7 }
-const SNAKE_DISTANCE_MOVEMENT = 20
+const SNAKE_HEAD_MOVEMENT_DIRECTION = {
+  none: 0,
+  up: 1,
+  down: 2,
+  left: 3,
+  right: 4,
+  curveRightUp: 5,
+  curveRightDown: 6,
+  curveLeftUp: 7,
+  curveLeftDown: 8,
+}
+export const SNAKE_DISTANCE_MOVEMENT = 20
 const SNAKE_SPRITE_PICTURES = {
   headUp: { x: 3, y: 0 },
   headDown: { x: 3, y: 1 },
@@ -25,7 +36,7 @@ const SNAKE_SPRITE_PICTURES = {
 
 export function getSpriteImagePosition(snakeElement, index) {
   const IS_SNAKE_HEAD = index === 0
-  const IS_SNAKE_TAIL = index === snakeBody.length - 1
+  const IS_SNAKE_TAIL = index === snake.snakeBody.length - 1
   const IS_ANY_BODY_PART = !IS_SNAKE_HEAD && !IS_SNAKE_TAIL
 
   if (IS_SNAKE_HEAD) return getSnakeHeadImage()
@@ -56,10 +67,10 @@ function getSnakeHeadMovementDirection() {
   const SNAKE_HEAD_DIRECTION = getSnakeLastInputDirection()
 
   if (isNewGame(SNAKE_HEAD_DIRECTION)) return getDefaultSnakePosition()
-  if (SNAKE_HEAD_DIRECTION.y > 0) return SNAKE_HEAD_MOVEMENT_DIRECTION.down
   if (SNAKE_HEAD_DIRECTION.y < 0) return SNAKE_HEAD_MOVEMENT_DIRECTION.up
-  if (SNAKE_HEAD_DIRECTION.x > 0) return SNAKE_HEAD_MOVEMENT_DIRECTION.right
+  if (SNAKE_HEAD_DIRECTION.y > 0) return SNAKE_HEAD_MOVEMENT_DIRECTION.down
   if (SNAKE_HEAD_DIRECTION.x < 0) return SNAKE_HEAD_MOVEMENT_DIRECTION.left
+  if (SNAKE_HEAD_DIRECTION.x > 0) return SNAKE_HEAD_MOVEMENT_DIRECTION.right
 }
 
 function getSnakeTailImage(snakeElement, index) {
@@ -76,17 +87,22 @@ function getSnakeTailImage(snakeElement, index) {
 
     case SNAKE_HEAD_MOVEMENT_DIRECTION.right:
       return SNAKE_SPRITE_PICTURES.tailRight
+
+    case SNAKE_HEAD_MOVEMENT_DIRECTION.none:
+      return
   }
 
   console.log('DIRECTION not expected for tails.')
 }
 
 function getPriorSnakeTailPosition(snakeElement, index) {
-  const PRIOR_SNAKE_ELEMENT = snakeBody[index - 1]
+  const PRIOR_SNAKE_ELEMENT = snake.snakeBody[index - 1]
   if (snakeElement.y - SNAKE_DISTANCE_MOVEMENT === PRIOR_SNAKE_ELEMENT.y) return SNAKE_HEAD_MOVEMENT_DIRECTION.up
   if (snakeElement.y + SNAKE_DISTANCE_MOVEMENT === PRIOR_SNAKE_ELEMENT.y) return SNAKE_HEAD_MOVEMENT_DIRECTION.down
   if (snakeElement.x - SNAKE_DISTANCE_MOVEMENT === PRIOR_SNAKE_ELEMENT.x) return SNAKE_HEAD_MOVEMENT_DIRECTION.left
   if (snakeElement.x + SNAKE_DISTANCE_MOVEMENT === PRIOR_SNAKE_ELEMENT.x) return SNAKE_HEAD_MOVEMENT_DIRECTION.right
+
+  if (snakeElement.y === PRIOR_SNAKE_ELEMENT.y && snakeElement.x === PRIOR_SNAKE_ELEMENT.x) return SNAKE_HEAD_MOVEMENT_DIRECTION.none
 
   return getDefaultSnakeDirection()
 }
@@ -117,8 +133,8 @@ function getSnakeBodyPart(snakeElement, index) {
 }
 
 function getPriorSnakeBodyPosition(snakeElement, index) {
-  const PRIOR_SNAKE_ELEMENT = snakeBody[index - 1]
-  const NEXT_SNAKE_ELEMENT = snakeBody[index + 1]
+  const PRIOR_SNAKE_ELEMENT = snake.snakeBody[index - 1]
+  const NEXT_SNAKE_ELEMENT = snake.snakeBody[index + 1]
 
   const IS_WALKING_VERTICAL = snakeElement.x === NEXT_SNAKE_ELEMENT.x && snakeElement.x === PRIOR_SNAKE_ELEMENT.x
   const IS_WALKING_HORIZONTAL = snakeElement.y === NEXT_SNAKE_ELEMENT.y && snakeElement.y === PRIOR_SNAKE_ELEMENT.y
@@ -129,7 +145,6 @@ function getPriorSnakeBodyPosition(snakeElement, index) {
 
   const IS_PRIOR_ELEMENT_WALKING_VERTICALLY_EQUAL = snakeElement.x === PRIOR_SNAKE_ELEMENT.x
   const IS_PRIOR_ELEMENT_WALKING_HORIZONTALLY_EQUAL = snakeElement.y === PRIOR_SNAKE_ELEMENT.y
-  const IS_PRIOR_ELEMENT_WALKING_SAME_DIRECTION = IS_PRIOR_ELEMENT_WALKING_VERTICALLY_EQUAL || IS_PRIOR_ELEMENT_WALKING_HORIZONTALLY_EQUAL
 
   const IS_NEXT_BODY_WALKING_LEFT = snakeElement.x - SNAKE_DISTANCE_MOVEMENT === NEXT_SNAKE_ELEMENT.x
   const IS_NEXT_BODY_WALKING_RIGHT = snakeElement.x + SNAKE_DISTANCE_MOVEMENT === NEXT_SNAKE_ELEMENT.x
@@ -141,6 +156,7 @@ function getPriorSnakeBodyPosition(snakeElement, index) {
   const IS_PRIOR_BODY_WALKING_DOWN = snakeElement.y + SNAKE_DISTANCE_MOVEMENT === PRIOR_SNAKE_ELEMENT.y
   const IS_PRIOR_BODY_WALKING_UP = snakeElement.y - SNAKE_DISTANCE_MOVEMENT === PRIOR_SNAKE_ELEMENT.y
 
+  const IS_PRIOR_ELEMENT_WALKING_SAME_DIRECTION = IS_PRIOR_ELEMENT_WALKING_VERTICALLY_EQUAL || IS_PRIOR_ELEMENT_WALKING_HORIZONTALLY_EQUAL
   const IS_NEXT_SNAKE_ELEMENT_GOING_LEFT_UP =
     IS_PRIOR_ELEMENT_WALKING_SAME_DIRECTION &&
     (IS_NEXT_BODY_WALKING_LEFT || IS_NEXT_BODY_WALKING_DOWN) &&
@@ -183,4 +199,23 @@ function getDefaultSnakePosition() {
 
 function getDefaultSnakeDirection() {
   return SNAKE_HEAD_MOVEMENT_DIRECTION.up
+}
+
+export function equalPositions(snakeElement, position) {
+  let snakeElementTop = snakeElement.y
+  let snakeElementBottom = snakeElement.y + SNAKE_DISTANCE_MOVEMENT
+  let snakeElementLeft = snakeElement.x
+  let snakeElementRight = snakeElement.x + SNAKE_DISTANCE_MOVEMENT
+
+  let foodTop = position.y
+  let foodBottom = position.y + food.height
+  let foodLeft = position.x
+  let foodRight = position.x + food.width
+
+  let aLeftOfB = snakeElementRight < foodLeft
+  let aRightOfB = snakeElementLeft > foodRight
+  let aAboveB = snakeElementBottom < foodTop
+  let aBelowB = snakeElementTop > foodBottom
+
+  return !(aLeftOfB || aRightOfB || aAboveB || aBelowB)
 }
