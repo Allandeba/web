@@ -1,6 +1,6 @@
 import { Sprite } from './classes.js'
 import { getSnakeDirection as getSnakeLastInputDirection } from './snakeInputDirection.js'
-import { getSpriteImagePosition, SNAKE_DISTANCE_MOVEMENT, equalPositions } from './snakeImageDirection.js'
+import { getSpriteImagePosition, equalPositions } from './snakeImageDirection.js'
 
 const CANVAS = document.getElementById('canvas')
 const CTX = CANVAS.getContext('2d')
@@ -45,13 +45,19 @@ export class Snake extends Sprite {
     })
   }
 
-  update() {
-    const SNAKE_HEAD_DIRECTION = getSnakeLastInputDirection()
+  updateSnakePosition() {
     for (let i = this.snakeBody.length - 2; i >= 0; i--) this.snakeBody[i + 1] = { ...this.snakeBody[i] }
+  }
 
+  updateSnakeDirection() {
+    const SNAKE_HEAD_DIRECTION = getSnakeLastInputDirection()
     this.snakeBody[0].y += SNAKE_HEAD_DIRECTION.y
     this.snakeBody[0].x += SNAKE_HEAD_DIRECTION.x
+  }
 
+  update() {
+    this.updateSnakePosition()
+    this.updateSnakeDirection()
     super.update()
   }
 }
