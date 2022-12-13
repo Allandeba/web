@@ -31,5 +31,16 @@ function isGameOver() {
 }
 
 function finishGame() {
-  alert('GAME OVER')
+  const gameOverScreen = document.getElementById('game-over')
+
+  const gameOverText = document.createElement('h2')
+  gameOverText.innerText = 'Game over...'
+  gameOverText.classList.add('game-over')
+  gameOverScreen.appendChild(gameOverText)
+
+  const restartButton = document.createElement('button')
+  restartButton.innerText = 'Restart'
+  restartButton.classList.add('game-over-button')
+  restartButton.onclick = () => location.reload()
+  gameOverScreen.appendChild(restartButton)
 }
