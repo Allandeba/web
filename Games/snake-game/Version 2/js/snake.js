@@ -1,6 +1,6 @@
 import { Sprite } from './classes.js'
 import { getSnakeDirection as getSnakeLastInputDirection } from './snakeInputDirection.js'
-import { getSpriteImagePosition, equalPositions } from './snakeImageDirection.js'
+import { getSpriteImagePosition, equalPositions, SNAKE_DISTANCE_MOVEMENT } from './snakeImageDirection.js'
 
 const CANVAS = document.getElementById('canvas')
 const CTX = CANVAS.getContext('2d')
@@ -64,10 +64,11 @@ export class Snake extends Sprite {
 
 export const snake = new Snake()
 
-export function isOnSnake(position, { ignoreHead = false } = {}) {
+export function isOnSnake({ position, height, width, ignoreHead = false, ignoreTailPosition = false } = {}) {
   return snake.snakeBody.some((snakeElement, index) => {
     if (ignoreHead === true && index === 0) return false
-    return equalPositions(snakeElement, position)
+    if (ignoreTailPosition === true && index === snake.snakeBody.length - 1) return false
+    return equalPositions({ snakeElement: snakeElement, position: position, height: height, width: width })
   })
 }
 
@@ -75,4 +76,21 @@ export function incrementSnakeBody() {
   let lastPosition = snake.snakeBody.length - 1
   let snakeTailElement = snake.snakeBody[lastPosition]
   snake.snakeBody.push({ ...snakeTailElement })
+}
+
+export function getSnakeHead() {
+  return snake.snakeBody[0]
+}
+
+export function isSnakeOutsideCanvas() {
+  let snakeHead = getSnakeHead()
+  let isCrossingOverRightSide = snakeHead.x > CANVAS.width
+  let isCrossingOverLeftSide = snakeHead.x + SNAKE_DISTANCE_MOVEMENT < 0
+  let isSnakeOutsideCanvasWidth = isCrossingOverRightSide || isCrossingOverLeftSide
+
+  let isCrossingOverBottomSide = snakeHead.y > CANVAS.height
+  let isCrossingOverTopSide = snakeHead.y + SNAKE_DISTANCE_MOVEMENT < 0
+  let isSnakeOutsideCanvasHeight = isCrossingOverBottomSide || isCrossingOverTopSide
+
+  return isSnakeOutsideCanvasWidth || isSnakeOutsideCanvasHeight
 }

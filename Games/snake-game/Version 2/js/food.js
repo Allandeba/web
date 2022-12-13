@@ -36,7 +36,7 @@ class Food extends Sprite {
   }
 
   update() {
-    if (isOnSnake(this.position)) {
+    if (isOnSnake({ position: this.position, height: this.height, width: this.width })) {
       food.position = getRandomFoodPosition()
       incrementSnakeBody()
     }
@@ -48,7 +48,7 @@ export const food = new Food()
 
 function getRandomFoodPosition() {
   let newFoodPosition = getRandomCanvasPosition()
-  while (newFoodPosition == null || newFoodPosition == undefined || isOnSnake(newFoodPosition, true)) {
+  while (newFoodPosition == null || newFoodPosition == undefined || isOnSnake({ position: newFoodPosition, ignoreHead: true })) {
     newFoodPosition = getRandomCanvasPosition()
   }
 
