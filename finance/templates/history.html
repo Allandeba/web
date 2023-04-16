@@ -1,0 +1,30 @@
+{% extends "layout.html" %} {% block title %} My stock history {% endblock %} {% block main %}
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Date</th>
+      <th scope="col">Operation</th>
+      <th scope="col">Symbol</th>
+      <th scope="col">Price</th>
+      <th scope="col">Shares</th>
+      <th scope="col">Total</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    {% for history in historyList %}
+    <tr>
+      <th scope="row">{{ history["ID"] }}</th>
+      <td>{{ history["DATE"] }}</td>
+      <td>{{ history["OPERATION"] }}</td>
+      <td>{{ history["SYMBOL"] }}</td>
+      <td>{{ history["PRICE"] }}</td>
+      <td>{{ history["SHARES"] }}</td>
+      <td>{{ history["TOTAL"] }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endblock %}

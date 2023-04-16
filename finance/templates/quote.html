@@ -1,0 +1,46 @@
+{% extends "layout.html" %} {% block title %} Quote {% endblock %} {% block main %}
+<form action="/quote" method="post">
+  <input
+    id="symbol"
+    type="text"
+    name="symbol"
+    list="stockList"
+    placeholder="Symbol"
+    value="{{ searchValue }}"
+    autocomplete="off"
+    autofocus
+    required
+  />
+  <datalist id="stockList">{% for stock in stockList %} <option value="{{ stock["symbol"] }}"> {% endfor %}</datalist>
+
+  <button class="btn btn-primary" type="submit">Search</button>
+</form>
+
+{% if stock %}
+<table class="table table-striped" style="margin-top: 40px">
+  <thead>
+    <tr>
+      <th scope="col">Symbol</th>
+      <th scope="col">Company name</th>
+      <th scope="col">Latest Price</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr>
+      <td>{{ stock["symbol"] }}</td>
+      <td>{{ stock["companyName"] }}</td>
+      <td>{{ stock["latestPrice"] }}</td>
+    </tr>
+  </tbody>
+</table>
+{% endif %}
+
+<script>
+  let symbolInput = document.getElementById('symbol')
+  symbolInput.addEventListener('focus', () => {
+    // OnFocus, Set cursor to the end
+    symbolInput.selectionStart = symbolInput.value.length
+  })
+</script>
+{% endblock %}

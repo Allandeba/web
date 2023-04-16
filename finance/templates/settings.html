@@ -1,0 +1,11 @@
+{% extends "layout.html" %} {% block title %} Settings {% endblock %} {% block main %}
+<div class="form-group">
+  <button id="2FAButton" class="btn btn-info" type="button">Add/Remove 2FA</button>
+</div>
+{% endblock %} {% block script %}
+<script>
+  document.getElementById('2FAButton').addEventListener('click', () => {
+    location.href = '2FA'
+  })
+</script>
+{% endblock %}

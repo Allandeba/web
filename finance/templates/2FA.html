@@ -1,0 +1,35 @@
+{% extends "layout.html" %} {% block title %} 2FA {% endblock %} {% block main %} {% if is2FAActive %}
+<form action="/2FA" method="post">
+  <div class="form-group">
+    <input id="remove2FAButton" type="checkbox" name="remove2FA" autocomplete="off" autofocus required />
+    <label for="remove2FAButton">Are you sure you wanna delete your current 2FA autenticator?</label>
+    <div>
+      <input hidden id="2FA" class="form-control" name="2FA" placeholder="2FA code" type="number" required />
+    </div>
+  </div>
+  <button class="btn btn-primary" type="submit">Send</button>
+</form>
+{% else %}
+<form action="/2FA" method="post">
+  <div class="form-group">
+    <figure>
+      <img src="{{url_for('static', filename='img/2FA.jpg')}}" alt="2FA qrCode" />
+      <figcaption>Scan the qrCode through your Authenticator app</figcaption>
+    </figure>
+
+    <input type="number" name="2FA" placeholder="2FA code" autocomplete="off" autofocus required />
+    <button class="btn btn-primary" type="submit">Send</button>
+  </div>
+  remove2FA
+</form>
+{% endif %} {% endblock %} {% block script %}
+<script>
+  document.getElementById('remove2FAButton').addEventListener('click', () => {
+    if (document.getElementById('2FA').hasAttribute('hidden')) {
+      document.getElementById('2FA').removeAttribute('hidden')
+    } else {
+      document.getElementById('2FA').setAttribute('hidden', '')
+    }
+  })
+</script>
+{% endblock %}

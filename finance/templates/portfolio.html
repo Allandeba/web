@@ -1,0 +1,33 @@
+{% extends "layout.html" %} {% block title %} My stock market shares {% endblock %} {% block main %}
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Symbol</th>
+      <th scope="col">Name</th>
+      <th scope="col">Shares</th>
+      <th scope="col">Price</th>
+      <th scope="col">Total</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    {% for marketShares in marketSharesList %}
+    <tr>
+      <th scope="row">{{ marketShares["ID"] }}</th>
+      <td>{{ marketShares["SYMBOL"] }}</td>
+      <td>{{ marketShares["COMPANY_NAME"] }}</td>
+      <td>{{ marketShares["SHARES"] }}</td>
+      <td>{{ marketShares["PRICE"] }}</td>
+      <td>{{ marketShares["TOTAL"] }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+
+  <tfoot class="table-total">
+    <th colspan="5" scope="row">Total cash</th>
+    <td colspan="6">{{ cash | usd }}</td>
+  </tfoot>
+</table>
+
+{% endblock %}

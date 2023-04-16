@@ -1,0 +1,17 @@
+{% extends "layout.html" %} {% block title %} Sell {% endblock %} {% block main %}
+<form action="/sell" method="post">
+  <input id="symbol" type="text" name="symbol" list="stockList" placeholder="Symbol" value="{{ symbol }}" autocomplete="off" autofocus required />
+  <datalist id="stockList">{% for stock in stockList %} <option value="{{ stock["symbol"] }}"> {% endfor %}</datalist>
+  <input type="number" name="qtStock" placeholder="Amount stocks" value="{{ qtStock }}" autocomplete="off" required />
+
+  <button id="submit" class="btn btn-primary" type="submit">Sell</button>
+</form>
+
+<script>
+  let symbolInput = document.getElementById('symbol')
+  symbolInput.addEventListener('focus', () => {
+    // OnFocus, Set cursor to the end
+    symbolInput.selectionStart = symbolInput.value.length
+  })
+</script>
+{% endblock %}
