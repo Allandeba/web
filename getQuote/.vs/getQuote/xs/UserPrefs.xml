@@ -1,0 +1,40 @@
+﻿<Properties StartupConfiguration="{50D32D61-7B58-44AB-ADB2-25A0B96DDD0F}|https">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.getQuote PreferredExecutionTarget="/Applications/Google Chrome Dev.app" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.Workbench ActiveDocument="appsettings.Development.json">
+    <Files>
+      <File FileName="Controllers/AccessController.cs" Line="20" Column="17" IsPinned="True" />
+      <File FileName="Views/Shared/_Layout.cshtml" Line="54" Column="1" />
+      <File FileName="Views/Home/Index.cshtml" />
+      <File FileName="Models/Login.cs" />
+      <File FileName="Program.cs" Line="1" Column="1" />
+      <File FileName="appsettings.Development.json" Line="3" Column="13" />
+      <File FileName="Views/Access/Login.cshtml" Line="15" Column="25" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="getQuote" expanded="True">
+            <Node name="getQuote" expanded="True">
+              <Node name="Controllers" expanded="True" />
+              <Node name="Models" expanded="True" />
+              <Node name="Views" expanded="True">
+                <Node name="Access" expanded="True" />
+                <Node name="Home" expanded="True" />
+                <Node name="Shared" expanded="True" />
+              </Node>
+              <Node name="appsettings.json" expanded="True">
+                <Node name="appsettings.Development.json" selected="True" />
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
