@@ -8,4 +8,14 @@
 
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'https' " />
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'http' " />
+  <ItemGroup>
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="7.0.0" />
+    <PackageReference Include="DotNetEnv" Version="2.5.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="DAO\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DAO\" />
+  </ItemGroup>
 </Project>
