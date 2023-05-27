@@ -1,0 +1,33 @@
+﻿<Properties StartupConfiguration="{B06A8EF6-0BD1-4473-BAAA-2E2E1F541DF8}|https">
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.Workbench ActiveDocument="Models/PersonModel.cs">
+    <Files>
+      <File FileName="DAO/ApplicationDBContext.cs" Line="15" Column="2" IsPinned="True" />
+      <File FileName="Program.cs" Line="1" Column="20" IsPinned="True" />
+      <File FileName="Models/ContactModel.cs" Line="24" Column="15" />
+      <File FileName="Models/DocumentModel.cs" Line="27" Column="15" />
+      <File FileName="Models/PersonModel.cs" Line="28" Column="2" />
+      <File FileName=".env" Line="1" Column="106" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="getQuote" expanded="True">
+            <Node name="getQuote" expanded="True">
+              <Node name="DAO" expanded="True" />
+              <Node name="Models" expanded="True" />
+              <Node name="source" expanded="True" />
+              <Node name="Views" expanded="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.getQuote PreferredExecutionTarget="/Applications/Google Chrome Dev.app" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

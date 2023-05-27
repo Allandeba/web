@@ -1,0 +1,33 @@
+﻿@model IEnumerable<PersonModel>
+
+@{
+    ViewData["Title"] = "Person Page";
+}
+
+<section class="py-5 text-center container">
+    <div class="row py-lg-5">
+        <div class="col-lg-6 col-md-8 mx-auto">
+            <h1 class="fw-light">People</h1>
+            <p class="lead text-body-secondary">For more informations, click into the items below.</p>
+        </div>
+    </div>
+</section>
+
+<div class="d-flex flex-column flex-md-row p-4 gap-4 py-md-5 align-items-center justify-content-center">
+    <div class="list-group">
+        @foreach (var item in Model)
+        {
+            <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+                <img src="https://cdn-icons-png.flaticon.com/512/64/64572.png" alt="user icon" width="32" height="32" class="rounded-circle flex-shrink-0">
+                <div class="d-flex gap-2 w-100 justify-content-between">
+                    <div>
+                        <h6 class="mb-0">@item.PersonName</h6>
+                        <p class="mb-0 opacity-75">@item.FirstName Some useful information.</p>
+                    </div>
+                    <small class="opacity-50 text-nowrap">@item.CreationDate.ToString("dd/MM/yyyy")</small>
+                </div>
+            </a>
+        }
+    </div>
+</div>
+
