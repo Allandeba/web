@@ -1,6 +1,8 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Server.IISIntegration;
+using Microsoft.EntityFrameworkCore;
 
 namespace getQuote.Models;
 
@@ -23,14 +25,8 @@ public class PersonModel
     [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "dd/MM/yyyy")]
     public DateTime CreationDate { get; set; }
 
-    [Required]
-    [Display(Name = "Documents")]
-    public virtual ICollection<DocumentModel>? Documents { get; set; }
-
-    [Required]
-    [Display(Name = "Contacts")]
-    public virtual ICollection<ContactModel>? Contacts { get; set; }
+    public virtual DocumentModel? Document { get; set; } = null!;
+    public virtual ContactModel? Contact { get; set; } = null!;
 
     public string PersonName { get { return this.FirstName + ' ' + this.LastName; } }
-
 }

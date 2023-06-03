@@ -11,7 +11,7 @@ using getQuote.DAO;
 namespace getQuote.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    [Migration("20230527210055_Initial")]
+    [Migration("20230603183031_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -33,7 +33,8 @@ namespace getQuote.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("varchar(50)");
 
-                    b.Property<int>("PersonId")
+                    b.Property<int?>("PersonId")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("Phone")
@@ -43,7 +44,8 @@ namespace getQuote.Migrations
 
                     b.HasKey("ContactId");
 
-                    b.HasIndex("PersonId");
+                    b.HasIndex("PersonId")
+                        .IsUnique();
 
                     b.ToTable("Contact");
                 });
@@ -60,15 +62,15 @@ namespace getQuote.Migrations
                         .HasColumnType("varchar(50)");
 
                     b.Property<int>("DocumentType")
-                        .HasMaxLength(50)
                         .HasColumnType("int");
 
-                    b.Property<int>("PersonId")
+                    b.Property<int?>("PersonId")
                         .HasColumnType("int");
 
                     b.HasKey("DocumentId");
 
-                    b.HasIndex("PersonId");
+                    b.HasIndex("PersonId")
+                        .IsUnique();
 
                     b.ToTable("Document");
                 });
@@ -102,8 +104,8 @@ namespace getQuote.Migrations
             modelBuilder.Entity("getQuote.Models.ContactModel", b =>
                 {
                     b.HasOne("getQuote.Models.PersonModel", "Person")
-                        .WithMany("Contacts")
-                        .HasForeignKey("PersonId")
+                        .WithOne("Contact")
+                        .HasForeignKey("getQuote.Models.ContactModel", "PersonId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -113,19 +115,17 @@ namespace getQuote.Migrations
             modelBuilder.Entity("getQuote.Models.DocumentModel", b =>
                 {
                     b.HasOne("getQuote.Models.PersonModel", "Person")
-                        .WithMany("Documents")
-                        .HasForeignKey("PersonId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithOne("Document")
+                        .HasForeignKey("getQuote.Models.DocumentModel", "PersonId");
 
                     b.Navigation("Person");
                 });
 
             modelBuilder.Entity("getQuote.Models.PersonModel", b =>
                 {
-                    b.Navigation("Contacts");
+                    b.Navigation("Contact");
 
-                    b.Navigation("Documents");
+                    b.Navigation("Document");
                 });
 #pragma warning restore 612, 618
         }

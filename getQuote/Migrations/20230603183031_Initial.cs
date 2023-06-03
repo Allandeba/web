@@ -63,10 +63,10 @@ namespace getQuote.Migrations
                 {
                     DocumentId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    DocumentType = table.Column<int>(type: "int", maxLength: 50, nullable: false),
+                    DocumentType = table.Column<int>(type: "int", nullable: false),
                     Document = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    PersonId = table.Column<int>(type: "int", nullable: false)
+                    PersonId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -75,20 +75,21 @@ namespace getQuote.Migrations
                         name: "FK_Document_Person_PersonId",
                         column: x => x.PersonId,
                         principalTable: "Person",
-                        principalColumn: "PersonId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "PersonId");
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Contact_PersonId",
                 table: "Contact",
-                column: "PersonId");
+                column: "PersonId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Document_PersonId",
                 table: "Document",
-                column: "PersonId");
+                column: "PersonId",
+                unique: true);
         }
 
         /// <inheritdoc />

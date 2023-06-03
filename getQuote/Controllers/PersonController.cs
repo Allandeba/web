@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Runtime.ConstrainedExecution;
 using getQuote.DAO;
 using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 
 namespace getQuote.Controllers;
 
@@ -25,12 +26,46 @@ public class PersonController : Controller
         return View(people);
     }
 
-    [HttpPost]
-    public IActionResult Create(PersonModel person)
+    public IActionResult Create()
     {
-        if (!ModelState.IsValid) { return View(); }
+        return View();
+    }
 
-        throw new ApplicationException("Not implemented yet");
+    [HttpPost]
+    public Task<IActionResult> Create(PersonModel person)
+    {
+        if (!ModelState.IsValid) { return Task.FromResult<IActionResult>(View(person)); }
+
+        _context.Person.Add(person);
+        _context.SaveChanges();
+        return Task.FromResult<IActionResult>(RedirectToAction(nameof(Index))); 
+    }
+
+    public IActionResult Update(int id)
+    {
+        PersonModel person = _context.Person.Include(c => c.Contact)
+                                            .Include(d => d.Document)
+                                            .FirstOrDefault(p => p.PersonId == id);
+        return View(person);
+    }
+
+    [HttpPost]
+    public Task<IActionResult> Update(PersonModel person)
+    {
+        if (!ModelState.IsValid) { return Task.FromResult<IActionResult>(View(person)); }
+
+        var existentPerson = _context.Person.Include(c => c.Contact)
+                                            .Include(d => d.Document)
+                                            .FirstOrDefault(p => p.PersonId == person.PersonId);
+        if (existentPerson != null)
+        {
+            // not working in the html hidden input.
+            person.CreationDate = existentPerson.CreationDate;
+            _context.Entry(existentPerson).CurrentValues.SetValues(person);
+        }
+        
+        _context.SaveChanges();
+        return Task.FromResult<IActionResult>(RedirectToAction(nameof(Index)));
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

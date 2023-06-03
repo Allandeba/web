@@ -4,13 +4,10 @@ using System.Xml.Linq;
 
 namespace getQuote.Models
 {
-    public enum DocumentTypes
+    public enum DocumentTypes : int
     {
-        [Display(Name = "CPF")]
-        CPF,
-
-        [Display(Name = "RG")]
-        RG
+        CPF = 0,
+        RG = 1
     }
 }
 

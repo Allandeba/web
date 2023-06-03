@@ -1,5 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Reflection;
+using Microsoft.AspNetCore.Server.IISIntegration;
+using Microsoft.EntityFrameworkCore;
 
 namespace getQuote.Models;
 
@@ -10,16 +13,15 @@ public class DocumentModel
 
     [Required]
     [Display(Name = "Document type")]
-    [MaxLength(50)]
-    public DocumentTypes? DocumentType { get; set; }
+    public DocumentTypes DocumentType { get; set; }
 
     [Required]
     [Display(Name = "Document")]
     [MaxLength(50)]
-    public string? Document { get; set; }
+    public string Document { get; set; } = string.Empty;
 
-    [Required]
-    [Display(Name = "Person")]
+
     [ForeignKey("PersonId")]
-    public virtual PersonModel? Person { get; set; }
+    public int? PersonId { get; set; }
+    public virtual PersonModel? Person { get; set; } = null!;
 }
