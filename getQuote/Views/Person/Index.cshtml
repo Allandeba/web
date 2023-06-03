@@ -19,16 +19,28 @@
     <div class="list-group">
         @foreach (var item in Model)
         {
-            <a asp-controller="Person" asp-action="Update" asp-route-id="@item.PersonId" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
-                <img src="https://cdn-icons-png.flaticon.com/512/64/64572.png" alt="user icon" width="32" height="32" class="rounded-circle flex-shrink-0">
-                <div class="d-flex gap-2 w-100 justify-content-between">
-                    <div>
-                        <h6 class="mb-0">@item.PersonName</h6>
-                        <p class="mb-0 opacity-75">Some useful information.</p>
+            <span class="list-group-item list-group-item-action border-0 gap-3 py-2">
+                <a asp-controller="Person" asp-action="Delete" asp-route-id="@item.PersonId"
+                   onmouseover="this.style.opacity = '1'"
+                   onmouseout="this.style.opacity = '0.75'"
+                   class="close position-absolute top-5 start-100 translate-middle badge border border-light rounded-circle bg-danger p-2 opacity-75 text-decoration-none" aria-label="Close">
+
+                    <span aria-hidden="true">&times;</span>
+                </a>
+
+                <a asp-controller="Person" asp-action="Update" asp-route-id="@item.PersonId" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+                    <img src="https://cdn-icons-png.flaticon.com/512/64/64572.png" alt="user icon" width="32" height="32" class="rounded-circle flex-shrink-0">
+
+                    <div class="d-flex gap-2 w-100 justify-content-between">
+                        <div>
+                            <h6 class="mb-0">@item.PersonName</h6>
+                            <p class="mb-0 opacity-75">Some useful information.</p>
+                        </div>
+
+                        <small class="opacity-50 text-nowrap">@item.CreationDate.ToString("dd/MM/yyyy")</small>
                     </div>
-                    <small class="opacity-50 text-nowrap">@item.CreationDate.ToString("dd/MM/yyyy")</small>
-                </div>
-            </a>
+                </a>
+            </span>
         }
     </div>
 </div>

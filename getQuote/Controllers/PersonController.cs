@@ -54,7 +54,7 @@ public class PersonController : Controller
     {
         if (!ModelState.IsValid) { return Task.FromResult<IActionResult>(View(person)); }
 
-        var existentPerson = _context.Person.Include(c => c.Contact)
+        PersonModel existentPerson = _context.Person.Include(c => c.Contact)
                                             .Include(d => d.Document)
                                             .FirstOrDefault(p => p.PersonId == person.PersonId);
         if (existentPerson != null)
@@ -66,6 +66,16 @@ public class PersonController : Controller
         
         _context.SaveChanges();
         return Task.FromResult<IActionResult>(RedirectToAction(nameof(Index)));
+    }
+
+    public IActionResult Delete(int id)
+    {
+        PersonModel person = _context.Person.Include(c => c.Contact)
+                                            .Include(d => d.Document)
+                                            .FirstOrDefault(p => p.PersonId == id);
+        _context.Person.Remove(person);
+        _context.SaveChanges();
+        return RedirectToAction(nameof(Index));
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

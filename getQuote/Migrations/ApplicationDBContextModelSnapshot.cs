@@ -31,7 +31,6 @@ namespace getQuote.Migrations
                         .HasColumnType("varchar(50)");
 
                     b.Property<int?>("PersonId")
-                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("Phone")
@@ -102,9 +101,7 @@ namespace getQuote.Migrations
                 {
                     b.HasOne("getQuote.Models.PersonModel", "Person")
                         .WithOne("Contact")
-                        .HasForeignKey("getQuote.Models.ContactModel", "PersonId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("getQuote.Models.ContactModel", "PersonId");
 
                     b.Navigation("Person");
                 });
@@ -120,9 +117,11 @@ namespace getQuote.Migrations
 
             modelBuilder.Entity("getQuote.Models.PersonModel", b =>
                 {
-                    b.Navigation("Contact");
+                    b.Navigation("Contact")
+                        .IsRequired();
 
-                    b.Navigation("Document");
+                    b.Navigation("Document")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

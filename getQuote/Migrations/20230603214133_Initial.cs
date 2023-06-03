@@ -43,7 +43,7 @@ namespace getQuote.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Phone = table.Column<string>(type: "varchar(15)", maxLength: 15, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    PersonId = table.Column<int>(type: "int", nullable: false)
+                    PersonId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -52,8 +52,7 @@ namespace getQuote.Migrations
                         name: "FK_Contact_Person_PersonId",
                         column: x => x.PersonId,
                         principalTable: "Person",
-                        principalColumn: "PersonId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "PersonId");
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
