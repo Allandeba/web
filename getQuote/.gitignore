@@ -75,4 +75,4 @@ _[Ss]cripts
 *.ncrunchsolution
 *.dot[Cc]over
 *.env
-project-cache/
+.vs/
