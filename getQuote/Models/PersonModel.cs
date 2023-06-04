@@ -25,11 +25,14 @@ public class PersonModel
     [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "dd/MM/yyyy")]
     public DateTime CreationDate { get; set; }
 
-
     [Required]
     public virtual DocumentModel? Document { get; set; } = null!;
+
     [Required]
     public virtual ContactModel? Contact { get; set; } = null!;
 
-    public string PersonName { get { return this.FirstName + ' ' + this.LastName; } }
+    public string PersonName
+    {
+        get { return this.FirstName + ' ' + this.LastName; }
+    }
 }

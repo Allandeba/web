@@ -10,4 +10,3 @@ namespace getQuote.Models
         RG = 1
     }
 }
-

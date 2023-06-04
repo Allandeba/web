@@ -17,7 +17,10 @@ public class Program
 
         // Add MySQL connection.
         var connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION");
-        builder.Services.AddDbContext<ApplicationDBContext>(options => options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
+        builder.Services.AddDbContext<ApplicationDBContext>(
+            options =>
+                options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString))
+        );
 
         var app = builder.Build();
 
@@ -36,11 +39,8 @@ public class Program
 
         app.UseAuthorization();
 
-        app.MapControllerRoute(
-            name: "default",
-            pattern: "{controller=Home}/{action=Index}/{id?}");
+        app.MapControllerRoute(name: "default", pattern: "{controller=Home}/{action=Index}/{id?}");
 
         app.Run();
     }
 }
-

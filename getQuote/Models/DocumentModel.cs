@@ -20,7 +20,6 @@ public class DocumentModel
     [MaxLength(50)]
     public string Document { get; set; } = string.Empty;
 
-
     [ForeignKey("PersonId")]
     public int? PersonId { get; set; }
     public virtual PersonModel? Person { get; set; } = null!;

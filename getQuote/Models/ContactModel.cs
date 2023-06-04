@@ -21,7 +21,6 @@ public class ContactModel
     [MaxLength(15)]
     public string Phone { get; set; } = String.Empty;
 
-
     [ForeignKey("PersonId")]
     public int? PersonId { get; set; }
     public virtual PersonModel? Person { get; set; } = null!;
