@@ -26,10 +26,10 @@ public class PersonModel
     public DateTime CreationDate { get; set; }
 
     [Required]
-    public virtual DocumentModel? Document { get; set; } = null!;
+    public virtual DocumentModel? Document { get; set; } = null;
 
     [Required]
-    public virtual ContactModel? Contact { get; set; } = null!;
+    public virtual ContactModel? Contact { get; set; } = null;
 
     public string PersonName
     {

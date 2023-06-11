@@ -22,5 +22,5 @@ public class DocumentModel
 
     [ForeignKey("PersonId")]
     public int? PersonId { get; set; }
-    public virtual PersonModel? Person { get; set; } = null!;
+    public virtual PersonModel? Person { get; set; } = null;
 }
