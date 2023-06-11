@@ -13,6 +13,8 @@ namespace getQuote.DAO
         public DbSet<PersonModel> Person { get; set; }
         public DbSet<DocumentModel> Document { get; set; }
         public DbSet<ContactModel> Contact { get; set; }
+        public DbSet<ItemModel> Item { get; set; }
+        public DbSet<ItemImageModel> ItemImage { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

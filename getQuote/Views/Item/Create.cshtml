@@ -1,0 +1,38 @@
+﻿@model ItemModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div class="col-md-7 col-lg-8">
+    <form method="post" asp-action="Create" asp-controller="Item" class="needs-validation" enctype="multipart/form-data">
+        <div class="row g-3">
+            <div class="col-sm-6">
+                <label asp-for="ItemName" class="form-label"></label>
+                <input asp-for="ItemName" class="form-control" placeholder="" required>
+                <span asp-validation-for="ItemName" class="text-danger"></span>
+            </div>
+
+            <div class="col-sm-6">
+                <label asp-for="Value" class="form-label"></label>
+                <input asp-for="Value" class="form-control" placeholder="" required>
+                <span asp-validation-for="Value" class="text-danger"></span>
+            </div>
+
+            <div class="col-sm-6">
+                <label asp-for="ImageFiles" class="form-label"></label>
+                <input asp-for="ImageFiles" accept="image/*" placeholder="" required>
+                <span asp-validation-for="ImageFiles" class="text-danger"></span>
+            </div>
+        </div>
+
+        <hr class="my-4">
+
+        <div class="form-group">
+            <input class="w-100 btn btn-primary btn-lg" type="submit" value="Save" />
+            <a class="w-100 btn btn-secondary btn-lg" asp-action="index">Cancel</a>
+        </div>
+
+    </form>
+</div>
+
