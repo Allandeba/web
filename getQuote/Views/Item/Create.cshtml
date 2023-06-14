@@ -21,9 +21,11 @@
 
             <div class="col-sm-6">
                 <label asp-for="ImageFiles" class="form-label"></label>
-                <input asp-for="ImageFiles" accept="image/*" placeholder="" required>
+                <input id="upload" asp-for="ImageFiles" accept="image/*" placeholder="" required>
                 <span asp-validation-for="ImageFiles" class="text-danger"></span>
             </div>
+
+            <div class="row g-3" id="images__client"></div>
         </div>
 
         <hr class="my-4">

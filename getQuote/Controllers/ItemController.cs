@@ -29,17 +29,18 @@ public class ItemController : Controller
     }
 
     [HttpPost]
+    [DisableRequestSizeLimit,
+    RequestFormLimits(MultipartBodyLengthLimit = int.MaxValue,
+        ValueLengthLimit = int.MaxValue)]
     public Task<IActionResult> Create([Bind("ItemId, ItemName, Value, ImageFiles")] ItemModel Item)
     {
-        if (Item == null)
-        {
+        if (Item == null) {
             return Task.FromResult<IActionResult>(BadRequest(ModelState));
         }
 
         Item.SetItemImageList();
 
-        if (!ModelState.IsValid)
-        {
+        if (!ModelState.IsValid) {
             return Task.FromResult<IActionResult>(View(Item));
         }
 
@@ -58,12 +59,18 @@ public class ItemController : Controller
     }
 
     [HttpPost]
+    [DisableRequestSizeLimit,
+    RequestFormLimits(MultipartBodyLengthLimit = int.MaxValue,
+        ValueLengthLimit = int.MaxValue)]
     public Task<IActionResult> Update(ItemModel Item)
     {
+        if (Item == null) {
+            return Task.FromResult<IActionResult>(BadRequest(ModelState));
+        }
+
         Item.SetItemImageList();
 
-        if (!ModelState.IsValid)
-        {
+        if (!ModelState.IsValid) {
             return Task.FromResult<IActionResult>(View(Item));
         }
 
@@ -71,12 +78,14 @@ public class ItemController : Controller
             .Include(i => i.ItemImageList)
             .FirstOrDefault(i => i.ItemId == Item.ItemId);
 
-        if (existentItem != null)
-        {
-            _context.Entry(existentItem).CurrentValues.SetValues(Item);
-            foreach (var Image in Item.ItemImageList)
-            {
-                existentItem.ItemImageList.Add(Image);
+        if (existentItem != null) {
+            existentItem.ItemName = Item.ItemName;
+            existentItem.Value = Item.Value;
+            //_context.Entry(existentItem).CurrentValues.SetValues(Item);
+            if (Item.ItemImageList != null) {
+                foreach (var Image in Item.ItemImageList) {
+                    existentItem.ItemImageList.Add(Image);
+                }
             }
         }
 
@@ -91,8 +100,7 @@ public class ItemController : Controller
             .FirstOrDefault(i => i.ItemId == id);
         _context.Item.Remove(Item);
 
-        foreach (var Image in Item.ItemImageList)
-        {
+        foreach (var Image in Item.ItemImageList) {
             ItemImageModel ItemImage = _context.ItemImage.Find(Image.ItemImageId);
             _context.ItemImage.Remove(ItemImage);
         }
@@ -112,8 +120,7 @@ public class ItemController : Controller
     public IActionResult Error()
     {
         return View(
-            new getQuote.Models.ErrorViewModel
-            {
+            new getQuote.Models.ErrorViewModel {
                 RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
             }
         );

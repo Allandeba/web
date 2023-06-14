@@ -23,25 +23,26 @@
 
             <div class="col-sm-6">
                 <label asp-for="ImageFiles" class="form-label"></label>
-                <input asp-for="ImageFiles" accept="image/*" placeholder="">
+                <input id="upload" asp-for="ImageFiles" accept="image/*" placeholder="">
                 <span asp-validation-for="ImageFiles" class="text-danger"></span>
             </div>
 
-            <div class="row g-3">
+            <div class="row g-3" id="images__client">
                 @foreach (var image in Model.ItemImageList)
                 {
                     <span class="col-6 col-md-4">
+                        @*If changed, remember to change the creation of the span in uploadImageUtils.js*@
                         <a asp-controller="Item" asp-action="DeleteImage" asp-route-id="@image.ItemImageId"
                            onmouseover="this.style.opacity = '1'"
                            onmouseout="this.style.opacity = '0.75'"
-                           class="close position-absolute translate-middle badge border border-light rounded-circle bg-danger p-2 opacity-75 text-decoration-none" aria-label="Close">
+                           class="close position-absolute translate-middle badge border border-light rounded-circle bg-danger p-2 opacity-75 text-decoration-none"
+                           aria-label="Close">
 
                             <span aria-hidden="true">&times;</span>
                         </a>
 
-                        <img src="data:image/*;base64,@(Convert.ToBase64String(image.ImageFile))" alt="ItemName + ' ' + image.FileName" width="250px" height="250px" />
+                        <img src="data:image/*;base64,@(Convert.ToBase64String(image.ImageFile))" alt="ItemName + ' ' + image.FileName" width="@Const.MAX_IMAGE_WIDTH + 'px'" height="@Const.MAX_IMAGE_HEIGHT + 'px'" />
                     </span>
-
                 }
             </div>
         </div>
@@ -55,4 +56,3 @@
 
     </form>
 </div>
-

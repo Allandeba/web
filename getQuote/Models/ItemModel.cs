@@ -2,6 +2,11 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using SixLabors.ImageSharp.Formats.Jpeg;
+using SixLabors.ImageSharp.Formats.Png;
+using SixLabors.ImageSharp.PixelFormats;
+using static System.Net.Mime.MediaTypeNames;
+using Image = SixLabors.ImageSharp.Image;
 
 namespace getQuote.Models;
 
@@ -28,24 +33,36 @@ public class ItemModel
 
     public void SetItemImageList()
     {
-        if (this.ImageFiles != null && this.ImageFiles.Count > 0)
-        {
+        if (this.ImageFiles != null && this.ImageFiles.Count > 0) {
             this.ItemImageList = new List<ItemImageModel>();
-            foreach (var image in this.ImageFiles)
-            {
+            foreach (var image in this.ImageFiles) {
                 ItemImageModel itemImage = new ItemImageModel();
                 itemImage.FileName = image.FileName;
-
-                var ms = new MemoryStream();
-                image.CopyTo(ms);
-                itemImage.ImageFile = ms.ToArray();
 
                 // Temporary
                 itemImage.Principal = true;
 
+                itemImage.ImageFile = ResizeImage(image).ToArray();
+
                 this.ItemImageList.Add(itemImage);
             }
         }
+    }
+
+    private MemoryStream ResizeImage(IFormFile image)
+    {
+        using var ms = new MemoryStream();
+        image.CopyTo(ms);
+        ms.Position = 0;
+
+        using var imageToResize = Image.Load(ms);
+        imageToResize.Mutate(x => x.Resize(Const.MAX_IMAGE_WIDTH, Const.MAX_IMAGE_HEIGHT));
+
+        using var outputStream = new MemoryStream();
+        imageToResize.Save(outputStream, new JpegEncoder());
+        outputStream.Position = 0;
+
+        return outputStream;
     }
 
     public virtual List<ItemImageModel>? ItemImageList { get; set; } = null;
