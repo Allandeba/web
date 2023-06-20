@@ -9,4 +9,9 @@ namespace getQuote.Models
         CPF = 0,
         RG = 1
     }
+
+    public enum SelectDefault
+    {
+        None
+    }
 }

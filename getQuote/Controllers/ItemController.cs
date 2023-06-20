@@ -1,6 +1,4 @@
-﻿// Todo: Using ImageSharp for resizing the image on Upload
-
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using getQuote.DAO;
 using getQuote.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -29,18 +27,24 @@ public class ItemController : Controller
     }
 
     [HttpPost]
-    [DisableRequestSizeLimit,
-    RequestFormLimits(MultipartBodyLengthLimit = int.MaxValue,
-        ValueLengthLimit = int.MaxValue)]
-    public Task<IActionResult> Create([Bind("ItemId, ItemName, Value, ImageFiles")] ItemModel Item)
+    [
+        DisableRequestSizeLimit,
+        RequestFormLimits(MultipartBodyLengthLimit = int.MaxValue, ValueLengthLimit = int.MaxValue)
+    ]
+    public Task<IActionResult> Create(
+        [Bind("ItemId, ItemName, Value, ImageFiles, DefaultImage")] ItemModel Item
+    )
     {
-        if (Item == null) {
+        if (Item == null)
+        {
             return Task.FromResult<IActionResult>(BadRequest(ModelState));
         }
 
         Item.SetItemImageList();
+        Item.SetDefaultImage(Item.DefaultImage);
 
-        if (!ModelState.IsValid) {
+        if (!ModelState.IsValid)
+        {
             return Task.FromResult<IActionResult>(View(Item));
         }
 
@@ -59,18 +63,21 @@ public class ItemController : Controller
     }
 
     [HttpPost]
-    [DisableRequestSizeLimit,
-    RequestFormLimits(MultipartBodyLengthLimit = int.MaxValue,
-        ValueLengthLimit = int.MaxValue)]
+    [
+        DisableRequestSizeLimit,
+        RequestFormLimits(MultipartBodyLengthLimit = int.MaxValue, ValueLengthLimit = int.MaxValue)
+    ]
     public Task<IActionResult> Update(ItemModel Item)
     {
-        if (Item == null) {
+        if (Item == null)
+        {
             return Task.FromResult<IActionResult>(BadRequest(ModelState));
         }
 
         Item.SetItemImageList();
 
-        if (!ModelState.IsValid) {
+        if (!ModelState.IsValid)
+        {
             return Task.FromResult<IActionResult>(View(Item));
         }
 
@@ -78,15 +85,20 @@ public class ItemController : Controller
             .Include(i => i.ItemImageList)
             .FirstOrDefault(i => i.ItemId == Item.ItemId);
 
-        if (existentItem != null) {
+        if (existentItem != null)
+        {
             existentItem.ItemName = Item.ItemName;
             existentItem.Value = Item.Value;
-            //_context.Entry(existentItem).CurrentValues.SetValues(Item);
-            if (Item.ItemImageList != null) {
-                foreach (var Image in Item.ItemImageList) {
+
+            if (Item.ItemImageList != null)
+            {
+                foreach (var Image in Item.ItemImageList)
+                {
                     existentItem.ItemImageList.Add(Image);
                 }
             }
+
+            existentItem.SetDefaultImage(Item.DefaultImage);
         }
 
         _context.SaveChanges();
@@ -100,7 +112,8 @@ public class ItemController : Controller
             .FirstOrDefault(i => i.ItemId == id);
         _context.Item.Remove(Item);
 
-        foreach (var Image in Item.ItemImageList) {
+        foreach (var Image in Item.ItemImageList)
+        {
             ItemImageModel ItemImage = _context.ItemImage.Find(Image.ItemImageId);
             _context.ItemImage.Remove(ItemImage);
         }
@@ -120,7 +133,8 @@ public class ItemController : Controller
     public IActionResult Error()
     {
         return View(
-            new getQuote.Models.ErrorViewModel {
+            new getQuote.Models.ErrorViewModel
+            {
                 RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
             }
         );

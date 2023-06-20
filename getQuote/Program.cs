@@ -1,4 +1,5 @@
-﻿using getQuote.DAO;
+﻿using System.Text.Json.Serialization;
+using getQuote.DAO;
 using Microsoft.EntityFrameworkCore;
 using Pomelo.EntityFrameworkCore.MySql;
 
@@ -14,6 +15,11 @@ public class Program
 
         // Add services to the container.
         builder.Services.AddControllersWithViews();
+        builder.Services
+            .AddControllers()
+            .AddJsonOptions(
+                x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles
+            );
 
         // Add MySQL connection.
         var connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION");

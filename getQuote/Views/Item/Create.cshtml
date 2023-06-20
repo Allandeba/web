@@ -25,6 +25,11 @@
                 <span asp-validation-for="ImageFiles" class="text-danger"></span>
             </div>
 
+            <label asp-for="DefaultImage" class="form-label"></label>
+            <select asp-for="DefaultImage" class="form-select" id="defaultImageSelect" required>
+                <option value="@(SelectDefault.None)">@(SelectDefault.None.ToString())</option>
+            </select>
+
             <div class="row g-3" id="images__client"></div>
         </div>
 

@@ -29,22 +29,43 @@ public class ItemModel
     [NotMapped]
     [Display(Name = "Upload Image")]
     [DataType(DataType.Upload)]
-    public List<IFormFile>? ImageFiles { get; set; } = null;
+    public List<IFormFile>? ImageFiles { get; set; }
+
+    [NotMapped]
+    [Required]
+    [Display(Name = "Default image")]
+    public String? DefaultImage { get; set; }
 
     public void SetItemImageList()
     {
-        if (this.ImageFiles != null && this.ImageFiles.Count > 0) {
+        if (this.ImageFiles != null && this.ImageFiles.Count > 0)
+        {
             this.ItemImageList = new List<ItemImageModel>();
-            foreach (var image in this.ImageFiles) {
+            foreach (var image in this.ImageFiles)
+            {
                 ItemImageModel itemImage = new ItemImageModel();
                 itemImage.FileName = image.FileName;
-
-                // Temporary
-                itemImage.Principal = true;
-
                 itemImage.ImageFile = ResizeImage(image).ToArray();
 
                 this.ItemImageList.Add(itemImage);
+            }
+        }
+    }
+
+    public void SetDefaultImage(String defaultImageFileName)
+    {
+        if (this.ItemImageList != null && this.ItemImageList.Count > 0)
+        {
+            foreach (var image in this.ItemImageList)
+            {
+                if (defaultImageFileName == SelectDefault.None.ToString())
+                { // Todo: converter para enum
+                    image.Main = false;
+                }
+                else
+                {
+                    image.Main = image.FileName == defaultImageFileName;
+                }
             }
         }
     }
@@ -65,5 +86,5 @@ public class ItemModel
         return outputStream;
     }
 
-    public virtual List<ItemImageModel>? ItemImageList { get; set; } = null;
+    public virtual List<ItemImageModel>? ItemImageList { get; set; }
 }

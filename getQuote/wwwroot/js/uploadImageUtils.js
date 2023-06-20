@@ -1,4 +1,5 @@
 ﻿export let imageClient = document.querySelector('#images__client');
+export let defaultImageSelect = document.querySelector('#defaultImageSelect');
 
 const MAX_HEIGHT = 250;
 const MAX_WIDTH = 250;
@@ -41,6 +42,7 @@ function getNewImage() {
     image.addEventListener('load', (event) => {
         drawImage(event.target);
         drawElements();
+        drawNewDefaultImageSelect(event.target);
     });
 
     return image;
@@ -76,11 +78,22 @@ function getDeleteLinkElement() {
     deleteLink.setAttribute('id', new Date().getTime());
     deleteLink.setAttribute('onmouseover', "this.style.opacity = '1'");
     deleteLink.setAttribute('onmouseout', "this.style.opacity = '0.75'");
+    deleteLink.setAttribute('arial-label', 'Close');
     deleteLink.setAttribute(
         'class',
-        'close position-absolute translate-middle badge border border-light rounded-circle bg-danger p-2 opacity-75 text-decoration-none'
+        'close ' +
+        'position-absolute ' +
+        'translate-middle ' +
+        'd - block ' +
+        'badge ' +
+        'badge-danger ' +
+        'border border-light ' +
+        'rounded-circle ' +
+        'bg-danger ' +
+        'p-2 ' +
+        'opacity-75 ' +
+        'text-decoration-none'
     );
-    deleteLink.setAttribute('arial-label', 'Close');
 
     deleteLink.addEventListener("click", (event) => {
         clearUploadImage(event.target.id)
@@ -107,20 +120,6 @@ function getImageElement() {
     return img;
 }
 
-//function deleteClientImage(_id) {
-//    Array.from(imageClient.getElementsByClassName('close')).forEach(function (element, index) {
-//        if (element.id == _id) {
-
-//            const parent = element.parentNode;
-//            //let img = parent.getElementsByClassName("image__client")[0];
-//            //deleteFileFromUploadImage(img.name);
-
-//            imageClient.removeChild(parent);
-//            return;
-//        }
-//    });
-//}
-
 function clearUploadImage(_id) {
     if (!_id) return;
 
@@ -128,10 +127,11 @@ function clearUploadImage(_id) {
     uploadFiles.value = "";
 
     deleteAllChildren();
+}
 
-    //let pattern = "//[^\s] +?" + _name
-    //console.log("pattern = ", pattern)
-    //console.log("uploadFiles.value = ", uploadFiles.value)
-    //uploadFiles.value.Replace(pattern, "");
-    //console.log("uploadFiles.value = ", uploadFiles.value)
+function drawNewDefaultImageSelect(_newImage) {
+    var option = document.createElement('option');
+    option.value = _newImage.name;
+    option.text = _newImage.name;
+    defaultImageSelect.appendChild(option);
 }

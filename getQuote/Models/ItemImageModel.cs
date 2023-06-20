@@ -12,8 +12,8 @@ public class ItemImageModel
     public int ItemImageId { get; set; }
 
     [Required]
-    [Display(Name = "Principal")]
-    public bool? Principal { get; set; }
+    [Display(Name = "Main")]
+    public bool Main { get; set; } = false;
 
     [Required]
     [Display(Name = "FileName")]
@@ -22,9 +22,9 @@ public class ItemImageModel
 
     [Required]
     [Display(Name = "Upload Image")]
-    public byte[]? ImageFile { get; set; } = null;
+    public byte[]? ImageFile { get; set; }
 
     [ForeignKey("ItemId")]
     public int? ItemId { get; set; }
-    public virtual ItemModel? Item { get; set; } = null;
+    public virtual ItemModel? Item { get; set; }
 }
