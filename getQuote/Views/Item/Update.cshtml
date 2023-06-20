@@ -27,21 +27,49 @@
                 <span asp-validation-for="ImageFiles" class="text-danger"></span>
             </div>
 
+            <label asp-for="DefaultImage" class="form-label"></label>
+            <select asp-for="DefaultImage" class="form-select" id="defaultImageSelect" required>
+                <option value="@(SelectDefault.None)">@(SelectDefault.None.ToString())</option>
+                @foreach (var image in Model.ItemImageList)
+                {
+                    @if (image.Main)
+                    {
+                        <option selected="selected" value="@(image.FileName)">@(image.FileName)</option>
+                    }
+                    else
+                    {
+                        <option value="@(image.FileName)">@(image.FileName)</option>
+
+                    }
+                }
+            </select>
+
             <div class="row g-3" id="images__client">
                 @foreach (var image in Model.ItemImageList)
                 {
                     <span class="col-6 col-md-4">
                         @*If changed, remember to change the creation of the span in uploadImageUtils.js*@
+
                         <a asp-controller="Item" asp-action="DeleteImage" asp-route-id="@image.ItemImageId"
-                           onmouseover="this.style.opacity = '1'"
+                           onmouseover=" this.style.opacity='1' "
                            onmouseout="this.style.opacity = '0.75'"
-                           class="close position-absolute translate-middle badge border border-light rounded-circle bg-danger p-2 opacity-75 text-decoration-none"
-                           aria-label="Close">
+                           aria-label="Close"
+                           class="close
+                            position-absolute
+                            d-block
+                            translate-middle
+                            badge badge-danger
+                            border border-light
+                            rounded-circle
+                            bg-danger
+                            p-2
+                            opacity-75
+                            text-decoration-none">
 
                             <span aria-hidden="true">&times;</span>
                         </a>
 
-                        <img src="data:image/*;base64,@(Convert.ToBase64String(image.ImageFile))" alt="ItemName + ' ' + image.FileName" width="@Const.MAX_IMAGE_WIDTH + 'px'" height="@Const.MAX_IMAGE_HEIGHT + 'px'" />
+                        <img src="data:image/*;base64,@(Convert.ToBase64String(image.ImageFile))" alt="@(image.FileName)" width="@(Const.MAX_IMAGE_WIDTH + " px")" height=" @(Const.MAX_IMAGE_HEIGHT + " px")" />
                     </span>
                 }
             </div>
