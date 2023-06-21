@@ -59,7 +59,7 @@ public class ItemModel
             foreach (var image in this.ItemImageList)
             {
                 if (defaultImageFileName == SelectDefault.None.ToString())
-                { // Todo: converter para enum
+                {
                     image.Main = false;
                 }
                 else
