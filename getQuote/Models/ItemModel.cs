@@ -86,5 +86,15 @@ public class ItemModel
         return outputStream;
     }
 
+    [Required]
     public virtual List<ItemImageModel>? ItemImageList { get; set; }
+
+    public ItemImageModel GetMainImage
+    {
+        get
+        {
+            ItemImageModel MainImage = this.ItemImageList.FirstOrDefault(a => a.Main);
+            return MainImage;
+        }
+    }
 }
