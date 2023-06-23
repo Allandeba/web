@@ -18,9 +18,8 @@ public class ItemImageModel
     [Required]
     [Display(Name = "FileName")]
     [MaxLength(100)]
-    public string? FileName { get; set; }
+    public string FileName { get; set; } = String.Empty;
 
-    [Required]
     [Display(Name = "Upload Image")]
     public byte[]? ImageFile { get; set; }
 

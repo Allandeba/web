@@ -26,13 +26,17 @@ public class ItemModel
     [Precision(18, 2)]
     public decimal? Value { get; set; }
 
+    [Required]
+    [Display(Name = "Description")]
+    [MaxLength(250)]
+    public string Description { get; set; } = String.Empty;
+
     [NotMapped]
     [Display(Name = "Upload Image")]
     [DataType(DataType.Upload)]
     public List<IFormFile>? ImageFiles { get; set; }
 
     [NotMapped]
-    [Required]
     [Display(Name = "Default image")]
     public String? DefaultImage { get; set; }
 
@@ -86,15 +90,11 @@ public class ItemModel
         return outputStream;
     }
 
-    [Required]
     public virtual List<ItemImageModel>? ItemImageList { get; set; }
 
-    public ItemImageModel GetMainImage
+    public ItemImageModel GetMainImage()
     {
-        get
-        {
-            ItemImageModel MainImage = this.ItemImageList.FirstOrDefault(a => a.Main);
-            return MainImage;
-        }
+        ItemImageModel? itemImageModel = ItemImageList.FirstOrDefault(a => a.Main);
+        return itemImageModel;
     }
 }

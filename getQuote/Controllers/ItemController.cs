@@ -32,7 +32,7 @@ public class ItemController : Controller
         RequestFormLimits(MultipartBodyLengthLimit = int.MaxValue, ValueLengthLimit = int.MaxValue)
     ]
     public Task<IActionResult> Create(
-        [Bind("ItemId, ItemName, Value, ImageFiles, DefaultImage")] ItemModel Item
+        [Bind("ItemId, ItemName, Value, Description, ImageFiles, DefaultImage")] ItemModel Item
     )
     {
         if (Item == null)
@@ -89,6 +89,7 @@ public class ItemController : Controller
         {
             existentItem.ItemName = Item.ItemName;
             existentItem.Value = Item.Value;
+            existentItem.Description = Item.Description;
 
             if (Item.ItemImageList != null)
             {
@@ -110,6 +111,7 @@ public class ItemController : Controller
         ItemModel Item = _context.Item
             .Include(i => i.ItemImageList)
             .FirstOrDefault(i => i.ItemId == id);
+
         _context.Item.Remove(Item);
 
         foreach (var Image in Item.ItemImageList)
@@ -117,6 +119,7 @@ public class ItemController : Controller
             ItemImageModel ItemImage = _context.ItemImage.Find(Image.ItemImageId);
             _context.ItemImage.Remove(ItemImage);
         }
+
         _context.SaveChanges();
         return RedirectToAction(nameof(Index));
     }
