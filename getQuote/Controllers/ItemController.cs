@@ -129,7 +129,7 @@ public class ItemController : Controller
         ItemImageModel ItemImage = _context.ItemImage.FirstOrDefault(i => i.ItemImageId == id);
         _context.ItemImage.Remove(ItemImage);
         _context.SaveChanges();
-        return RedirectToAction(nameof(Update), new { @id = ItemImage.ItemId });
+        return Ok();
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
