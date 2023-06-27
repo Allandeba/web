@@ -36,8 +36,7 @@ public class ProposalController : Controller
     [HttpPost]
     public Task<IActionResult> Create(ProposalModel Proposal)
     {
-        if (!ModelState.IsValid)
-        {
+        if (!ModelState.IsValid) {
             return Task.FromResult<IActionResult>(View(Proposal));
         }
 
@@ -45,8 +44,7 @@ public class ProposalController : Controller
         Proposal.Person = person;
 
         Proposal.ProposalContent = new();
-        foreach (var itemId in Proposal.ItemIdList)
-        {
+        foreach (var itemId in Proposal.ItemIdList) {
             var item = _context.Item.Find(itemId);
             var proposalContent = new ProposalContentModel { Item = item };
             Proposal.ProposalContent.Add(proposalContent);
@@ -76,8 +74,7 @@ public class ProposalController : Controller
     [HttpPost]
     public Task<IActionResult> Update(ProposalModel proposal)
     {
-        if (!ModelState.IsValid)
-        {
+        if (!ModelState.IsValid) {
             return Task.FromResult<IActionResult>(View(proposal));
         }
 
@@ -85,8 +82,7 @@ public class ProposalController : Controller
         proposal.Person = person;
 
         proposal.ProposalContent = new();
-        foreach (var itemId in proposal.ItemIdList)
-        {
+        foreach (var itemId in proposal.ItemIdList) {
             var item = _context.Item.FirstOrDefault(i => i.ItemId == itemId);
 
             var proposalContent = new ProposalContentModel { Item = item };
@@ -98,8 +94,7 @@ public class ProposalController : Controller
             .Include(pc => pc.ProposalContent)
             .FirstOrDefault(pp => pp.ProposalId == proposal.ProposalId);
 
-        if (existentProposal != null)
-        {
+        if (existentProposal != null) {
             _context.Entry(existentProposal).CurrentValues.SetValues(proposal);
 
             existentProposal.Person = proposal.Person;
@@ -110,8 +105,7 @@ public class ProposalController : Controller
                 .ToList();
             var newItemIds = proposal.ItemIdList.Except(existingProposalContentIds).ToList();
 
-            foreach (var itemId in newItemIds)
-            {
+            foreach (var itemId in newItemIds) {
                 var item = _context.Item.FirstOrDefault(i => i.ItemId == itemId);
 
                 var proposalContent = new ProposalContentModel { Item = item };
@@ -132,8 +126,7 @@ public class ProposalController : Controller
             pc => pc.ProposalContentId == id
         );
 
-        if (proposalContent != null)
-        {
+        if (proposalContent != null) {
             _context.ProposalContent.Remove(proposalContent);
             _context.SaveChanges();
         }
@@ -148,8 +141,7 @@ public class ProposalController : Controller
             .FirstOrDefault(p => p.ProposalId == id);
         _context.Proposal.Remove(proposal);
 
-        foreach (var proposalContent in proposal.ProposalContent)
-        {
+        foreach (var proposalContent in proposal.ProposalContent) {
             ProposalContentModel proposalContentModel = _context.ProposalContent.Find(
                 proposalContent.ProposalContentId
             );
@@ -166,6 +158,7 @@ public class ProposalController : Controller
             .Include(p => p.Person)
             .Include(pc => pc.ProposalContent)
             .ThenInclude(pc => pc.Item)
+            .ThenInclude(i => i.ItemImageList)
             .FirstOrDefault(pp => pp.ProposalId == id);
 
         ViewBag.ProposalPerson = proposal.Person;

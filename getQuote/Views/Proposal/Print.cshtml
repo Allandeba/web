@@ -55,6 +55,18 @@
                     </tbody>
                 </table>
             </div>
+
+
+        </div>
+
+        <br />
+
+        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+            @foreach (var ProposalContent in Model.ProposalContent)
+            {
+                ItemImageModel image = ProposalContent.Item.GetMainImage();
+                <img id="@(image.ItemImageId)" name="@(image.FileName)" src="data:image/*;base64,@(Convert.ToBase64String(image.ImageFile))" alt="@(image.FileName)" width="@(Const.MAX_IMAGE_WIDTH + " px")" height=" @(Const.MAX_IMAGE_HEIGHT + " px")" />
+            }
         </div>
     </div>
 </section>
