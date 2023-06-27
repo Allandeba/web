@@ -1,0 +1,60 @@
+﻿@model ProposalModel
+
+@{
+    ViewData["Title"] = "Print - " + Model.ProposalId;
+}
+
+<header class="bg-dark py-5">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="text-center text-white">
+            <h1 class="display-4 fw-bolder">@ViewData["Title"]</h1>
+            <p class="lead fw-normal text-white-50 mb-0">Some information</p>
+        </div>
+    </div>
+</header>
+
+<section class="py-5">
+    <div class="container px-4 px-lg-5 mt-5">
+        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+
+            <div class="col-sm-6">
+                <table id="proposalContentTable" class="table">
+                    <thead class="thead-light">
+                        <tr>
+                            <th class="text-center">Proposal Content ID</th>
+                            <th class="text-center">Item ID</th>
+                            <th class="text-center">Item Name</th>
+                            <th class="text-center">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            decimal totalValue = 0;
+                        }
+
+                        @foreach (var proposalContent in ViewBag.ProposalContent)
+                        {
+                            <tr id="proposalContentRow_@proposalContent.ProposalContentId">
+                                <td class="text-center">
+                                    <input type="hidden" asp-for="ItemIdList" value="@proposalContent.Item.ItemId" />
+                                    <span>@proposalContent.ProposalContentId</span>
+                                </td>
+                                <td class="text-center">@proposalContent.Item.ItemId</td>
+                                <td class="text-center">@proposalContent.Item.ItemName</td>
+                                <td class="text-center">R$ @proposalContent.Item.Value</td>
+                            </tr>
+
+                            totalValue += proposalContent.Item.Value;
+                        }
+
+                        <tr>
+                            <td colspan="3" class="text-end fw-bold">Total:</td>
+                            <td class="text-center fw-bold">R$ @totalValue.ToString("0.00")</td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>

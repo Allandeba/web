@@ -160,6 +160,22 @@ public class ProposalController : Controller
         return RedirectToAction(nameof(Index));
     }
 
+    public IActionResult Print(int id)
+    {
+        ProposalModel proposal = _context.Proposal
+            .Include(p => p.Person)
+            .Include(pc => pc.ProposalContent)
+            .ThenInclude(pc => pc.Item)
+            .FirstOrDefault(pp => pp.ProposalId == id);
+
+        ViewBag.ProposalPerson = proposal.Person;
+        ViewBag.ProposalContent = proposal.ProposalContent;
+        ViewBag.People = GetPeople();
+        ViewBag.Items = GetItems();
+
+        return View(proposal);
+    }
+
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {
