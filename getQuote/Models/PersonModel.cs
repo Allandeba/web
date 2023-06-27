@@ -31,6 +31,8 @@ public class PersonModel
     [Required]
     public virtual ContactModel? Contact { get; set; }
 
+    public virtual ICollection<ProposalModel>? Proposal { get; set; }
+
     public string PersonName
     {
         get { return this.FirstName + ' ' + this.LastName; }

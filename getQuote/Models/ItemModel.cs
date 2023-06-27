@@ -3,9 +3,6 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 using SixLabors.ImageSharp.Formats.Jpeg;
-using SixLabors.ImageSharp.Formats.Png;
-using SixLabors.ImageSharp.PixelFormats;
-using static System.Net.Mime.MediaTypeNames;
 using Image = SixLabors.ImageSharp.Image;
 
 namespace getQuote.Models;
@@ -91,6 +88,7 @@ public class ItemModel
     }
 
     public virtual List<ItemImageModel>? ItemImageList { get; set; }
+    public virtual IEnumerable<ProposalContentModel>? ProposalContent { get; set; }
 
     public ItemImageModel GetMainImage()
     {

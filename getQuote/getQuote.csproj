@@ -26,10 +26,12 @@
     <None Remove="DAO\" />
     <None Remove="Views\Home %28copy%29\" />
     <None Remove="Views\Catalog\" />
+    <None Remove="Views\Proposal\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DAO\" />
     <Folder Include="Views\Person\" />
     <Folder Include="Views\Catalog\" />
+    <Folder Include="Views\Proposal\" />
   </ItemGroup>
 </Project>
