@@ -13,60 +13,60 @@
     </div>
 </header>
 
-<section class="py-5">
-    <div class="container px-4 px-lg-5 mt-5">
-        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+<div class="container">
+    <div class="row">
+        <div class="table-responsive mb-4">
+            <table id="proposalContentTable" class="table table-striped">
+                <thead class="thead-light">
+                    <tr>
+                        <th class="text-center">Proposal Content ID</th>
+                        <th class="text-center">Item ID</th>
+                        <th class="text-center">Item Name</th>
+                        <th class="text-center">Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        decimal totalValue = 0;
+                    }
 
-            <div class="col-sm-6">
-                <table id="proposalContentTable" class="table">
-                    <thead class="thead-light">
-                        <tr>
-                            <th class="text-center">Proposal Content ID</th>
-                            <th class="text-center">Item ID</th>
-                            <th class="text-center">Item Name</th>
-                            <th class="text-center">Value</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @{
-                            decimal totalValue = 0;
-                        }
-
-                        @foreach (var proposalContent in ViewBag.ProposalContent)
-                        {
-                            <tr id="proposalContentRow_@proposalContent.ProposalContentId">
-                                <td class="text-center">
-                                    <input type="hidden" asp-for="ItemIdList" value="@proposalContent.Item.ItemId" />
-                                    <span>@proposalContent.ProposalContentId</span>
-                                </td>
-                                <td class="text-center">@proposalContent.Item.ItemId</td>
-                                <td class="text-center">@proposalContent.Item.ItemName</td>
-                                <td class="text-center">R$ @proposalContent.Item.Value</td>
-                            </tr>
-
-                            totalValue += proposalContent.Item.Value;
-                        }
-
-                        <tr>
-                            <td colspan="3" class="text-end fw-bold">Total:</td>
-                            <td class="text-center fw-bold">R$ @totalValue.ToString("0.00")</td>
+                    @foreach (var proposalContent in ViewBag.ProposalContent)
+                    {
+                        <tr id="proposalContentRow_@proposalContent.ProposalContentId">
+                            <td class="text-center">
+                                <input type="hidden" asp-for="ItemIdList" value="@proposalContent.Item.ItemId" />
+                                <span>@proposalContent.ProposalContentId</span>
+                            </td>
+                            <td class="text-center">@proposalContent.Item.ItemId</td>
+                            <td class="text-center">@proposalContent.Item.ItemName</td>
+                            <td class="text-center">R$ @proposalContent.Item.Value</td>
                         </tr>
 
-                    </tbody>
-                </table>
-            </div>
+                        totalValue += proposalContent.Item.Value;
+                    }
 
-
-        </div>
-
-        <br />
-
-        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-            @foreach (var ProposalContent in Model.ProposalContent)
-            {
-                ItemImageModel image = ProposalContent.Item.GetMainImage();
-                <img id="@(image.ItemImageId)" name="@(image.FileName)" src="data:image/*;base64,@(Convert.ToBase64String(image.ImageFile))" alt="@(image.FileName)" width="@(Const.MAX_IMAGE_WIDTH + " px")" height=" @(Const.MAX_IMAGE_HEIGHT + " px")" />
-            }
+                    <tr>
+                        <td colspan="3" class="text-end fw-bold">Total:</td>
+                        <td class="text-center fw-bold">R$ @totalValue.ToString("0.00")</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
-</section>
+
+    <hr class="my-4">
+    <div class="text-center text-black">
+        <h1 class="display-4 fw-bolder">Catalog</h1>
+    </div>
+    <hr class="my-4">
+
+    <div class="row justify-content-center">
+        @foreach (var ProposalContent in Model.ProposalContent)
+        {
+            ItemImageModel image = ProposalContent.Item.GetMainImage();
+            <div class="col-6 col-md-4 col-lg-3">
+                <img id="@(image.ItemImageId)" name="@(image.FileName)" src="data:image/*;base64,@(Convert.ToBase64String(image.ImageFile))" alt="@(image.FileName)" class="img-fluid" />
+            </div>
+        }
+    </div>
+</div>

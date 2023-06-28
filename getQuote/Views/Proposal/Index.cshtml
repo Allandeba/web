@@ -4,51 +4,56 @@
     ViewData["Title"] = "Proposal Page";
 }
 
-<section class="py-5 text-center container">
-    <div class="row py-lg-5">
-        <div class="col-lg-6 col-md-8 mx-auto">
-            <h1 class="fw-light">Proposal</h1>
-            <p class="lead text-body-secondary">For more informations, click into the Proposals below.</p>
+<section class="py-5 text-center">
+    <div class="container">
+        <div class="row py-lg-5">
+            <div class="col-lg-6 col-md-8 mx-auto">
+                <h1 class="fw-light">Proposal</h1>
+                <p class="lead text-muted">For more information, click on the proposals below.</p>
+            </div>
         </div>
 
-        @Html.ActionLink("Add", "Create")
+        <div class="col-lg-6 col-md-8 mx-auto mt-4 mt-md-0 d-flex justify-content-end">
+            <button class="btn btn-primary" onclick="location.href='@Url.Action("Create")'">Add</button>
+        </div>
     </div>
 </section>
 
-<div class="d-flex flex-column flex-md-row p-4 gap-4 py-md-5 align-items-center justify-content-center">
-    <div class="list-group">
-        @foreach (var Proposal in Model)
-        {
-            <div class="d-flex justify-content-end">
-                <a asp-controller="Proposal" asp-action="Print" asp-route-id="@Proposal.ProposalId">
-                    <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
-                        <path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zM432 248a24 24 0 1 1 0 48 24 24 0 1 1 0-48z" />
-                    </svg>
-                </a>
-            </div>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8">
+            <div class="list-group">
+                @foreach (var proposal in Model)
+                {
+                    <div class="list-group-item list-group-item-action d-flex gap-3 py-3">
+                        <a asp-controller="Proposal" asp-action="Delete" asp-route-id="@proposal.ProposalId" class="close position-absolute top-0 start-0 translate-middle badge rounded-circle bg-danger p-2 opacity-75 text-decoration-none" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </a>
 
-            <span class="list-group-item list-group-item-action border-0 gap-3 py-2">
-                <a asp-controller="Proposal" asp-action="Delete" asp-route-id="@Proposal.ProposalId"
-                   onmouseover="this.style.opacity = '1'"
-                   onmouseout="this.style.opacity = '0.75'"
-                   class="close position-absolute top-5 start-0 translate-middle badge border border-light rounded-circle bg-danger p-2 opacity-75 text-decoration-none" aria-label="Close">
+                        <a asp-controller="Proposal" asp-action="Update" asp-route-id="@proposal.ProposalId" class="d-flex align-items-center w-100 text-decoration-none text-dark">
+                            <img src="https://cdn-icons-png.flaticon.com/512/64/64572.png" alt="user icon" width="32" height="32" class="rounded-circle flex-shrink-0">
 
-                    <span aria-hidden="true">&times;</span>
-                </a>
+                            <div class="flex-grow-1 ms-3">
+                                <h6 class="mb-0">@proposal.Person.PersonName - @proposal.ProposalId</h6>
+                                <p class="mb-0 opacity-75">Some useful information.</p>
+                            </div>
 
-                <a asp-controller="Proposal" asp-action="Update" asp-route-id="@Proposal.ProposalId" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
-                    <img src="https://cdn-icons-png.flaticon.com/512/64/64572.png" alt="user icon" width="32" height="32" class="rounded-circle flex-shrink-0">
+                            <div class="d-flex flex-column align-items-end">
+                                <span class="text-muted">Modified</span>
+                                <small class="opacity-50 text-nowrap">@proposal.ModificationDate.ToString("dd/MM/yyyy")</small>
+                            </div>
+                        </a>
 
-                    <div class="d-flex gap-2 w-100 justify-content-between">
-                        <div>
-                            <h6 class="mb-0">@Proposal.Person.PersonName - @Proposal.ProposalId</h6>
-                            <p class="mb-0 opacity-75">Some useful information.</p>
+                        <div class="d-flex justify-content-end">
+                            <a asp-controller="Proposal" asp-action="Print" asp-route-id="@proposal.ProposalId" class="text-decoration-none">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
+                                    <path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zM432 248a24 24 0 1 1 0 48 24 24 0 1 1 0-48z" />
+                                </svg>
+                            </a>
                         </div>
-
-                        <small class="opacity-50 text-nowrap">@Proposal.ModificationDate.ToString("dd/MM/yyyy")</small>
                     </div>
-                </a>
-            </span>
-        }
+                }
+            </div>
+        </div>
     </div>
 </div>
