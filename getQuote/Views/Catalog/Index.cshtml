@@ -15,17 +15,15 @@
 
 <section class="py-5">
     <div class="container px-4 px-lg-5 mt-5">
-        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 justify-content-center">
 
             @foreach (var item in Model)
             {
-                <div class="col mb-5">
+                <div class="col mb-4">
                     <div class="card h-100">
-
                         @if (item.GetMainImage != null)
                         {
                             <img class="card-img-top" src="data:image/*;base64,@(Convert.ToBase64String(item.GetMainImage().ImageFile))" alt="@(item.GetMainImage().FileName)" />
-
                         }
                         @if (item.ItemImageList.FindAll(a => a.Main == false) != null)
                         {
@@ -38,14 +36,11 @@
                                 }
                             </div>
                         }
-
                         <div class="card-body p-4">
                             <div class="text-center">
-
                                 <h5 class="fw-bolder">@item.ItemName</h5>
                                 <p class="fw-light">@item.Description</p>
-
-                                R$ @item.Value
+                                <p class="fw-bold">R$ @item.Value</p>
                             </div>
                         </div>
                     </div>
