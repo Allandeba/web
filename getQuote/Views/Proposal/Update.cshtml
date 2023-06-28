@@ -10,10 +10,10 @@
 }
 
 <script>
-    document.addEventListener('DOMContentLoaded', () => {
-    let personList = document.getElementById('ProposalPersonId');
-    personList.value = @ViewBag.ProposalPerson.PersonId;
-});
+        document.addEventListener('DOMContentLoaded', () => {
+        let personList = document.getElementById('ProposalPersonId');
+        personList.value = @ViewBag.ProposalPerson.PersonId;
+    });
 </script>
 
 <div class="container">
@@ -47,10 +47,15 @@
                                 <th class="text-center">Proposal Content ID</th>
                                 <th class="text-center">Item ID</th>
                                 <th class="text-center">Item Name</th>
+                                <th class="text-center">Value</th>
                                 <th class="text-center">Actions</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="table-rows">
+                            @{
+                                decimal totalValue = 0;
+                            }
+
                             @foreach (var proposalContent in ViewBag.ProposalContent)
                             {
                                 <tr id="proposalContentRow_@proposalContent.ProposalContentId">
@@ -60,6 +65,7 @@
                                     </td>
                                     <td class="text-center">@proposalContent.Item.ItemId</td>
                                     <td class="text-center">@proposalContent.Item.ItemName</td>
+                                    <td id="item-value" class="text-center">R$ @proposalContent.Item.Value</td>
                                     <td class="text-center">
                                         <span class="delete-icon" onclick="deleteItem(@proposalContent.ProposalContentId, @proposalContent.Item.ItemId)">
                                             <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512">
@@ -73,7 +79,14 @@
                                         </span>
                                     </td>
                                 </tr>
+
+                                totalValue += proposalContent.Item.Value;
                             }
+
+                            <tr>
+                                <td colspan="3" class="text-end fw-bold">Total:</td>
+                                <td id="total-value-cell" class="text-center fw-bold">R$ @totalValue.ToString("0.00")</td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
