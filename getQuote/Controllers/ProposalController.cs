@@ -27,8 +27,9 @@ public class ProposalController : Controller
 
     public IActionResult Create()
     {
-        ViewBag.People = GetPeople();
-        ViewBag.Items = GetItems();
+        ViewBag.People = GetSelectListPeople();
+        ViewBag.Items = GetSelectListItems();
+        ViewBag.ItemsFull = GetItemList();
 
         return View();
     }
@@ -67,8 +68,10 @@ public class ProposalController : Controller
 
         ViewBag.ProposalPerson = proposal.Person;
         ViewBag.ProposalContent = proposal.ProposalContent;
-        ViewBag.People = GetPeople();
-        ViewBag.Items = GetItems();
+        ViewBag.People = GetSelectListPeople();
+        ViewBag.Items = GetSelectListItems();
+
+        ViewBag.ItemsFull = GetItemList();
 
         return View(proposal);
     }
@@ -171,8 +174,8 @@ public class ProposalController : Controller
 
         ViewBag.ProposalPerson = proposal.Person;
         ViewBag.ProposalContent = proposal.ProposalContent;
-        ViewBag.People = GetPeople();
-        ViewBag.Items = GetItems();
+        ViewBag.People = GetSelectListPeople();
+        ViewBag.Items = GetSelectListItems();
 
         return View(proposal);
     }
@@ -185,7 +188,16 @@ public class ProposalController : Controller
         );
     }
 
-    public SelectList GetPeople() => new SelectList(_context.Person, "PersonId", "PersonName");
+    public SelectList GetSelectListPeople() => new SelectList(_context.Person, "PersonId", "PersonName");
 
-    private SelectList GetItems() => new SelectList(_context.Item, "ItemId", "ItemName");
+    private SelectList GetSelectListItems() => new SelectList(_context.Item, "ItemId", "ItemName");
+
+    private List<dynamic> GetItemList() 
+    {
+        return _context.Item.Select(i => new {
+            ItemId = i.ItemId,
+            ItemName = i.ItemName,
+            Value = i.Value,
+        }).ToList<dynamic>();
+    }
 }

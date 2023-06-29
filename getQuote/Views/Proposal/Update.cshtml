@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Update - " + Model.ProposalId;
+    string itemsJson = Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.ItemsFull);
 }
 
 @section Scripts
@@ -10,7 +11,9 @@
 }
 
 <script>
-        document.addEventListener('DOMContentLoaded', () => {
+    var items = @Html.Raw(itemsJson);
+
+    document.addEventListener('DOMContentLoaded', () => {
         let personList = document.getElementById('ProposalPersonId');
         personList.value = @ViewBag.ProposalPerson.PersonId;
     });
