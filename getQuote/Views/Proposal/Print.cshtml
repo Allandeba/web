@@ -19,9 +19,9 @@
             <table id="proposalContentTable" class="table table-striped">
                 <thead class="thead-light">
                     <tr>
-                        <th class="text-center">Proposal Content ID</th>
                         <th class="text-center">Item ID</th>
                         <th class="text-center">Item Name</th>
+                        <th class="text-center">Description</th>
                         <th class="text-center">Value</th>
                     </tr>
                 </thead>
@@ -33,12 +33,9 @@
                     @foreach (var proposalContent in ViewBag.ProposalContent)
                     {
                         <tr id="proposalContentRow_@proposalContent.ProposalContentId">
-                            <td class="text-center">
-                                <input type="hidden" asp-for="ItemIdList" value="@proposalContent.Item.ItemId" />
-                                <span>@proposalContent.ProposalContentId</span>
-                            </td>
                             <td class="text-center">@proposalContent.Item.ItemId</td>
                             <td class="text-center">@proposalContent.Item.ItemName</td>
+                            <td class="text-center">@proposalContent.Item.Description</td>
                             <td class="text-center">R$ @proposalContent.Item.Value</td>
                         </tr>
 
