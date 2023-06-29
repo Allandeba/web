@@ -20,7 +20,7 @@ public class ProposalController : Controller
 
     public IActionResult Index()
     {
-        List<ProposalModel> proposals = _context.Proposal.Include(a => a.Person).ToList();
+        List<ProposalModel> proposals = _context.Proposal.OrderByDescending(a => a.ProposalId).Include(a => a.Person).ToList();
         return View(proposals);
     }
 

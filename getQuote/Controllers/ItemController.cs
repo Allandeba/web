@@ -17,7 +17,7 @@ public class ItemController : Controller
 
     public IActionResult Index()
     {
-        List<ItemModel> items = _context.Item.ToList();
+        List<ItemModel> items = _context.Item.OrderByDescending(a => a.ItemId).ToList();
         return View(items);
     }
 
