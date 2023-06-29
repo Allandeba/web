@@ -4,6 +4,36 @@
     ViewData["Title"] = "Print - " + Model.ProposalId;
 }
 
+<script>
+    function gerarPDF() {
+        // Hidde elements
+        let header = document.getElementsByTagName("header")[0];
+        console.log('header = ', header)
+        const HEADER_STYLE = header.style.display;
+        header.style.display = 'none';
+        
+        let footer = document.getElementsByTagName("footer")[0];
+        const FOOTER_STYLE = footer.style.display;
+        footer.style.display = 'none';
+
+        let btnGerarPDF = document.getElementById("btnGerarPDF");
+        const BTN_GERAR_PDF_STYLE = btnGerarPDF.style.display;
+        btnGerarPDF.style.display = 'none';
+
+        window.print();
+
+        // Show elements
+        header.style.display = HEADER_STYLE;
+        footer.style.display = FOOTER_STYLE;
+        btnGerarPDF.style.display = BTN_GERAR_PDF_STYLE;
+
+    };
+</script>
+
+<div class="d-flex justify-content-center">
+    <button id="btnGerarPDF" onclick="gerarPDF()" class="btn btn-primary">GERAR PDF</button>
+</div>
+
 <header class="bg-dark py-5">
     <div class="container px-4 px-lg-5 my-5">
         <div class="text-center text-white">
@@ -30,7 +60,7 @@
                         decimal totalValue = 0;
                     }
 
-                    @foreach (var proposalContent in ViewBag.ProposalContent)
+                    @foreach (var proposalContent in Model.ProposalContent)
                     {
                         <tr id="proposalContentRow_@proposalContent.ProposalContentId">
                             <td class="text-center">@proposalContent.Item.ItemId</td>

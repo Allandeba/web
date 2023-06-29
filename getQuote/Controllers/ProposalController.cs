@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using getQuote.Models;
 using getQuote.DAO;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace getQuote.Controllers;
@@ -165,18 +164,7 @@ public class ProposalController : Controller
 
     public IActionResult Print(int id)
     {
-        ProposalModel proposal = _context.Proposal
-            .Include(p => p.Person)
-            .Include(pc => pc.ProposalContent)
-            .ThenInclude(pc => pc.Item)
-            .ThenInclude(i => i.ItemImageList)
-            .FirstOrDefault(pp => pp.ProposalId == id);
-
-        ViewBag.ProposalPerson = proposal.Person;
-        ViewBag.ProposalContent = proposal.ProposalContent;
-        ViewBag.People = GetSelectListPeople();
-        ViewBag.Items = GetSelectListItems();
-
+        ProposalModel proposal = GetProposal(id);
         return View(proposal);
     }
 
@@ -192,12 +180,22 @@ public class ProposalController : Controller
 
     private SelectList GetSelectListItems() => new SelectList(_context.Item, "ItemId", "ItemName");
 
-    private List<dynamic> GetItemList() 
+    private List<dynamic> GetItemList()
     {
         return _context.Item.Select(i => new {
             ItemId = i.ItemId,
             ItemName = i.ItemName,
             Value = i.Value,
         }).ToList<dynamic>();
+    }
+
+    private ProposalModel GetProposal(int id)
+    {
+        return _context.Proposal
+            .Include(p => p.Person)
+            .Include(pc => pc.ProposalContent)
+            .ThenInclude(pc => pc.Item)
+            .ThenInclude(i => i.ItemImageList)
+            .FirstOrDefault(pp => pp.ProposalId == id);
     }
 }

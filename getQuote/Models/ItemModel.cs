@@ -21,7 +21,7 @@ public class ItemModel
     [Display(Name = "Value")]
     [DataType(DataType.Currency)]
     [Precision(18, 2)]
-    public decimal? Value { get; set; }
+    public decimal Value { get; set; } = 0;
 
     [Required]
     [Display(Name = "Description")]
