@@ -23,7 +23,7 @@ public class PersonController : Controller
 
     public IActionResult Index()
     {
-        List<PersonModel> people = _context.Person.ToList();
+        List<PersonModel> people = _context.Person.OrderByDescending(a => a.PersonId).ToList();
         return View(people);
     }
 
