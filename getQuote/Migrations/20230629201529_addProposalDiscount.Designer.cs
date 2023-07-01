@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using getQuote.DAO;
 
@@ -10,9 +11,11 @@ using getQuote.DAO;
 namespace getQuote.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    partial class ApplicationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20230629201529_addProposalDiscount")]
+    partial class addProposalDiscount
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -83,10 +86,9 @@ namespace getQuote.Migrations
                         .HasColumnType("varchar(100)");
 
                     b.Property<byte[]>("ImageFile")
-                        .IsRequired()
                         .HasColumnType("longblob");
 
-                    b.Property<int>("ItemId")
+                    b.Property<int?>("ItemId")
                         .HasColumnType("int");
 
                     b.Property<bool>("Main")
@@ -218,9 +220,7 @@ namespace getQuote.Migrations
                 {
                     b.HasOne("getQuote.Models.ItemModel", "Item")
                         .WithMany("ItemImageList")
-                        .HasForeignKey("ItemId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ItemId");
 
                     b.Navigation("Item");
                 });

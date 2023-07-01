@@ -34,6 +34,12 @@
                     </select>
                 </div>
 
+                <div class="mb-3 text-start">
+                    <label asp-for="Discount" class="form-label"></label>
+                    <input id="discount" asp-for="Discount" type="number" onchange="calculateTotalValue()" class="form-control" placeholder="">
+                    <span asp-validation-for="Discount" class="text-danger"></span>
+                </div>
+
                 <hr class="my-4">
 
                 <div class="table-responsive mb-4">

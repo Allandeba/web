@@ -12,15 +12,20 @@ public class ProposalModel
 
     [Display(Name = "Modification date")]
     [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "dd/MM/yyyy")]
-    public DateTime ModificationDate { get; set; }
+    public DateTime ModificationDate { get; set; } = DateTime.MinValue;
+
+    [Display(Name = "Discount")]
+    [DataType(DataType.Currency)]
+    [Precision(18, 2)]
+    public Decimal Discount { get; set; } = 0;
 
     [NotMapped]
     [Display(Name = "Items")]
-    public int[]? ItemIdList { get; set; }
+    public int[] ItemIdList { get; set; } = new int[0];
 
     [NotMapped]
     [Display(Name = "Person")]
-    public int? ProposalPersonId { get; set; }
+    public int ProposalPersonId { get; set; } = 0;
 
     public virtual PersonModel? Person { get; set; }
     public virtual List<ProposalContentModel>? ProposalContent { get; set; }
@@ -32,6 +37,7 @@ public class ProposalModel
         {
             proposalContentIdList.Add(ProposalContent.ProposalContentId);
         }
+
         return proposalContentIdList;
     }
 }

@@ -1,5 +1,9 @@
 ﻿const NEW_PROPOSAL_CONTENT_ID = 0;
 
+function getDiscountElement() {
+  return document.getElementById('discount');
+}
+
 function getItemList() {
   return document.getElementById('ItemList');
 }
@@ -157,6 +161,7 @@ function calculateTotalValue() {
     }
   }
 
+  totalValue -= getDiscountElement().value;
   totalValueCell.textContent = 'R$ ' + totalValue.toFixed(2);
 }
 
@@ -172,3 +177,19 @@ function deleteItem(proposalContentId, itemId) {
     }
   }
 }
+
+function setPerson() {
+  if (typeof selectPersonId === 'undefined' || selectPersonId === null) return;
+
+  let personList = document.getElementById('ProposalPersonId');
+  personList.value = selectPersonId;
+}
+
+function setDiscount() {
+  calculateTotalValue();
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  setPerson();
+  setDiscount();
+});

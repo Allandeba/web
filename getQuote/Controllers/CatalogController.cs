@@ -19,7 +19,10 @@ public class CatalogController : Controller
 
     public IActionResult Index()
     {
-        List<ItemModel> items = _context.Item.Include(i => i.ItemImageList).OrderByDescending(a => a.ItemImageList.Count > 1).ToList();
+        List<ItemModel> items = _context.Item
+            .Include(i => i.ItemImageList)
+            .OrderByDescending(a => a.ItemImageList.Count > 1)
+            .ToList();
         return View(items);
     }
 

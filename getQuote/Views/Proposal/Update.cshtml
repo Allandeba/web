@@ -11,12 +11,8 @@
 }
 
 <script>
-    var items = @Html.Raw(itemsJson);
-
-    document.addEventListener('DOMContentLoaded', () => {
-        let personList = document.getElementById('ProposalPersonId');
-        personList.value = @ViewBag.ProposalPerson.PersonId;
-    });
+    let items = @Html.Raw(itemsJson);
+    let selectPersonId = @ViewBag.ProposalPerson.PersonId;
 </script>
 
 <div class="container">
@@ -39,6 +35,12 @@
                     <select id="ItemList" class="form-select" asp-items="@ViewBag.Items" onchange="javascript:selectionChange(this)">
                         <option value="@((int)SelectDefault.None)">@(SelectDefault.None.ToString())</option>
                     </select>
+                </div>
+
+                <div class="mb-3 text-start">
+                    <label asp-for="Discount" class="form-label"></label>
+                    <input id="discount" asp-for="Discount" type="number" onchange="calculateTotalValue()" class="form-control" placeholder="">
+                    <span asp-validation-for="Discount" class="text-danger"></span>
                 </div>
 
                 <hr class="my-4">
@@ -88,7 +90,7 @@
 
                             <tr>
                                 <td colspan="3" class="text-end fw-bold">Total:</td>
-                                <td id="total-value-cell" class="text-center fw-bold">R$ @totalValue.ToString("0.00")</td>
+                                <td id="total-value-cell" class="text-center fw-bold">R$ @((totalValue - Model.Discount).ToString("0.00"))</td>
                             </tr>
                         </tbody>
                     </table>
