@@ -21,9 +21,9 @@ public class ItemImageModel
     public string FileName { get; set; } = String.Empty;
 
     [Display(Name = "Upload Image")]
-    public byte[]? ImageFile { get; set; }
+    public byte[] ImageFile { get; set; } = new byte[0];
 
     [ForeignKey("ItemId")]
-    public int? ItemId { get; set; }
+    public int ItemId { get; set; }
     public virtual ItemModel? Item { get; set; }
 }

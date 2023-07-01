@@ -14,16 +14,16 @@ public class PersonModel
     [Required]
     [Display(Name = "First name")]
     [MaxLength(50)]
-    public string? FirstName { get; set; }
+    public string FirstName { get; set; } = string.Empty;
 
     [Required]
     [Display(Name = "Last name")]
     [MaxLength(100)]
-    public string? LastName { get; set; }
+    public string LastName { get; set; } = string.Empty;
 
     [Display(Name = "Creation date")]
     [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "dd/MM/yyyy")]
-    public DateTime CreationDate { get; set; }
+    public DateTime CreationDate { get; set; } = DateTime.MinValue;
 
     [Required]
     public virtual DocumentModel? Document { get; set; }
@@ -31,7 +31,7 @@ public class PersonModel
     [Required]
     public virtual ContactModel? Contact { get; set; }
 
-    public virtual ICollection<ProposalModel>? Proposal { get; set; }
+    public virtual List<ProposalModel>? Proposal { get; set; }
 
     public string PersonName
     {

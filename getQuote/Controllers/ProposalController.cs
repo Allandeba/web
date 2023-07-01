@@ -20,16 +20,16 @@ public class ProposalController : Controller
 
     public IActionResult Index()
     {
-        List<ProposalModel> proposals = _context.Proposal.OrderByDescending(a => a.ProposalId).Include(a => a.Person).ToList();
+        List<ProposalModel> proposals = _context.Proposal
+            .OrderByDescending(a => a.ProposalId)
+            .Include(a => a.Person)
+            .ToList();
         return View(proposals);
     }
 
     public IActionResult Create()
     {
-        ViewBag.People = GetSelectListPeople();
-        ViewBag.Items = GetSelectListItems();
-        ViewBag.ItemsFull = GetItemList();
-
+        PopulateViewBagDefault();
         return View();
     }
 
@@ -38,6 +38,7 @@ public class ProposalController : Controller
     {
         if (!ModelState.IsValid)
         {
+            PopulateViewBagDefault();
             return Task.FromResult<IActionResult>(View(Proposal));
         }
 
@@ -54,6 +55,7 @@ public class ProposalController : Controller
 
         _context.Proposal.Add(Proposal);
         _context.SaveChanges();
+
         return Task.FromResult<IActionResult>(RedirectToAction(nameof(Index)));
     }
 
@@ -65,12 +67,7 @@ public class ProposalController : Controller
             .ThenInclude(pc => pc.Item)
             .FirstOrDefault(pp => pp.ProposalId == id);
 
-        ViewBag.ProposalPerson = proposal.Person;
-        ViewBag.ProposalContent = proposal.ProposalContent;
-        ViewBag.People = GetSelectListPeople();
-        ViewBag.Items = GetSelectListItems();
-
-        ViewBag.ItemsFull = GetItemList();
+        PopulateViewBagUpdate(proposal);
 
         return View(proposal);
     }
@@ -80,6 +77,7 @@ public class ProposalController : Controller
     {
         if (!ModelState.IsValid)
         {
+            PopulateViewBagUpdate(proposal);
             return Task.FromResult<IActionResult>(View(proposal));
         }
 
@@ -176,17 +174,24 @@ public class ProposalController : Controller
         );
     }
 
-    public SelectList GetSelectListPeople() => new SelectList(_context.Person, "PersonId", "PersonName");
+    public SelectList GetSelectListPeople() =>
+        new SelectList(_context.Person, "PersonId", "PersonName");
 
     private SelectList GetSelectListItems() => new SelectList(_context.Item, "ItemId", "ItemName");
 
     private List<dynamic> GetItemList()
     {
-        return _context.Item.Select(i => new {
-            ItemId = i.ItemId,
-            ItemName = i.ItemName,
-            Value = i.Value,
-        }).ToList<dynamic>();
+        return _context.Item
+            .Select(
+                i =>
+                    new
+                    {
+                        ItemId = i.ItemId,
+                        ItemName = i.ItemName,
+                        Value = i.Value,
+                    }
+            )
+            .ToList<dynamic>();
     }
 
     private ProposalModel GetProposal(int id)
@@ -197,5 +202,19 @@ public class ProposalController : Controller
             .ThenInclude(pc => pc.Item)
             .ThenInclude(i => i.ItemImageList)
             .FirstOrDefault(pp => pp.ProposalId == id);
+    }
+
+    private void PopulateViewBagUpdate(ProposalModel proposal)
+    {
+        ViewBag.ProposalPerson = proposal.Person;
+        ViewBag.ProposalContent = proposal.ProposalContent;
+        PopulateViewBagDefault();
+    }
+
+    private void PopulateViewBagDefault()
+    {
+        ViewBag.People = GetSelectListPeople();
+        ViewBag.Items = GetSelectListItems();
+        ViewBag.ItemsFull = GetItemList();
     }
 }

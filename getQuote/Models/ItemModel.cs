@@ -15,7 +15,7 @@ public class ItemModel
     [Required]
     [Display(Name = "Item name")]
     [MaxLength(50)]
-    public string? ItemName { get; set; }
+    public string ItemName { get; set; } = String.Empty;
 
     [Required]
     [Display(Name = "Value")]
@@ -31,11 +31,11 @@ public class ItemModel
     [NotMapped]
     [Display(Name = "Upload Image")]
     [DataType(DataType.Upload)]
-    public List<IFormFile>? ImageFiles { get; set; }
+    public List<IFormFile> ImageFiles { get; set; } = new();
 
     [NotMapped]
     [Display(Name = "Default image")]
-    public String? DefaultImage { get; set; }
+    public String DefaultImage { get; set; } = String.Empty;
 
     public void SetItemImageList()
     {
@@ -88,7 +88,7 @@ public class ItemModel
     }
 
     public virtual List<ItemImageModel>? ItemImageList { get; set; }
-    public virtual IEnumerable<ProposalContentModel>? ProposalContent { get; set; }
+    public virtual List<ProposalContentModel>? ProposalContent { get; set; }
 
     public ItemImageModel GetMainImage()
     {
