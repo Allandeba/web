@@ -25,9 +25,9 @@ public class ProposalModel
 
     [NotMapped]
     [Display(Name = "Person")]
-    public int ProposalPersonId { get; set; } = 0;
-
+    public int? PersonId { get; set; } = 0;
     public virtual PersonModel? Person { get; set; }
+
     public virtual List<ProposalContentModel>? ProposalContent { get; set; }
 
     public List<int> GetIdProposalContentList()

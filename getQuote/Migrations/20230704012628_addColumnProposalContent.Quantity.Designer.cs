@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using getQuote.DAO;
 
@@ -10,9 +11,11 @@ using getQuote.DAO;
 namespace getQuote.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    partial class ApplicationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20230704012628_addColumnProposalContent.Quantity")]
+    partial class addColumnProposalContentQuantity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -156,7 +159,7 @@ namespace getQuote.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int?>("ItemId1")
+                    b.Property<int?>("ItemId")
                         .HasColumnType("int");
 
                     b.Property<int?>("ProposalId")
@@ -167,7 +170,7 @@ namespace getQuote.Migrations
 
                     b.HasKey("ProposalContentId");
 
-                    b.HasIndex("ItemId1");
+                    b.HasIndex("ItemId");
 
                     b.HasIndex("ProposalId");
 
@@ -189,12 +192,12 @@ namespace getQuote.Migrations
                         .HasColumnType("timestamp")
                         .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
-                    b.Property<int?>("PersonId1")
+                    b.Property<int?>("PersonId")
                         .HasColumnType("int");
 
                     b.HasKey("ProposalId");
 
-                    b.HasIndex("PersonId1");
+                    b.HasIndex("PersonId");
 
                     b.ToTable("Proposal");
                 });
@@ -232,7 +235,7 @@ namespace getQuote.Migrations
                 {
                     b.HasOne("getQuote.Models.ItemModel", "Item")
                         .WithMany("ProposalContent")
-                        .HasForeignKey("ItemId1");
+                        .HasForeignKey("ItemId");
 
                     b.HasOne("getQuote.Models.ProposalModel", "Proposal")
                         .WithMany("ProposalContent")
@@ -247,7 +250,7 @@ namespace getQuote.Migrations
                 {
                     b.HasOne("getQuote.Models.PersonModel", "Person")
                         .WithMany("Proposal")
-                        .HasForeignKey("PersonId1");
+                        .HasForeignKey("PersonId");
 
                     b.Navigation("Person");
                 });

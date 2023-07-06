@@ -20,11 +20,11 @@
             @using (Html.BeginForm("Create", "Proposal", FormMethod.Post, new { @class = "needs-validation" }))
             {
                 <div class="mb-3 text-start">
-                    <label asp-for="ProposalPersonId" class="form-label"></label>
-                    <select asp-for="ProposalPersonId" class="form-select" asp-items="@ViewBag.People">
+                    <label asp-for="PersonId" class="form-label"></label>
+                    <select asp-for="PersonId" class="form-select" asp-items="@ViewBag.People">
                         <option value="@(SelectDefault.None)">@(SelectDefault.None.ToString())</option>
                     </select>
-                    <span asp-validation-for="ProposalPersonId" class="text-danger"></span>
+                    <span asp-validation-for="PersonId" class="text-danger"></span>
                 </div>
 
                 <div class="mb-3 text-start">
@@ -50,10 +50,11 @@
                                 <th class="text-center">Item ID</th>
                                 <th class="text-center">Item Name</th>
                                 <th class="text-center">Value</th>
+                                <th class="text-center">Quantity</th>
                                 <th class="text-center">Actions</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="table-rows">
                             @*dinamically*@
                             <tr>
                                 <td colspan="3" class="text-end fw-bold">Total:</td>

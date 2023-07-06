@@ -17,16 +17,22 @@ function getProposalContentTable() {
   return document.getElementById('proposalContentTable');
 }
 
+function getActualRow() {
+  return document.getElementById('table-rows').rows.length - 2; // nesse momento precisa ser -2 pois a ultima row é esse registro
+}
+
 function addProposalContentCellClasses(cell) {
   cell.classList.add('text-center');
 }
 
 function setProposalContentIdContent(proposalContentIdCell) {
-  let itemList = getItemList();
-  let input = '<input type="hidden" name="ItemIdList" value="' + itemList.value + '" />';
+  let inputProposalContentId =
+    '<input type="hidden" name="ProposalContent[' + getActualRow() + '].ProposalContentId" value="' + NEW_PROPOSAL_CONTENT_ID + '" />';
+  let inputITemId = '<input type="hidden" name="ProposalContent[' + getActualRow() + '].ItemId" value="' + getItemList().value + '" />';
+
   let span = '<span>' + NEW_PROPOSAL_CONTENT_ID + '</span>';
 
-  proposalContentIdCell.innerHTML = input + span;
+  proposalContentIdCell.innerHTML = inputProposalContentId + inputITemId + span;
 }
 
 function setProposalContentItemIdContent(itemIdCell) {
@@ -50,6 +56,18 @@ function setProposalContentValueContent(valueCell) {
   }
   valueCell.id = 'item-value';
 }
+function setProposalContentQuantityContent(quantityCell) {
+  let input = document.createElement('input');
+  addProposalContentCellClasses(input);
+  input.id = 'item-quantity';
+  input.value = '1';
+  input.name = 'ProposalContent[' + getActualRow() + '].Quantity';
+  input.addEventListener('change', function () {
+    calculateTotalValue();
+  });
+
+  quantityCell.appendChild(input);
+}
 
 function setProposalContentActionContent(actionsCell) {
   let itemList = getItemList();
@@ -71,17 +89,20 @@ function createProposalContentCells(proposalContentRow) {
   let itemIdCell = proposalContentRow.insertCell();
   let itemNameCell = proposalContentRow.insertCell();
   let valueCell = proposalContentRow.insertCell();
+  let quantityCell = proposalContentRow.insertCell();
   let actionsCell = proposalContentRow.insertCell();
 
   addProposalContentCellClasses(proposalContentIdCell);
   addProposalContentCellClasses(itemIdCell);
   addProposalContentCellClasses(itemNameCell);
+  addProposalContentCellClasses(quantityCell);
   addProposalContentCellClasses(valueCell);
   addProposalContentCellClasses(actionsCell);
 
   setProposalContentIdContent(proposalContentIdCell);
   setProposalContentItemIdContent(itemIdCell);
   setProposalContentItemNameContent(itemNameCell);
+  setProposalContentQuantityContent(quantityCell);
   setProposalContentValueContent(valueCell);
   setProposalContentActionContent(actionsCell);
 
@@ -157,6 +178,12 @@ function calculateTotalValue() {
     let itemValueCell = row.querySelector('#item-value');
     if (itemValueCell) {
       let itemValue = parseFloat(itemValueCell.textContent.replace('R$ ', ''));
+
+      let itemQuantityCell = row.querySelector('#item-quantity');
+      if (itemQuantityCell) {
+        itemValue *= itemQuantityCell.value;
+      }
+
       totalValue += itemValue;
     }
   }
@@ -181,7 +208,7 @@ function deleteItem(proposalContentId, itemId) {
 function setPerson() {
   if (typeof selectPersonId === 'undefined' || selectPersonId === null) return;
 
-  let personList = document.getElementById('ProposalPersonId');
+  let personList = document.getElementById('PersonId');
   personList.value = selectPersonId;
 }
 
@@ -193,3 +220,11 @@ document.addEventListener('DOMContentLoaded', () => {
   setPerson();
   setDiscount();
 });
+
+function onChangeItemQuantity(e) {
+  if (e) {
+    if (e.value <= 0) {
+      e.value = 1;
+    }
+  }
+}

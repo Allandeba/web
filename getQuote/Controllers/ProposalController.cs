@@ -42,15 +42,13 @@ public class ProposalController : Controller
             return Task.FromResult<IActionResult>(View(Proposal));
         }
 
-        var person = _context.Person.Find(Proposal.ProposalPersonId);
+        var person = _context.Person.Find(Proposal.PersonId);
         Proposal.Person = person;
 
-        Proposal.ProposalContent = new();
-        foreach (var itemId in Proposal.ItemIdList)
+        foreach (var ProposalContent in Proposal.ProposalContent)
         {
-            var item = _context.Item.Find(itemId);
-            var proposalContent = new ProposalContentModel { Item = item };
-            Proposal.ProposalContent.Add(proposalContent);
+            ItemModel? item = _context.Item.Find(ProposalContent.ItemId);
+            ProposalContent.Item = item;
         }
 
         _context.Proposal.Add(Proposal);
@@ -81,16 +79,13 @@ public class ProposalController : Controller
             return Task.FromResult<IActionResult>(View(proposal));
         }
 
-        var person = _context.Person.Find(proposal.ProposalPersonId);
+        var person = _context.Person.Find(proposal.PersonId);
         proposal.Person = person;
 
-        proposal.ProposalContent = new();
-        foreach (var itemId in proposal.ItemIdList)
+        foreach (var ProposalContent in proposal.ProposalContent)
         {
-            var item = _context.Item.FirstOrDefault(i => i.ItemId == itemId);
-
-            var proposalContent = new ProposalContentModel { Item = item };
-            proposal.ProposalContent.Add(proposalContent);
+            var item = _context.Item.FirstOrDefault(i => i.ItemId == ProposalContent.ItemId);
+            ProposalContent.Item = item;
         }
 
         ProposalModel existentProposal = _context.Proposal
@@ -104,18 +99,19 @@ public class ProposalController : Controller
 
             existentProposal.Person = proposal.Person;
 
-            // Atualiza os ProposalContent existentes com base nos ItemIdList
-            var existingProposalContentIds = existentProposal.ProposalContent
-                .Select(pc => pc.Item.ItemId)
-                .ToList();
-            var newItemIds = proposal.ItemIdList.Except(existingProposalContentIds).ToList();
-
-            foreach (var itemId in newItemIds)
+            foreach (var ProposalContent in proposal.ProposalContent)
             {
-                var item = _context.Item.FirstOrDefault(i => i.ItemId == itemId);
-
-                var proposalContent = new ProposalContentModel { Item = item };
-                existentProposal.ProposalContent.Add(proposalContent);
+                var updateProposalContent = existentProposal.ProposalContent.Find(
+                    a => a.Item.ItemId == ProposalContent.Item.ItemId
+                );
+                if (updateProposalContent == null)
+                {
+                    existentProposal.ProposalContent.Add(ProposalContent);
+                }
+                else
+                {
+                    updateProposalContent = ProposalContent;
+                }
             }
         }
 
