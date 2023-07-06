@@ -20,10 +20,6 @@ public class ProposalModel
     public Decimal Discount { get; set; } = 0;
 
     [NotMapped]
-    [Display(Name = "Items")]
-    public int[] ItemIdList { get; set; } = new int[0];
-
-    [NotMapped]
     [Display(Name = "Person")]
     public int? PersonId { get; set; } = 0;
     public virtual PersonModel? Person { get; set; }
