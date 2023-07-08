@@ -6,8 +6,8 @@ namespace getQuote.Models
 {
     public enum DocumentTypes : int
     {
-        CPF = 0,
-        RG = 1
+        CPF,
+        RG
     }
 
     public enum SelectDefault
