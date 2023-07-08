@@ -82,7 +82,7 @@
                                 <span aria-hidden="true">&times;</span>
                             </a>
 
-                            <img id="@(image.ItemImageId)" name="@(image.FileName)" src="data:image/*;base64,@(Convert.ToBase64String(image.ImageFile))" alt="@(image.FileName)" width="@(Const.MAX_IMAGE_WIDTH + " px")" height=" @(Const.MAX_IMAGE_HEIGHT + " px")" />
+                            <img id="@(image.ItemImageId)" name="@(image.FileName)" src="data:image/*;base64,@(Convert.ToBase64String(image.ImageFile))" alt="@(image.FileName)" width="@(Constants.MaxImageWidth)" height="@(Constants.MaxImageHeight)" />
                         </span>
                     }
                 </div>

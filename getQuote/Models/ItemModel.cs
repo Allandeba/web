@@ -78,7 +78,7 @@ public class ItemModel
         ms.Position = 0;
 
         using var imageToResize = Image.Load(ms);
-        imageToResize.Mutate(x => x.Resize(Const.MAX_IMAGE_WIDTH, Const.MAX_IMAGE_HEIGHT));
+        imageToResize.Mutate(x => x.Resize(Constants.MaxImageWidth, Constants.MaxImageHeight));
 
         using var outputStream = new MemoryStream();
         imageToResize.Save(outputStream, new JpegEncoder());
