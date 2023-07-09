@@ -2,29 +2,18 @@
 const NEW_PROPOSAL_CONTENT_NAME = 'proposalContentRow_';
 const FULL_ID_NEW_PROPOSAL_CONTENT_ROW = NEW_PROPOSAL_CONTENT_NAME + NEW_PROPOSAL_CONTENT_ID;
 
-function getDiscountElement() {
-  return document.getElementById('discount');
-}
-
-function getItemList() {
-  return document.getElementById('ItemList');
-}
+const itemList = document.getElementById('ItemList');
+const proposalContentTable = document.getElementById('proposalContentTable');
+const tableRows = document.getElementById('table-rows');
+const discountElement = document.getElementById('discount');
+const totalValueCell = document.getElementById('total-value-cell');
 
 function setItemDefault() {
-  let itemList = getItemList();
   itemList.value = 0;
 }
 
-function getProposalContentTable() {
-  return document.getElementById('proposalContentTable');
-}
-
-function getTableRow() {
-  return document.getElementById('table-rows');
-}
-
 function getActualRow() {
-  return getTableRow().rows.length - 2; // nesse momento precisa ser -2 pois a ultima row é esse registro
+  return tableRows.rows.length - 2; // nesse momento precisa ser -2 pois a ultima row é esse registro
 }
 
 function addProposalContentCellClasses(cell) {
@@ -34,7 +23,7 @@ function addProposalContentCellClasses(cell) {
 function setProposalContentIdContent(proposalContentIdCell) {
   let inputProposalContentId =
     '<input type="hidden" name="ProposalContent[' + getActualRow() + '].ProposalContentId" value="' + NEW_PROPOSAL_CONTENT_ID + '" />';
-  let inputITemId = '<input type="hidden" name="ProposalContent[' + getActualRow() + '].ItemId" value="' + getItemList().value + '" />';
+  let inputITemId = '<input type="hidden" name="ProposalContent[' + getActualRow() + '].ItemId" value="' + itemList.value + '" />';
 
   let span = '<span>' + NEW_PROPOSAL_CONTENT_ID + '</span>';
 
@@ -42,17 +31,15 @@ function setProposalContentIdContent(proposalContentIdCell) {
 }
 
 function setProposalContentItemIdContent(itemIdCell) {
-  let itemList = getItemList();
   itemIdCell.textContent = itemList.value;
 }
 
 function setProposalContentItemNameContent(itemNameCell) {
-  let itemList = getItemList();
   itemNameCell.textContent = itemList.options[itemList.selectedIndex].text;
 }
 
 function setProposalContentValueContent(valueCell) {
-  let itemId = getItemList().value;
+  let itemId = itemList.value;
   let item = items.find((i) => i.ItemId == itemId);
 
   if (item) {
@@ -76,7 +63,6 @@ function setProposalContentQuantityContent(quantityCell) {
 }
 
 function setProposalContentActionContent(actionsCell) {
-  let itemList = getItemList();
   actionsCell.innerHTML =
     '<span class="delete-icon" onclick="deleteItem(' +
     NEW_PROPOSAL_CONTENT_ID +
@@ -131,7 +117,6 @@ function createNewProposalContentTableRow() {
 }
 
 function selectionChange() {
-  let itemList = getItemList();
   if (itemList.value == 0) return;
 
   if (isItemInTable(itemList.value)) {
@@ -145,8 +130,6 @@ function selectionChange() {
 }
 
 function isItemInTable(itemId) {
-  let proposalContentTable = getProposalContentTable();
-
   for (let i = 0; i < proposalContentTable.rows.length; i++) {
     let row = proposalContentTable.rows[i];
     let rowItemId = row.cells[1].textContent; // A célula 1 contém o ID do item
@@ -175,17 +158,16 @@ function deleteItemOnServer(proposalContentId) {
 }
 
 function calculateTotalValue() {
-  let proposalContentTable = getProposalContentTable();
-  let totalValueCell = document.getElementById('total-value-cell');
   let totalValue = 0;
 
   for (let i = 0; i < proposalContentTable.rows.length; i++) {
     let row = proposalContentTable.rows[i];
     let itemValueCell = row.querySelector('#item-value');
+
     if (itemValueCell) {
       let itemValue = parseFloat(itemValueCell.textContent.replace('R$ ', ''));
-
       let itemQuantityCell = row.querySelector('#item-quantity');
+
       if (itemQuantityCell) {
         itemValue *= itemQuantityCell.value;
       }
@@ -194,7 +176,7 @@ function calculateTotalValue() {
     }
   }
 
-  totalValue -= getDiscountElement().value;
+  totalValue -= parseFloat(discountElement.value);
   totalValueCell.textContent = 'R$ ' + totalValue.toFixed(2);
 }
 
@@ -240,8 +222,7 @@ function onChangeItemQuantity(e) {
 }
 
 function getExistentDBItems() {
-  const tableRow = getTableRow();
-  const trElements = tableRow.getElementsByTagName('tr');
+  const trElements = tableRows.getElementsByTagName('tr');
 
   const existentDBItems = Array.from(trElements).filter((tr) => {
     const trID = tr.getAttribute('id');
@@ -257,7 +238,7 @@ function updateProposalContentIndex(element, index) {
 }
 
 function sortNewProposalContentId() {
-  const tableRowChildren = getTableRow().children;
+  const tableRowChildren = tableRows.children;
 
   let existentDBItems = getExistentDBItems();
   sortDBProposalContentId(existentDBItems);
