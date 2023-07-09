@@ -1,4 +1,6 @@
 ﻿const NEW_PROPOSAL_CONTENT_ID = 0;
+const NEW_PROPOSAL_CONTENT_NAME = 'proposalContentRow_';
+const FULL_ID_NEW_PROPOSAL_CONTENT_ROW = NEW_PROPOSAL_CONTENT_NAME + NEW_PROPOSAL_CONTENT_ID;
 
 function getDiscountElement() {
   return document.getElementById('discount');
@@ -17,8 +19,12 @@ function getProposalContentTable() {
   return document.getElementById('proposalContentTable');
 }
 
+function getTableRow() {
+  return document.getElementById('table-rows');
+}
+
 function getActualRow() {
-  return document.getElementById('table-rows').rows.length - 2; // nesse momento precisa ser -2 pois a ultima row é esse registro
+  return getTableRow().rows.length - 2; // nesse momento precisa ser -2 pois a ultima row é esse registro
 }
 
 function addProposalContentCellClasses(cell) {
@@ -115,7 +121,7 @@ function getNewRowPosition() {
 }
 
 function createNewProposalContentTableRow() {
-  let rowId = 'proposalContentRow_' + NEW_PROPOSAL_CONTENT_ID;
+  let rowId = FULL_ID_NEW_PROPOSAL_CONTENT_ROW;
   let row = proposalContentTable.insertRow(getNewRowPosition());
   row.id = rowId;
 
@@ -194,7 +200,7 @@ function calculateTotalValue() {
 
 function deleteItem(proposalContentId, itemId) {
   if (confirm('Tem certeza de que deseja excluir o Proposal Content ID: ' + proposalContentId + ', Item ID: ' + itemId + '?')) {
-    var row = document.getElementById('proposalContentRow_' + proposalContentId);
+    var row = document.getElementById(NEW_PROPOSAL_CONTENT_NAME + proposalContentId);
     if (row) {
       if (proposalContentId && proposalContentId != 0) {
         deleteItemOnServer(proposalContentId);
@@ -221,10 +227,62 @@ document.addEventListener('DOMContentLoaded', () => {
   setDiscount();
 });
 
+document.addEventListener('submit', () => {
+  sortNewProposalContentId();
+});
+
 function onChangeItemQuantity(e) {
   if (e) {
     if (e.value <= 0) {
       e.value = 1;
     }
   }
+}
+
+function getExistentDBItems() {
+  const tableRow = getTableRow();
+  const trElements = tableRow.getElementsByTagName('tr');
+
+  const existentDBItems = Array.from(trElements).filter((tr) => {
+    const trID = tr.getAttribute('id');
+    return trID && trID != FULL_ID_NEW_PROPOSAL_CONTENT_ROW;
+  });
+
+  return existentDBItems;
+}
+
+function updateProposalContentIndex(element, index) {
+  const findIntValueRegex = /\d+/;
+  element.name = element.name.replace(findIntValueRegex, index);
+}
+
+function sortNewProposalContentId() {
+  const tableRowChildren = getTableRow().children;
+
+  let existentDBItems = getExistentDBItems();
+  sortDBProposalContentId(existentDBItems);
+
+  let index = existentDBItems.length;
+
+  Array.from(tableRowChildren).forEach((element) => {
+    if (element.id == FULL_ID_NEW_PROPOSAL_CONTENT_ROW) {
+      applyIndexForInputElements(element, index);
+
+      index++;
+    }
+  });
+}
+
+function sortDBProposalContentId(existentDBItems) {
+  let index = 0;
+  Array.from(existentDBItems).forEach((element) => {
+    applyIndexForInputElements(element, index);
+  });
+}
+
+function applyIndexForInputElements(element, index) {
+  let inputElements = element.getElementsByTagName('input');
+  Array.from(inputElements).forEach((inputElement) => {
+    updateProposalContentIndex(inputElement, index);
+  });
 }
