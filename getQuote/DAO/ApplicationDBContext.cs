@@ -17,12 +17,15 @@ namespace getQuote.DAO
         public DbSet<ProposalModel> Proposal { get; set; }
         public DbSet<ProposalContentModel> ProposalContent { get; set; }
 
+        //public DbSet<ProposalHistoryModel> ProposalHistory { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             PersonInformation(modelBuilder);
             DocumentInformation(modelBuilder);
             ContactInformation(modelBuilder);
             ProposalInformation(modelBuilder);
+            ItemInformation(modelBuilder);
         }
 
         private void PersonInformation(ModelBuilder modelBuilder)
@@ -73,6 +76,14 @@ namespace getQuote.DAO
                 .HasColumnType("timestamp")
                 .HasDefaultValueSql("CURRENT_TIMESTAMP")
                 .ValueGeneratedOnAddOrUpdate();
+        }
+
+        private void ItemInformation(ModelBuilder modelBuilder)
+        {
+            modelBuilder
+                .Entity<ItemModel>()
+                .HasIndex(p => p.ItemName)
+                .IsUnique();
         }
     }
 }
