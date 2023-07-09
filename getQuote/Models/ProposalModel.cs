@@ -10,21 +10,18 @@ public class ProposalModel
     [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity), Key()]
     public int ProposalId { get; set; }
 
-    [Display(Name = "Modification date")]
     [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "dd/MM/yyyy")]
     public DateTime ModificationDate { get; set; } = DateTime.MinValue;
 
-    [Display(Name = "Discount")]
     [DataType(DataType.Currency)]
     [Precision(18, 2)]
     public Decimal Discount { get; set; } = 0;
 
-    [NotMapped]
     [Display(Name = "Person")]
-    public int? PersonId { get; set; } = 0;
-    public virtual PersonModel? Person { get; set; }
+    public int PersonId { get; set; } = 0;
+    public virtual required PersonModel? Person { get; set; }
 
-    public virtual List<ProposalContentModel>? ProposalContent { get; set; }
+    public virtual required List<ProposalContentModel> ProposalContent { get; set; }
 
     public List<int> GetIdProposalContentList()
     {

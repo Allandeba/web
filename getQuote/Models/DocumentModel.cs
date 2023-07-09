@@ -16,11 +16,9 @@ public class DocumentModel
     public DocumentTypes DocumentType { get; set; }
 
     [Required]
-    [Display(Name = "Document")]
     [MaxLength(50)]
     public string Document { get; set; } = string.Empty;
 
-    [ForeignKey("PersonId")]
-    public int? PersonId { get; set; }
+    public int PersonId { get; set; }
     public virtual PersonModel? Person { get; set; }
 }

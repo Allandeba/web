@@ -36,7 +36,7 @@
 
                 <div class="mb-3 text-start">
                     <label asp-for="Discount" class="form-label"></label>
-                    <input id="discount" asp-for="Discount" type="number" onchange="calculateTotalValue()" class="form-control" placeholder="">
+                    <input id="discount" asp-for="Discount" type="number" onchange="calculateTotalValue()" class="form-control" placeholder="" value="0">
                     <span asp-validation-for="Discount" class="text-danger"></span>
                 </div>
 

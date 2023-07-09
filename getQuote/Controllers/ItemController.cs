@@ -15,9 +15,9 @@ public class ItemController : Controller
         _context = context;
     }
 
-    public IActionResult Index()
+    public async Task<IActionResult> Index()
     {
-        List<ItemModel> items = _context.Item.OrderByDescending(a => a.ItemId).ToList();
+        List<ItemModel> items = await _context.Item.OrderByDescending(a => a.ItemId).ToListAsync();
         return View(items);
     }
 
@@ -27,108 +27,108 @@ public class ItemController : Controller
     }
 
     [HttpPost]
-    [
-        DisableRequestSizeLimit,
-        RequestFormLimits(MultipartBodyLengthLimit = int.MaxValue, ValueLengthLimit = int.MaxValue)
-    ]
-    public Task<IActionResult> Create(
-        [Bind("ItemId, ItemName, Value, Description, ImageFiles, DefaultImage")] ItemModel Item
-    )
+    [DisableRequestSizeLimit]
+    [RequestFormLimits(MultipartBodyLengthLimit = int.MaxValue, ValueLengthLimit = int.MaxValue)]
+    public async Task<IActionResult> Create(ItemModel item)
     {
-        if (Item == null)
+        if (item == null)
         {
-            return Task.FromResult<IActionResult>(BadRequest(ModelState));
+            return BadRequest(ModelState);
         }
 
-        Item.SetItemImageList();
-        Item.SetDefaultImage(Item.DefaultImage);
+        item.SetItemImageList();
+        item.SetDefaultImage(item.DefaultImage);
 
         if (!ModelState.IsValid)
         {
-            return Task.FromResult<IActionResult>(View(Item));
+            return View(item);
         }
 
-        _context.Item.Add(Item);
-        _context.SaveChanges();
-        return Task.FromResult<IActionResult>(RedirectToAction(nameof(Index)));
+        _context.Item.Add(item);
+        await _context.SaveChangesAsync();
+        return RedirectToAction(nameof(Index));
     }
 
     public IActionResult Update(int id)
     {
-        ItemModel Item = _context.Item
+        ItemModel item = _context.Item
             .Include(i => i.ItemImageList)
             .FirstOrDefault(i => i.ItemId == id);
 
-        return View(Item);
+        return View(item);
     }
 
     [HttpPost]
-    [
-        DisableRequestSizeLimit,
-        RequestFormLimits(MultipartBodyLengthLimit = int.MaxValue, ValueLengthLimit = int.MaxValue)
-    ]
-    public Task<IActionResult> Update(ItemModel Item)
+    [DisableRequestSizeLimit]
+    [RequestFormLimits(MultipartBodyLengthLimit = int.MaxValue, ValueLengthLimit = int.MaxValue)]
+    public async Task<IActionResult> Update(ItemModel item)
     {
-        if (Item == null)
+        if (item == null)
         {
-            return Task.FromResult<IActionResult>(BadRequest(ModelState));
+            return BadRequest(ModelState);
         }
 
-        Item.SetItemImageList();
+        item.SetItemImageList();
 
         if (!ModelState.IsValid)
         {
-            return Task.FromResult<IActionResult>(View(Item));
+            return View(item);
         }
 
         ItemModel existentItem = _context.Item
             .Include(i => i.ItemImageList)
-            .FirstOrDefault(i => i.ItemId == Item.ItemId);
+            .FirstOrDefault(i => i.ItemId == item.ItemId);
 
         if (existentItem != null)
         {
-            existentItem.ItemName = Item.ItemName;
-            existentItem.Value = Item.Value;
-            existentItem.Description = Item.Description;
+            existentItem.ItemName = item.ItemName;
+            existentItem.Value = item.Value;
+            existentItem.Description = item.Description;
 
-            if (Item.ItemImageList != null)
+            if (item.ItemImageList != null)
             {
-                foreach (var Image in Item.ItemImageList)
-                {
-                    existentItem.ItemImageList.Add(Image);
-                }
+                existentItem.ItemImageList.AddRange(item.ItemImageList);
             }
 
-            existentItem.SetDefaultImage(Item.DefaultImage);
+            existentItem.SetDefaultImage(item.DefaultImage);
         }
 
-        _context.SaveChanges();
-        return Task.FromResult<IActionResult>(RedirectToAction(nameof(Index)));
+        await _context.SaveChangesAsync();
+        return RedirectToAction(nameof(Index));
     }
 
     public IActionResult Delete(int id)
     {
-        ItemModel Item = _context.Item
+        ItemModel item = _context.Item
             .Include(i => i.ItemImageList)
             .FirstOrDefault(i => i.ItemId == id);
 
-        _context.Item.Remove(Item);
-
-        foreach (var Image in Item.ItemImageList)
+        if (item != null)
         {
-            ItemImageModel ItemImage = _context.ItemImage.Find(Image.ItemImageId);
-            _context.ItemImage.Remove(ItemImage);
+            _context.Item.Remove(item);
+
+            foreach (var image in item.ItemImageList)
+            {
+                ItemImageModel itemImage = _context.ItemImage.Find(image.ItemImageId);
+                _context.ItemImage.Remove(itemImage);
+            }
+
+            _context.SaveChanges();
         }
 
-        _context.SaveChanges();
         return RedirectToAction(nameof(Index));
     }
 
     public IActionResult DeleteImage(int id)
     {
-        ItemImageModel ItemImage = _context.ItemImage.FirstOrDefault(i => i.ItemImageId == id);
-        _context.ItemImage.Remove(ItemImage);
-        _context.SaveChanges();
+        ItemImageModel itemImage = _context.ItemImage.FirstOrDefault(i => i.ItemImageId == id);
+
+        if (itemImage != null)
+        {
+            _context.ItemImage.Remove(itemImage);
+            _context.SaveChanges();
+        }
+
         return Ok();
     }
 
@@ -136,10 +136,7 @@ public class ItemController : Controller
     public IActionResult Error()
     {
         return View(
-            new getQuote.Models.ErrorViewModel
-            {
-                RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
-            }
+            new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier }
         );
     }
 }

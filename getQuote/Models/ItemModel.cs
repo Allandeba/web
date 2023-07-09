@@ -18,13 +18,11 @@ public class ItemModel
     public string ItemName { get; set; } = String.Empty;
 
     [Required]
-    [Display(Name = "Value")]
-    [DataType(DataType.Currency)]
     [Precision(18, 2)]
+    [DataType(DataType.Currency, ErrorMessage = "Invalid currency format.")]
     public decimal Value { get; set; } = 0;
 
     [Required]
-    [Display(Name = "Description")]
     [MaxLength(250)]
     public string Description { get; set; } = String.Empty;
 

@@ -10,18 +10,15 @@ public class ContactModel
     public int ContactId { get; set; }
 
     [Required]
-    [Display(Name = "Email")]
     [MaxLength(50)]
     [DataType(DataType.EmailAddress, ErrorMessage = "Invalid Email format.")]
     public string Email { get; set; } = String.Empty;
 
     [Required]
-    [Display(Name = "Phone")]
-    [DataType(DataType.PhoneNumber, ErrorMessage = "Invalid Phone format.")]
     [MaxLength(15)]
+    [DataType(DataType.PhoneNumber, ErrorMessage = "Invalid Phone format.")]
     public string Phone { get; set; } = String.Empty;
 
-    [ForeignKey("PersonId")]
-    public int? PersonId { get; set; }
+    public int PersonId { get; set; }
     public virtual PersonModel? Person { get; set; }
 }

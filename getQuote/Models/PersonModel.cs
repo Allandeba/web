@@ -21,15 +21,15 @@ public class PersonModel
     [MaxLength(100)]
     public string LastName { get; set; } = string.Empty;
 
-    [Display(Name = "Creation date")]
     [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "dd/MM/yyyy")]
+    [DataType(DataType.DateTime, ErrorMessage = "Invalid dateTime.")]
     public DateTime CreationDate { get; set; } = DateTime.MinValue;
 
     [Required]
-    public virtual DocumentModel? Document { get; set; }
+    public virtual required DocumentModel Document { get; set; }
 
     [Required]
-    public virtual ContactModel? Contact { get; set; }
+    public virtual required ContactModel Contact { get; set; }
 
     public virtual List<ProposalModel>? Proposal { get; set; }
 

@@ -12,18 +12,15 @@ public class ItemImageModel
     public int ItemImageId { get; set; }
 
     [Required]
-    [Display(Name = "Main")]
     public bool Main { get; set; } = false;
 
     [Required]
-    [Display(Name = "FileName")]
     [MaxLength(100)]
     public string FileName { get; set; } = String.Empty;
 
     [Display(Name = "Upload Image")]
     public byte[] ImageFile { get; set; } = new byte[0];
 
-    [ForeignKey("ItemId")]
     public int ItemId { get; set; }
-    public virtual ItemModel? Item { get; set; }
+    public virtual ItemModel Item { get; set; }
 }

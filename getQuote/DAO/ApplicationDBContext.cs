@@ -1,4 +1,5 @@
-﻿using getQuote.Models;
+﻿using System.Reflection.Emit;
+using getQuote.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace getQuote.DAO
@@ -18,7 +19,14 @@ namespace getQuote.DAO
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // Person Information
+            PersonInformation(modelBuilder);
+            DocumentInformation(modelBuilder);
+            ContactInformation(modelBuilder);
+            ProposalInformation(modelBuilder);
+        }
+
+        private void PersonInformation(ModelBuilder modelBuilder)
+        {
             modelBuilder
                 .Entity<PersonModel>()
                 .Property(p => p.CreationDate)
@@ -26,7 +34,39 @@ namespace getQuote.DAO
                 .HasDefaultValueSql("CURRENT_TIMESTAMP")
                 .ValueGeneratedOnAdd();
 
-            //Proposal information
+            modelBuilder
+                .Entity<PersonModel>()
+                .HasOne(PersonModel => PersonModel.Document)
+                .WithOne(d => d.Person)
+                .HasForeignKey<DocumentModel>(d => d.PersonId);
+
+            modelBuilder
+                .Entity<PersonModel>()
+                .HasOne(PersonModel => PersonModel.Contact)
+                .WithOne(c => c.Person)
+                .HasForeignKey<ContactModel>(c => c.PersonId);
+        }
+
+        private void DocumentInformation(ModelBuilder modelBuilder)
+        {
+            modelBuilder
+                .Entity<DocumentModel>()
+                .HasOne(d => d.Person)
+                .WithOne(p => p.Document)
+                .HasForeignKey<DocumentModel>(d => d.PersonId);
+        }
+
+        private void ContactInformation(ModelBuilder modelBuilder)
+        {
+            modelBuilder
+                .Entity<ContactModel>()
+                .HasOne(d => d.Person)
+                .WithOne(p => p.Contact)
+                .HasForeignKey<ContactModel>(d => d.PersonId);
+        }
+
+        private void ProposalInformation(ModelBuilder modelBuilder)
+        {
             modelBuilder
                 .Entity<ProposalModel>()
                 .Property(p => p.ModificationDate)
