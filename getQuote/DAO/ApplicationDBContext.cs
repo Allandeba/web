@@ -16,8 +16,7 @@ namespace getQuote.DAO
         public DbSet<ItemImageModel> ItemImage { get; set; }
         public DbSet<ProposalModel> Proposal { get; set; }
         public DbSet<ProposalContentModel> ProposalContent { get; set; }
-
-        //public DbSet<ProposalHistoryModel> ProposalHistory { get; set; }
+        public DbSet<ProposalHistoryModel> ProposalHistory { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
