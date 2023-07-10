@@ -143,20 +143,6 @@ function isItemInTable(itemId) {
   return false;
 }
 
-function deleteItemOnServer(proposalContentId) {
-  var xhr = new XMLHttpRequest();
-  xhr.open('POST', '/Proposal/DeleteProposalContent/' + proposalContentId);
-  xhr.setRequestHeader('Content-Type', 'application/json');
-  xhr.onload = function () {
-    if (xhr.status === 200) {
-      alert('Item removido com sucesso!');
-    } else {
-      alert('Ocorreu um erro ao deletar o item!');
-    }
-  };
-  xhr.send();
-}
-
 function calculateTotalValue() {
   let totalValue = 0;
 
@@ -184,9 +170,6 @@ function deleteItem(proposalContentId, itemId) {
   if (confirm('Tem certeza de que deseja excluir o Proposal Content ID: ' + proposalContentId + ', Item ID: ' + itemId + '?')) {
     var row = document.getElementById(NEW_PROPOSAL_CONTENT_NAME + proposalContentId);
     if (row) {
-      if (proposalContentId && proposalContentId != 0) {
-        deleteItemOnServer(proposalContentId);
-      }
       row.remove();
       calculateTotalValue();
     }

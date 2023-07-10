@@ -108,9 +108,30 @@ namespace getQuote.Controllers
                 return NotFound();
             }
 
-            _context.Entry(existentProposal).CurrentValues.SetValues(proposal);
+            setProposalHistoryAsync(existentProposal);
 
+            // Update existent Proposal
+            _context.Entry(existentProposal).CurrentValues.SetValues(proposal);
             existentProposal.Person = proposal.Person;
+
+            // Remove deleted proposals
+            var updatedProposalContent = proposal.ProposalContent
+                .Select(pc => pc.ProposalContentId)
+                .ToList();
+            List<int> updatedProposalContentIds = proposal.ProposalContent
+                .Select(pc => pc.ProposalContentId)
+                .ToList();
+            var existentProposalContent = _context.ProposalContent
+                .Where(
+                    pc =>
+                        !updatedProposalContentIds.Contains(pc.ProposalContentId)
+                        && pc.ProposalId == proposal.ProposalId
+                )
+                .ToList();
+            foreach (var ExistentProposalContent in existentProposalContent)
+            {
+                existentProposal.ProposalContent.Remove(ExistentProposalContent);
+            }
 
             foreach (var proposalContent in proposal.ProposalContent)
             {
@@ -130,22 +151,6 @@ namespace getQuote.Controllers
             await _context.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> DeleteProposalContent(int id)
-        {
-            var proposalContent = await _context.ProposalContent.FirstOrDefaultAsync(
-                pc => pc.ProposalContentId == id
-            );
-
-            if (proposalContent != null)
-            {
-                _context.ProposalContent.Remove(proposalContent);
-                await _context.SaveChangesAsync();
-            }
-
-            return Ok();
         }
 
         public async Task<IActionResult> Delete(int id)
@@ -234,6 +239,19 @@ namespace getQuote.Controllers
             ViewBag.People = GetSelectListPeople();
             ViewBag.Items = GetSelectListItems();
             ViewBag.ItemsFull = GetItemList();
+        }
+
+        private async Task setProposalHistoryAsync(ProposalModel existentProposal)
+        {
+            ProposalHistoryModel ProposalHistory = new();
+            ProposalHistory.ModificationDate = existentProposal.ModificationDate;
+            ProposalHistory.Person = existentProposal.Person;
+            ProposalHistory.Proposal = existentProposal;
+
+            List<int> ItemsIdList = existentProposal.GetItemsIdList();
+            ProposalHistory.ProposalContentArray = string.Join(",", ItemsIdList);
+
+            await _context.ProposalHistory.AddAsync(ProposalHistory);
         }
     }
 }

@@ -15,7 +15,7 @@ public class ProposalModel
 
     [DataType(DataType.Currency)]
     [Precision(18, 2)]
-    public Decimal Discount { get; set; } = 0;
+    public decimal Discount { get; set; } = 0;
 
     [Display(Name = "Person")]
     public int PersonId { get; set; } = 0;
@@ -32,5 +32,10 @@ public class ProposalModel
         }
 
         return proposalContentIdList;
+    }
+
+    public List<int> GetItemsIdList()
+    {
+        return ProposalContent.Select(pc => pc.ItemId).ToList();
     }
 }
