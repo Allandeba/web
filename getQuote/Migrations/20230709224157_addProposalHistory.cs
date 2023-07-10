@@ -12,53 +12,72 @@ namespace getQuote.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "ProposalHistory",
-                columns: table => new
-                {
-                    ProposalHistoryId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    ModificationDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    Discount = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
-                    ProposalId = table.Column<int>(type: "int", nullable: false),
-                    PersonId = table.Column<int>(type: "int", nullable: false),
-                    ProposalContentArray = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ProposalHistory", x => x.ProposalHistoryId);
-                    table.ForeignKey(
-                        name: "FK_ProposalHistory_Person_PersonId",
-                        column: x => x.PersonId,
-                        principalTable: "Person",
-                        principalColumn: "PersonId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ProposalHistory_Proposal_ProposalId",
-                        column: x => x.ProposalId,
-                        principalTable: "Proposal",
-                        principalColumn: "ProposalId",
-                        onDelete: ReferentialAction.Cascade);
-                })
+            migrationBuilder
+                .CreateTable(
+                    name: "ProposalHistory",
+                    columns: table =>
+                        new
+                        {
+                            ProposalHistoryId = table
+                                .Column<int>(type: "int", nullable: false)
+                                .Annotation(
+                                    "MySql:ValueGenerationStrategy",
+                                    MySqlValueGenerationStrategy.IdentityColumn
+                                ),
+                            ModificationDate = table.Column<DateTime>(
+                                type: "datetime(6)",
+                                nullable: false
+                            ),
+                            Discount = table.Column<decimal>(
+                                type: "decimal(18,2)",
+                                precision: 18,
+                                scale: 2,
+                                nullable: false
+                            ),
+                            ProposalId = table.Column<int>(type: "int", nullable: false),
+                            PersonId = table.Column<int>(type: "int", nullable: false),
+                            ProposalContentArray = table
+                                .Column<string>(type: "longtext", nullable: false)
+                                .Annotation("MySql:CharSet", "utf8mb4")
+                        },
+                    constraints: table =>
+                    {
+                        table.PrimaryKey("PK_ProposalHistory", x => x.ProposalHistoryId);
+                        table.ForeignKey(
+                            name: "FK_ProposalHistory_Person_PersonId",
+                            column: x => x.PersonId,
+                            principalTable: "Person",
+                            principalColumn: "PersonId",
+                            onDelete: ReferentialAction.Cascade
+                        );
+                        table.ForeignKey(
+                            name: "FK_ProposalHistory_Proposal_ProposalId",
+                            column: x => x.ProposalId,
+                            principalTable: "Proposal",
+                            principalColumn: "ProposalId",
+                            onDelete: ReferentialAction.Cascade
+                        );
+                    }
+                )
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ProposalHistory_PersonId",
                 table: "ProposalHistory",
-                column: "PersonId");
+                column: "PersonId"
+            );
 
             migrationBuilder.CreateIndex(
                 name: "IX_ProposalHistory_ProposalId",
                 table: "ProposalHistory",
-                column: "ProposalId");
+                column: "ProposalId"
+            );
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "ProposalHistory");
+            migrationBuilder.DropTable(name: "ProposalHistory");
         }
     }
 }

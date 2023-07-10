@@ -14,15 +14,14 @@ namespace getQuote.Migrations
                 name: "IX_Item_ItemName",
                 table: "Item",
                 column: "ItemName",
-                unique: true);
+                unique: true
+            );
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropIndex(
-                name: "IX_Item_ItemName",
-                table: "Item");
+            migrationBuilder.DropIndex(name: "IX_Item_ItemName", table: "Item");
         }
     }
 }
