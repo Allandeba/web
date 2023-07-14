@@ -22,6 +22,7 @@ public class ProposalModel
     public virtual required PersonModel? Person { get; set; }
 
     public virtual required List<ProposalContentModel> ProposalContent { get; set; }
+    public virtual List<ProposalHistoryModel>? ProposalHistory { get; set; }
 
     public List<int> GetIdProposalContentList()
     {

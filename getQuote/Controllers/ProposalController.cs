@@ -23,6 +23,7 @@ namespace getQuote.Controllers
             var proposals = await _context.Proposal
                 .OrderByDescending(a => a.ProposalId)
                 .Include(a => a.Person)
+                .Include(ph => ph.ProposalHistory)
                 .ToListAsync();
 
             return View(proposals);
