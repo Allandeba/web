@@ -59,7 +59,7 @@
                                         @foreach (var proposalHistory in proposal.ProposalHistory)
                                         {
                                             <li>
-                                                <a asp-controller="ProposalHistory" asp-action="Printdot" asp-route-id="@proposalHistory.ProposalHistoryId" class="dropdown-item d-flex align-items-center text-decoration-none text-dark">
+                                                <a asp-controller="ProposalHistory" asp-action="Print" asp-route-id="@proposalHistory.ProposalHistoryId" class="dropdown-item d-flex align-items-center text-decoration-none text-dark">
                                                     <span class="text-muted">@($"{proposalHistory.ProposalHistoryId} - Modified {proposalHistory.ModificationDate.ToString("dd/MM/yyyy")}")</span>
                                                 </a>
                                             </li>

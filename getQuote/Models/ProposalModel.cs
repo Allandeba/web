@@ -34,9 +34,4 @@ public class ProposalModel
 
         return proposalContentIdList;
     }
-
-    public List<int> GetItemsIdList()
-    {
-        return ProposalContent.Select(pc => pc.ItemId).ToList();
-    }
 }

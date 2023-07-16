@@ -249,8 +249,16 @@ namespace getQuote.Controllers
             ProposalHistory.Person = existentProposal.Person;
             ProposalHistory.Proposal = existentProposal;
 
-            List<int> ItemsIdList = existentProposal.GetItemsIdList();
-            ProposalHistory.ProposalContentArray = string.Join(",", ItemsIdList);
+            ProposalContentJSON proposalContentJSON = new();
+            foreach (ProposalContentModel proposalContent in existentProposal.ProposalContent)
+            {
+                ProposalContentItems proposalContentItems = new();
+                proposalContentItems.ItemId = proposalContent.ItemId.ToString();
+                proposalContentItems.Quantity = proposalContent.Quantity.ToString();
+                proposalContentJSON.ProposalContentItems.Add(proposalContentItems);
+            }
+
+            ProposalHistory.ProposalContentJSON = proposalContentJSON;
 
             await _context.ProposalHistory.AddAsync(ProposalHistory);
         }

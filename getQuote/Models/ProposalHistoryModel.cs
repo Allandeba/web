@@ -19,7 +19,8 @@ public class ProposalContentJSON
     public List<int> GetItemIds()
     {
         List<int> itemIds = new();
-        foreach (var proposalContentItem in ProposalContentItems) {
+        foreach (var proposalContentItem in ProposalContentItems)
+        {
             itemIds.Add(Int32.Parse(proposalContentItem.ItemId));
         }
 
