@@ -56,7 +56,7 @@
                                     </a>
 
                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                        @foreach (var proposalHistory in proposal.ProposalHistory)
+                                        @foreach (var proposalHistory in proposal.ProposalHistory.OrderByDescending(x => x.ProposalHistoryId))
                                         {
                                             <li>
                                                 <a asp-controller="ProposalHistory" asp-action="Print" asp-route-id="@proposalHistory.ProposalHistoryId" class="dropdown-item d-flex align-items-center text-decoration-none text-dark">
