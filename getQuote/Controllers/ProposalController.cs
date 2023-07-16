@@ -145,7 +145,8 @@ namespace getQuote.Controllers
                 }
                 else
                 {
-                    updateProposalContent = proposalContent;
+                    updateProposalContent.Item = proposalContent.Item;
+                    updateProposalContent.Quantity = proposalContent.Quantity;
                 }
             }
 
