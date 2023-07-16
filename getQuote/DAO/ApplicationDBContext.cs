@@ -1,6 +1,8 @@
 ﻿using System.Reflection.Emit;
 using getQuote.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace getQuote.DAO
 {
@@ -25,6 +27,7 @@ namespace getQuote.DAO
             ContactInformation(modelBuilder);
             ProposalInformation(modelBuilder);
             ItemInformation(modelBuilder);
+            ProposalHistoryInformation(modelBuilder);
         }
 
         private void PersonInformation(ModelBuilder modelBuilder)
@@ -79,10 +82,43 @@ namespace getQuote.DAO
 
         private void ItemInformation(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<ItemModel>().HasIndex(p => p.ItemName).IsUnique();
+        }
+
+        private void ProposalHistoryInformation(ModelBuilder modelBuilder)
+        {
             modelBuilder
-                .Entity<ItemModel>()
-                .HasIndex(p => p.ItemName)
-                .IsUnique();
+                .Entity<ProposalHistoryModel>()
+                .OwnsOne(
+                    ph => ph.ProposalContentJSON,
+                    ownedNavigationBuilder =>
+                    {
+                        ownedNavigationBuilder
+                            .Property(pc => pc.ProposalContentItems)
+                            .HasConversion(
+                                v => Newtonsoft.Json.JsonConvert.SerializeObject(v),
+                                v =>
+                                    Newtonsoft.Json.JsonConvert.DeserializeObject<
+                                        List<ProposalContentItems>
+                                    >(v),
+                                new ValueComparer<List<ProposalContentItems>>(
+                                    (c1, c2) =>
+                                        Newtonsoft.Json.JsonConvert.SerializeObject(c1)
+                                        == Newtonsoft.Json.JsonConvert.SerializeObject(c2),
+                                    c =>
+                                        c == null
+                                            ? 0
+                                            : Newtonsoft.Json.JsonConvert
+                                                .SerializeObject(c)
+                                                .GetHashCode(),
+                                    c =>
+                                        Newtonsoft.Json.JsonConvert.DeserializeObject<
+                                            List<ProposalContentItems>
+                                        >(Newtonsoft.Json.JsonConvert.SerializeObject(c))
+                                )
+                            );
+                    }
+                );
         }
     }
 }

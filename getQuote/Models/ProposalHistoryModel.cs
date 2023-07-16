@@ -4,6 +4,29 @@ using Microsoft.EntityFrameworkCore;
 
 namespace getQuote.Models;
 
+[Owned]
+public class ProposalContentItems
+{
+    public string ItemId { get; set; }
+    public string Quantity { get; set; }
+}
+
+[Owned]
+public class ProposalContentJSON
+{
+    public List<ProposalContentItems> ProposalContentItems { get; set; } = new();
+
+    public List<int> GetItemIds()
+    {
+        List<int> itemIds = new();
+        foreach (var proposalContentItem in ProposalContentItems) {
+            itemIds.Add(Int32.Parse(proposalContentItem.ItemId));
+        }
+
+        return itemIds;
+    }
+}
+
 public class ProposalHistoryModel
 {
     [Key]
@@ -24,5 +47,6 @@ public class ProposalHistoryModel
     public virtual PersonModel Person { get; set; }
 
     [Required]
-    public string ProposalContentArray { get; set; } = string.Empty; // ItemsIdList
+    [Column(TypeName = "jsonb")]
+    public ProposalContentJSON ProposalContentJSON { get; set; } = new();
 }
