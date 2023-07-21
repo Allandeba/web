@@ -1,5 +1,6 @@
 ﻿let imageClient = document.querySelector("#images__client");
 let defaultImageSelect = document.querySelector("#defaultImageSelect");
+let SizeImagesToDelete = 0;
 
 const MAX_HEIGHT = 250;
 const MAX_WIDTH = 250;
@@ -184,18 +185,14 @@ function deleteNotExistentDefaultImage() {
   );
 }
 
-function deleteItemImageOnServer(itemImageId) {
-  var xhr = new XMLHttpRequest();
-  xhr.open("POST", "/Item/DeleteImage/" + itemImageId);
-  xhr.setRequestHeader("Content-Type", "application/json");
-  xhr.onload = function () {
-    if (xhr.status === 200) {
-      alert("Imagem removida com sucesso!");
-    } else {
-      alert("Ocorreu um erro ao deletar a imagem!");
-    }
-  };
-  xhr.send();
+function createInputForDeletingImages(itemImageId) {
+  let inputForDeletingImage = document.createElement('input');
+  inputForDeletingImage.type = 'hidden';
+  inputForDeletingImage.name = 'IdImagesToDelete[' + SizeImagesToDelete + ']';
+  inputForDeletingImage.value = itemImageId;
+
+  imageClient.appendChild(inputForDeletingImage);
+  SizeImagesToDelete++;
 }
 
 function deleteItemImage(itemImageId) {
@@ -210,14 +207,8 @@ function deleteItemImage(itemImageId) {
       deleteNotExistentDefaultImage();
     }
   } else {
-    if (
-      confirm(
-        "Tem certeza de que deseja excluir a Item Image ID: " +
-          itemImageId +
-          " ?"
-      )
-    ) {
-      deleteItemImageOnServer(itemImageId);
+    if (confirm('Tem certeza de que deseja excluir a Item Image ID: ' + itemImageId + ' ?')) {
+      createInputForDeletingImages(itemImageId);
       deleteClientItemImage(itemImageId);
       deleteNotExistentDefaultImage();
     }

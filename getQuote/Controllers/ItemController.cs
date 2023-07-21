@@ -93,6 +93,14 @@ public class ItemController : Controller
             existentItem.SetDefaultImage(item.DefaultImage);
         }
 
+        foreach (var idItemImage in item.IdImagesToDelete)
+        {
+            ItemImageModel itemImage = existentItem.ItemImageList.Find(
+                im => im.ItemImageId == idItemImage
+            );
+            existentItem.ItemImageList.Remove(itemImage);
+        }
+
         await _context.SaveChangesAsync();
         return RedirectToAction(nameof(Index));
     }
@@ -117,19 +125,6 @@ public class ItemController : Controller
         }
 
         return RedirectToAction(nameof(Index));
-    }
-
-    public IActionResult DeleteImage(int id)
-    {
-        ItemImageModel itemImage = _context.ItemImage.FirstOrDefault(i => i.ItemImageId == id);
-
-        if (itemImage != null)
-        {
-            _context.ItemImage.Remove(itemImage);
-            _context.SaveChanges();
-        }
-
-        return Ok();
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

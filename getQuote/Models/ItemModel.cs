@@ -35,6 +35,9 @@ public class ItemModel
     [Display(Name = "Default image")]
     public String DefaultImage { get; set; } = String.Empty;
 
+    [NotMapped]
+    public List<int>? IdImagesToDelete { get; set; } = new();
+
     public void SetItemImageList()
     {
         if (this.ImageFiles != null && this.ImageFiles.Count > 0)
