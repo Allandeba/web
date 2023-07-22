@@ -8,7 +8,7 @@ namespace getQuote.Controllers
     {
         private readonly CatalogBusiness _business;
 
-        public CatalogController(ILogger<CatalogController> logger, CatalogBusiness catalogBusiness)
+        public CatalogController(CatalogBusiness catalogBusiness)
         {
             _business = catalogBusiness;
         }
