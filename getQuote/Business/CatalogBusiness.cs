@@ -11,9 +11,9 @@ namespace getQuote
             _repository = catalogRepository;
         }
 
-        public IEnumerable<ItemModel> GetItems()
+        public async Task<IEnumerable<ItemModel>> GetItems()
         {
-            return _repository.GetItems();
+            return await _repository.GetItems();
         }
     }
 }

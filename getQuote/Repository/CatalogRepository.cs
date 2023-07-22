@@ -13,12 +13,12 @@ namespace getQuote
             _context = context;
         }
 
-        public IEnumerable<ItemModel> GetItems()
+        public async Task<IEnumerable<ItemModel>> GetItems()
         {
-            return _context.Item
+            return await _context.Item
                 .Include(i => i.ItemImageList)
                 .OrderByDescending(a => a.ItemImageList.Count > 1)
-                .ToList();
+                .ToListAsync();
         }
     }
 }

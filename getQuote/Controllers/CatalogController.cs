@@ -13,9 +13,9 @@ namespace getQuote.Controllers
             _business = catalogBusiness;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            IEnumerable<ItemModel> items = _business.GetItems();
+            IEnumerable<ItemModel> items = await _business.GetItems();
             return View(items);
         }
 
