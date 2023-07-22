@@ -1,30 +1,21 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using getQuote.Models;
-using getQuote.DAO;
 
 namespace getQuote.Controllers
 {
     public class CatalogController : Controller
     {
-        private readonly ILogger<CatalogController> _logger;
-        private readonly ApplicationDBContext _context;
+        private readonly CatalogBusiness _business;
 
-        public CatalogController(ILogger<CatalogController> logger, ApplicationDBContext context)
+        public CatalogController(ILogger<CatalogController> logger, CatalogBusiness catalogBusiness)
         {
-            _logger = logger;
-            _context = context;
+            _business = catalogBusiness;
         }
 
         public IActionResult Index()
         {
-            var items = _context.Item
-                .Include(i => i.ItemImageList)
-                .OrderByDescending(a => a.ItemImageList.Count > 1)
-                .ToList();
-
+            IEnumerable<ItemModel> items = _business.GetItems();
             return View(items);
         }
 

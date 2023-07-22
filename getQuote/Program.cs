@@ -1,7 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 using getQuote.DAO;
 using Microsoft.EntityFrameworkCore;
-using Pomelo.EntityFrameworkCore.MySql;
 
 namespace getQuote;
 
@@ -27,6 +26,8 @@ public class Program
             options =>
                 options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString))
         );
+        builder.Services.AddScoped<CatalogRepository>();
+        builder.Services.AddScoped<CatalogBusiness>();
 
         var app = builder.Build();
 
