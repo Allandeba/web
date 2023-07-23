@@ -1,28 +1,21 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using getQuote.Models;
-using getQuote.DAO;
-using System.Threading.Tasks;
-using System.Linq;
 
 namespace getQuote.Controllers
 {
     public class PersonController : Controller
     {
-        private readonly ILogger<PersonController> _logger;
-        private readonly ApplicationDBContext _context;
+        private readonly PersonBusiness _business;
 
-        public PersonController(ILogger<PersonController> logger, ApplicationDBContext context)
+        public PersonController(PersonBusiness business)
         {
-            _logger = logger;
-            _context = context;
+            _business = business;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var people = _context.Person.OrderByDescending(a => a.PersonId).ToList();
+            IEnumerable<PersonModel> people = await _business.GetPeople();
             return View(people);
         }
 
@@ -39,56 +32,36 @@ namespace getQuote.Controllers
                 return View(person);
             }
 
-            _context.Person.Add(person);
-            await _context.SaveChangesAsync();
+            await _business.AddAsync(person);
             return RedirectToAction(nameof(Index));
         }
 
-        public IActionResult Update(int id)
+        public async Task<IActionResult> Update(int id)
         {
-            var person = _context.Person
-                .Include(c => c.Contact)
-                .Include(d => d.Document)
-                .FirstOrDefault(p => p.PersonId == id);
+            PersonModel person = await _business.GetByIdAsync(id);
             return View(person);
         }
 
         [HttpPost]
         public async Task<IActionResult> Update(PersonModel person)
         {
+            if (person == null)
+            {
+                return BadRequest(ModelState);
+            }
+
             if (!ModelState.IsValid)
             {
                 return View(person);
             }
 
-            var existentPerson = _context.Person
-                .Include(c => c.Contact)
-                .Include(d => d.Document)
-                .FirstOrDefault(p => p.PersonId == person.PersonId);
-
-            if (existentPerson != null)
-            {
-                person.CreationDate = existentPerson.CreationDate;
-                _context.Entry(existentPerson).CurrentValues.SetValues(person);
-            }
-
-            await _context.SaveChangesAsync();
+            await _business.UpdateAsync(person);
             return RedirectToAction(nameof(Index));
         }
 
         public async Task<IActionResult> Delete(int id)
         {
-            var person = _context.Person
-                .Include(c => c.Contact)
-                .Include(d => d.Document)
-                .FirstOrDefault(p => p.PersonId == id);
-
-            if (person != null)
-            {
-                _context.Person.Remove(person);
-                await _context.SaveChangesAsync();
-            }
-
+            await _business.RemoveAsync(id);
             return RedirectToAction(nameof(Index));
         }
 

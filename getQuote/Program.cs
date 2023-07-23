@@ -30,6 +30,8 @@ public class Program
         builder.Services.AddScoped<CatalogBusiness>();
         builder.Services.AddScoped<ItemRepository>();
         builder.Services.AddScoped<ItemBusiness>();
+        builder.Services.AddScoped<PersonRepository>();
+        builder.Services.AddScoped<PersonBusiness>();
 
         var app = builder.Build();
 
