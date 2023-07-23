@@ -36,7 +36,7 @@ namespace getQuote
                 updateExistentItemInformation(existentItem, item);
             }
 
-            await _repository.UpdateAsync(item);
+            await _repository.UpdateAsync(existentItem);
         }
 
         private void updateExistentItemInformation(ItemModel existentItem, ItemModel itemToUpdate)
