@@ -28,6 +28,8 @@ public class Program
         );
         builder.Services.AddScoped<CatalogRepository>();
         builder.Services.AddScoped<CatalogBusiness>();
+        builder.Services.AddScoped<ItemRepository>();
+        builder.Services.AddScoped<ItemBusiness>();
 
         var app = builder.Build();
 

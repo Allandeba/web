@@ -1,23 +1,20 @@
 ﻿using System.Diagnostics;
-using getQuote.DAO;
+using getQuote;
 using getQuote.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 public class ItemController : Controller
 {
-    private readonly ILogger<ItemController> _logger;
-    private readonly ApplicationDBContext _context;
+    private readonly ItemBusiness _business;
 
-    public ItemController(ILogger<ItemController> logger, ApplicationDBContext context)
+    public ItemController(ItemBusiness itemBusiness)
     {
-        _logger = logger;
-        _context = context;
+        _business = itemBusiness;
     }
 
     public async Task<IActionResult> Index()
     {
-        List<ItemModel> items = await _context.Item.OrderByDescending(a => a.ItemId).ToListAsync();
+        IEnumerable<ItemModel> items = await _business.GetItems();
         return View(items);
     }
 
@@ -44,17 +41,13 @@ public class ItemController : Controller
             return View(item);
         }
 
-        _context.Item.Add(item);
-        await _context.SaveChangesAsync();
+        await _business.AddAsync(item);
         return RedirectToAction(nameof(Index));
     }
 
-    public IActionResult Update(int id)
+    public async Task<IActionResult> Update(int id)
     {
-        ItemModel item = _context.Item
-            .Include(i => i.ItemImageList)
-            .FirstOrDefault(i => i.ItemId == id);
-
+        ItemModel item = await _business.GetByIdAsync(id);
         return View(item);
     }
 
@@ -75,55 +68,13 @@ public class ItemController : Controller
             return View(item);
         }
 
-        ItemModel existentItem = _context.Item
-            .Include(i => i.ItemImageList)
-            .FirstOrDefault(i => i.ItemId == item.ItemId);
-
-        if (existentItem != null)
-        {
-            existentItem.ItemName = item.ItemName;
-            existentItem.Value = item.Value;
-            existentItem.Description = item.Description;
-
-            if (item.ItemImageList != null)
-            {
-                existentItem.ItemImageList.AddRange(item.ItemImageList);
-            }
-
-            existentItem.SetDefaultImage(item.DefaultImage);
-        }
-
-        foreach (var idItemImage in item.IdImagesToDelete)
-        {
-            ItemImageModel itemImage = existentItem.ItemImageList.Find(
-                im => im.ItemImageId == idItemImage
-            );
-            existentItem.ItemImageList.Remove(itemImage);
-        }
-
-        await _context.SaveChangesAsync();
+        await _business.UpdateAsync(item);
         return RedirectToAction(nameof(Index));
     }
 
-    public IActionResult Delete(int id)
+    public async Task<IActionResult> Delete(int id)
     {
-        ItemModel item = _context.Item
-            .Include(i => i.ItemImageList)
-            .FirstOrDefault(i => i.ItemId == id);
-
-        if (item != null)
-        {
-            _context.Item.Remove(item);
-
-            foreach (var image in item.ItemImageList)
-            {
-                ItemImageModel itemImage = _context.ItemImage.Find(image.ItemImageId);
-                _context.ItemImage.Remove(itemImage);
-            }
-
-            _context.SaveChanges();
-        }
-
+        await _business.RemoveAsync(id);
         return RedirectToAction(nameof(Index));
     }
 

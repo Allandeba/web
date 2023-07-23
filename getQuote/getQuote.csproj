@@ -30,6 +30,7 @@
     <None Remove="Views\Proposal\" />
     <None Remove="Business\" />
     <None Remove="Repository\" />
+    <None Remove="Interfaces\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DAO\" />
@@ -38,5 +39,6 @@
     <Folder Include="Views\Proposal\" />
     <Folder Include="Business\" />
     <Folder Include="Repository\" />
+    <Folder Include="Interfaces\" />
   </ItemGroup>
 </Project>
