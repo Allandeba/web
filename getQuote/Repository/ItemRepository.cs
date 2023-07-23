@@ -14,7 +14,7 @@ namespace getQuote
             _context = context;
         }
 
-        public async Task<ItemModel> GetItemByIdAsync(int itemId)
+        public async Task<ItemModel> GetByIdAsync(int itemId)
         {
             return await _context.Item
                 .Include(i => i.ItemImageList)

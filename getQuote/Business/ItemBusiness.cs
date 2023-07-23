@@ -24,12 +24,12 @@ namespace getQuote
 
         public async Task<ItemModel> GetByIdAsync(int itemId)
         {
-            return await _repository.GetItemByIdAsync(itemId);
+            return await _repository.GetByIdAsync(itemId);
         }
 
         public async Task UpdateAsync(ItemModel item)
         {
-            ItemModel existentItem = await _repository.GetItemByIdAsync(item.ItemId);
+            ItemModel existentItem = await _repository.GetByIdAsync(item.ItemId);
 
             if (existentItem != null)
             {
@@ -76,7 +76,7 @@ namespace getQuote
 
         public async Task RemoveAsync(int itemId)
         {
-            ItemModel item = await _repository.GetItemByIdAsync(itemId);
+            ItemModel item = await _repository.GetByIdAsync(itemId);
             if (item == null)
             {
                 return;
