@@ -13,7 +13,10 @@ namespace getQuote
 
         public async Task<IEnumerable<PersonModel>> GetPeople()
         {
-            IEnumerable<PersonModel> people = await _repository.GetAllAsync();
+            PersonIncludes[] includes = new PersonIncludes[] { PersonIncludes.None };
+            IEnumerable<PersonModel> people = await _repository.GetAllAsync(
+                includes.Cast<System.Enum>().ToArray()
+            );
             return people.OrderByDescending(p => p.PersonId);
         }
 
@@ -24,20 +27,37 @@ namespace getQuote
 
         public async Task<PersonModel> GetByIdAsync(int personId)
         {
-            return await _repository.GetByIdAsync(personId);
+            PersonIncludes[] includes = new PersonIncludes[]
+            {
+                PersonIncludes.Contact,
+                PersonIncludes.Document
+            };
+            return await _repository.GetByIdAsync(personId, includes.Cast<System.Enum>().ToArray());
         }
 
         public async Task UpdateAsync(PersonModel person)
         {
-            PersonModel? existentPerson = await _repository.GetByIdAsync(person.PersonId);
+            PersonIncludes[] includes = new PersonIncludes[]
+            {
+                PersonIncludes.Contact,
+                PersonIncludes.Document
+            };
+            PersonModel? existentPerson = await _repository.GetByIdAsync(
+                person.PersonId,
+                includes.Cast<System.Enum>().ToArray()
+            );
 
             if (existentPerson == null)
             {
                 return;
             }
 
-            existentPerson.Contact = person.Contact;
-            existentPerson.Document = person.Document;
+            existentPerson.Contact.Email = person.Contact.Email;
+            existentPerson.Contact.Phone = person.Contact.Phone;
+
+            existentPerson.Document.DocumentType = person.Document.DocumentType;
+            existentPerson.Document.Document = person.Document.Document;
+
             existentPerson.FirstName = person.FirstName;
             existentPerson.LastName = person.LastName;
 
@@ -46,7 +66,15 @@ namespace getQuote
 
         public async Task RemoveAsync(int personId)
         {
-            PersonModel? person = await _repository.GetByIdAsync(personId);
+            PersonIncludes[] includes = new PersonIncludes[]
+            {
+                PersonIncludes.Contact,
+                PersonIncludes.Document
+            };
+            PersonModel? person = await _repository.GetByIdAsync(
+                personId,
+                includes.Cast<System.Enum>().ToArray()
+            );
             if (person == null)
             {
                 return;

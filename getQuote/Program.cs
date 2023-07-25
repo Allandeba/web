@@ -32,6 +32,8 @@ public class Program
         builder.Services.AddScoped<ItemBusiness>();
         builder.Services.AddScoped<PersonRepository>();
         builder.Services.AddScoped<PersonBusiness>();
+        builder.Services.AddScoped<ProposalRepository>();
+        builder.Services.AddScoped<ProposalBusiness>();
 
         var app = builder.Build();
 

@@ -13,7 +13,10 @@ namespace getQuote
 
         public async Task<IEnumerable<ItemModel>> GetItems()
         {
-            IEnumerable<ItemModel> items = await _repository.GetAllAsync();
+            ItemIncludes[] includes = new ItemIncludes[] { ItemIncludes.None };
+            IEnumerable<ItemModel> items = await _repository.GetAllAsync(
+                includes.Cast<System.Enum>().ToArray()
+            );
             return items.OrderByDescending(i => i.ItemId);
         }
 
@@ -24,12 +27,17 @@ namespace getQuote
 
         public async Task<ItemModel> GetByIdAsync(int itemId)
         {
-            return await _repository.GetByIdAsync(itemId);
+            ItemIncludes[] includes = new ItemIncludes[] { ItemIncludes.ItemImage };
+            return await _repository.GetByIdAsync(itemId, includes.Cast<System.Enum>().ToArray());
         }
 
         public async Task UpdateAsync(ItemModel item)
         {
-            ItemModel existentItem = await _repository.GetByIdAsync(item.ItemId);
+            ItemIncludes[] includes = new ItemIncludes[] { ItemIncludes.ItemImage };
+            ItemModel existentItem = await _repository.GetByIdAsync(
+                item.ItemId,
+                includes.Cast<System.Enum>().ToArray()
+            );
 
             if (existentItem != null)
             {
@@ -76,23 +84,16 @@ namespace getQuote
 
         public async Task RemoveAsync(int itemId)
         {
-            ItemModel item = await _repository.GetByIdAsync(itemId);
+            ItemIncludes[] includes = new ItemIncludes[] { ItemIncludes.ItemImage };
+            ItemModel item = await _repository.GetByIdAsync(
+                itemId,
+                includes.Cast<System.Enum>().ToArray()
+            );
             if (item == null)
             {
                 return;
             }
             ;
-
-            if (item.ItemImageList != null)
-            {
-                foreach (ItemImageModel image in item.ItemImageList)
-                {
-                    ItemImageModel itemImage = await _repository.GetItemImageByIdAsync(
-                        image.ItemImageId
-                    );
-                    await _repository.RemoveItemImageAsync(itemImage);
-                }
-            }
 
             await _repository.RemoveAsync(item);
         }

@@ -1,8 +1,4 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-using System.Xml.Linq;
-
-namespace getQuote.Models
+﻿namespace getQuote.Models
 {
     public enum DocumentTypes : int
     {
@@ -13,5 +9,27 @@ namespace getQuote.Models
     public enum SelectDefault
     {
         None
+    }
+
+    public enum ProposalIncludes
+    {
+        None,
+        Person,
+        ProposalHistory,
+        Item,
+        ItemImageList
+    }
+
+    public enum PersonIncludes
+    {
+        None,
+        Contact,
+        Document
+    }
+
+    public enum ItemIncludes
+    {
+        None,
+        ItemImage
     }
 }

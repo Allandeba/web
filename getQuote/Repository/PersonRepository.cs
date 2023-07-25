@@ -14,17 +14,42 @@ namespace getQuote
             _context = context;
         }
 
-        public async Task<PersonModel> GetByIdAsync(int PersonId)
+        private IQueryable<PersonModel> GetQuery(Enum[] includes)
         {
-            return await _context.Person
-                .Include(c => c.Contact)
-                .Include(d => d.Document)
-                .FirstOrDefaultAsync(p => p.PersonId == PersonId);
+            IQueryable<PersonModel> query = _context.Person;
+            foreach (PersonIncludes include in includes)
+            {
+                switch (include)
+                {
+                    case PersonIncludes.None:
+                        break;
+
+                    case PersonIncludes.Contact:
+                        query = query.Include(c => c.Contact);
+                        break;
+
+                    case PersonIncludes.Document:
+                        query = query.Include(d => d.Document);
+                        break;
+
+                    default:
+                        throw new Exception("PersonIncludes type not implemented");
+                }
+            }
+
+            return query;
         }
 
-        public async Task<IEnumerable<PersonModel>> GetAllAsync()
+        public async Task<PersonModel> GetByIdAsync(int PersonId, Enum[] includes)
         {
-            return await _context.Person.ToListAsync();
+            IQueryable<PersonModel> query = GetQuery(includes);
+            return await query.FirstOrDefaultAsync(p => p.PersonId == PersonId);
+        }
+
+        public async Task<IEnumerable<PersonModel>> GetAllAsync(Enum[] includes)
+        {
+            IQueryable<PersonModel> query = GetQuery(includes);
+            return await query.ToListAsync();
         }
 
         public async Task<IEnumerable<PersonModel>> FindAsync(

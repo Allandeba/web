@@ -14,11 +14,32 @@ namespace getQuote
             _context = context;
         }
 
-        public async Task<ItemModel> GetByIdAsync(int itemId)
+        private IQueryable<ItemModel> GetQuery(Enum[] includes)
         {
-            return await _context.Item
-                .Include(i => i.ItemImageList)
-                .FirstOrDefaultAsync(i => i.ItemId == itemId);
+            IQueryable<ItemModel> query = _context.Item;
+            foreach (ItemIncludes include in includes)
+            {
+                switch (include)
+                {
+                    case ItemIncludes.None:
+                        break;
+
+                    case ItemIncludes.ItemImage:
+                        query = query.Include(i => i.ItemImageList);
+                        break;
+
+                    default:
+                        throw new Exception("ItemIncludes type not implemented");
+                }
+            }
+
+            return query;
+        }
+
+        public async Task<ItemModel> GetByIdAsync(int itemId, Enum[] includes)
+        {
+            IQueryable<ItemModel> query = GetQuery(includes);
+            return await query.FirstOrDefaultAsync(i => i.ItemId == itemId);
         }
 
         public async Task<ItemImageModel> GetItemImageByIdAsync(int itemImageId)
@@ -26,9 +47,10 @@ namespace getQuote
             return await _context.ItemImage.FindAsync(itemImageId);
         }
 
-        public async Task<IEnumerable<ItemModel>> GetAllAsync()
+        public async Task<IEnumerable<ItemModel>> GetAllAsync(Enum[] includes)
         {
-            return await _context.Item.ToListAsync();
+            IQueryable<ItemModel> query = GetQuery(includes);
+            return await query.ToListAsync();
         }
 
         public async Task<IEnumerable<ItemModel>> FindAsync(Expression<Func<ItemModel, bool>> where)

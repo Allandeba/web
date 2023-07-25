@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using getQuote.Models;
 using getQuote.DAO;
-using Newtonsoft.Json;
 
 namespace getQuote.Controllers
 {
