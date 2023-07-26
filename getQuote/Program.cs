@@ -21,7 +21,8 @@ public class Program
             );
 
         // Add MySQL connection.
-        var connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION");
+        //var connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION");
+        var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
         builder.Services.AddDbContext<ApplicationDBContext>(
             options =>
                 options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString))

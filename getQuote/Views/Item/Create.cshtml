@@ -7,6 +7,7 @@
 @section Scripts
 {
     <script src="@Url.Content("~/js/uploadImageUtils.js")"></script>
+    <script src="@Url.Content("~/js/submitHelper.js")"></script>
 }
 
 <div class="container">
@@ -49,7 +50,7 @@
 
                 <hr class="my-4">
 
-                <div class="text-end mb-4">
+                <div id="submit" class="text-end mb-4">
                     <button class="btn btn-primary btn-lg" type="submit">Save</button>
                     <a class="btn btn-secondary btn-lg" asp-action="index">Cancel</a>
                 </div>
