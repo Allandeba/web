@@ -142,7 +142,7 @@ namespace getQuote
         private async Task CreateProposalHistoryAsync(ProposalModel existentProposal)
         {
             ProposalHistoryModel ProposalHistory = new();
-            ProposalHistory.ModificationDate = DateTime.Now;
+            ProposalHistory.ModificationDate = existentProposal.ModificationDate;
             ProposalHistory.Person = existentProposal.Person;
             ProposalHistory.Proposal = existentProposal;
 
