@@ -1,4 +1,5 @@
-﻿using getQuote.Models;
+﻿using System.Linq.Expressions;
+using getQuote.Models;
 
 namespace getQuote
 {
@@ -96,6 +97,19 @@ namespace getQuote
             ;
 
             await _repository.RemoveAsync(item);
+        }
+
+        public async Task<IEnumerable<ItemModel>> FindAsync(Expression<Func<ItemModel, bool>> where)
+        {
+            return await _repository.FindAsync(where);
+        }
+
+        public async Task<IEnumerable<ItemModel>> FindAsync(
+            Expression<Func<ItemModel, bool>> where,
+            ItemIncludes[] includes
+        )
+        {
+            return await _repository.FindAsync(where, includes.Cast<System.Enum>().ToArray());
         }
     }
 }

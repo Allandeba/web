@@ -58,6 +58,15 @@ namespace getQuote
             return await _context.Item.Where(where).ToListAsync();
         }
 
+        public async Task<IEnumerable<ItemModel>> FindAsync(
+            Expression<Func<ItemModel, bool>> where,
+            Enum[] includes
+        )
+        {
+            IQueryable<ItemModel> query = GetQuery(includes);
+            return await query.Where(where).ToListAsync();
+        }
+
         public async Task AddAsync(ItemModel item)
         {
             await _context.Item.AddAsync(item);

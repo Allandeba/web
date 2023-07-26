@@ -32,4 +32,11 @@
         None,
         ItemImage
     }
+
+    public enum ProposalHistoryIncludes
+    {
+        None,
+        Person,
+        Proposal
+    }
 }
