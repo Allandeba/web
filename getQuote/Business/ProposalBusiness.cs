@@ -8,16 +8,19 @@ namespace getQuote
         private readonly ProposalRepository _repository;
         private readonly PersonBusiness _personBusiness;
         private readonly ItemBusiness _itemBusiness;
+        private readonly ProposalHistoryBusiness _proposalHistoryBusiness;
 
         public ProposalBusiness(
             ProposalRepository ProposalRepository,
             PersonBusiness personBusiness,
-            ItemBusiness itemBusiness
+            ItemBusiness itemBusiness,
+            ProposalHistoryBusiness proposalHistoryBusiness
         )
         {
             _repository = ProposalRepository;
             _personBusiness = personBusiness;
             _itemBusiness = itemBusiness;
+            _proposalHistoryBusiness = proposalHistoryBusiness;
         }
 
         public async Task<IEnumerable<ProposalModel>> GetProposals()
@@ -96,7 +99,7 @@ namespace getQuote
                 return;
             }
 
-            //SetProposalHistoryAsync(existentProposal);
+            await CreateProposalHistoryAsync(existentProposal);
 
             await UpdateExistentProposalInformation(existentProposal, proposal);
             await _repository.UpdateAsync(existentProposal);
@@ -136,25 +139,25 @@ namespace getQuote
             return await _personBusiness.GetByIdAsync(personId);
         }
 
-        private async Task SetProposalHistoryAsync(ProposalModel existentProposal)
+        private async Task CreateProposalHistoryAsync(ProposalModel existentProposal)
         {
-            // Todo: Quando fizer o ProposalHistoryBusiness passar pra lá
-            //ProposalHistoryModel ProposalHistory = new();
-            //ProposalHistory.ModificationDate = existentProposal.ModificationDate;
-            //ProposalHistory.Person = existentProposal.Person;
-            //ProposalHistory.Proposal = existentProposal;
+            ProposalHistoryModel ProposalHistory = new();
+            ProposalHistory.ModificationDate = DateTime.Now;
+            ProposalHistory.Person = existentProposal.Person;
+            ProposalHistory.Proposal = existentProposal;
 
-            //ProposalContentJSON proposalContentJSON = new();
-            //foreach (ProposalContentModel proposalContent in existentProposal.ProposalContent) {
-            //    ProposalContentItems proposalContentItems = new();
-            //    proposalContentItems.ItemId = proposalContent.ItemId.ToString();
-            //    proposalContentItems.Quantity = proposalContent.Quantity.ToString();
-            //    proposalContentJSON.ProposalContentItems.Add(proposalContentItems);
-            //}
+            ProposalContentJSON proposalContentJSON = new();
+            foreach (ProposalContentModel proposalContent in existentProposal.ProposalContent)
+            {
+                ProposalContentItems proposalContentItems = new();
+                proposalContentItems.ItemId = proposalContent.ItemId.ToString();
+                proposalContentItems.Quantity = proposalContent.Quantity.ToString();
+                proposalContentJSON.ProposalContentItems.Add(proposalContentItems);
+            }
 
-            //ProposalHistory.ProposalContentJSON = proposalContentJSON;
+            ProposalHistory.ProposalContentJSON = proposalContentJSON;
 
-            //await _proposalHistoryBusiness.AddAsync(ProposalHistory);
+            await _proposalHistoryBusiness.AddAsync(ProposalHistory);
         }
 
         private async Task UpdateExistentProposalInformation(
