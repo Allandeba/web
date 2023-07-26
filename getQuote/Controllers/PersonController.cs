@@ -1,10 +1,9 @@
-﻿using System.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using getQuote.Models;
 
 namespace getQuote.Controllers
 {
-    public class PersonController : Controller
+    public class PersonController : BaseController
     {
         private readonly PersonBusiness _business;
 
@@ -63,17 +62,6 @@ namespace getQuote.Controllers
         {
             await _business.RemoveAsync(id);
             return RedirectToAction(nameof(Index));
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(
-                new ErrorViewModel
-                {
-                    RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
-                }
-            );
         }
     }
 }

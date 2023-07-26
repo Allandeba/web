@@ -1,10 +1,9 @@
-﻿using System.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using getQuote.Models;
 
 namespace getQuote.Controllers
 {
-    public class ProposalHistoryController : Controller
+    public class ProposalHistoryController : BaseController
     {
         private readonly ProposalHistoryBusiness _business;
 
@@ -17,17 +16,6 @@ namespace getQuote.Controllers
         {
             ProposalModel proposal = await _business.GetProposalFromHistory(id);
             return View(proposal);
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(
-                new ErrorViewModel
-                {
-                    RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
-                }
-            );
         }
     }
 }

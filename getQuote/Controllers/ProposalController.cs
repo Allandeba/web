@@ -1,10 +1,9 @@
-﻿using System.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using getQuote.Models;
 
 namespace getQuote.Controllers
 {
-    public class ProposalController : Controller
+    public class ProposalController : BaseController
     {
         private readonly ProposalBusiness _business;
 
@@ -74,17 +73,6 @@ namespace getQuote.Controllers
         {
             ProposalModel proposal = await _business.GetPrintByIdAsync(id);
             return View(proposal);
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(
-                new ErrorViewModel
-                {
-                    RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
-                }
-            );
         }
 
         private async Task PopulateViewBagUpdate(ProposalModel proposal)
