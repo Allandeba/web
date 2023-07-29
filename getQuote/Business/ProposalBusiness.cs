@@ -166,24 +166,26 @@ namespace getQuote
         )
         {
             existentProposal.Person = proposalToUpdate.Person;
-            //existentProposal.ProposalContent = proposalToUpdate.ProposalContent;
-            //existentProposal.ProposalHistory = proposalToUpdate.ProposalHistory;
             existentProposal.Discount = proposalToUpdate.Discount;
 
             await RemoveDeletedProposalContents(existentProposal, proposalToUpdate);
 
-            // Adiciona novos itens ou atualiza os existentes com seus novos valores
-            //foreach (var proposalContent in proposal.ProposalContent) {
-            //    var updateProposalContent = existentProposal.ProposalContent.Find(
-            //        a => a.Item.ItemId == proposalContent.Item.ItemId
-            //    );
-            //    if (updateProposalContent == null) {
-            //        existentProposal.ProposalContent.Add(proposalContent);
-            //    } else {
-            //        updateProposalContent.Item = proposalContent.Item;
-            //        updateProposalContent.Quantity = proposalContent.Quantity;
-            //    }
-            //}
+            //Adiciona novos itens ou atualiza os existentes com seus novos valores
+            foreach (ProposalContentModel proposalContent in proposalToUpdate.ProposalContent)
+            {
+                ProposalContentModel updateProposalContent = existentProposal.ProposalContent.Find(
+                    a => a.Item.ItemId == proposalContent.Item.ItemId
+                );
+                if (updateProposalContent == null)
+                {
+                    existentProposal.ProposalContent.Add(proposalContent);
+                }
+                else
+                {
+                    updateProposalContent.Item = proposalContent.Item;
+                    updateProposalContent.Quantity = proposalContent.Quantity;
+                }
+            }
         }
 
         private async Task RemoveDeletedProposalContents(
