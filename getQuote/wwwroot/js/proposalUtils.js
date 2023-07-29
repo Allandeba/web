@@ -167,13 +167,24 @@ function calculateTotalValue() {
 }
 
 function deleteItem(proposalContentId, itemId) {
-  if (confirm('Tem certeza de que deseja excluir o Proposal Content ID: ' + proposalContentId + ', Item ID: ' + itemId + '?')) {
-    var row = document.getElementById(NEW_PROPOSAL_CONTENT_NAME + proposalContentId);
-    if (row) {
-      row.remove();
-      calculateTotalValue();
-    }
-  }
+  openModal({
+    title: 'Deleting proposal content!',
+    message: 'Are you sure that you would like to delete Proposal Contetn ID: ' + proposalContentId + ', Item ID: ' + itemId + '?',
+  })
+    .then((result) => {
+      if (result) {
+        let row = document.getElementById(NEW_PROPOSAL_CONTENT_NAME + proposalContentId);
+        if (row) {
+          row.remove();
+          calculateTotalValue();
+        }
+      } else {
+        //
+      }
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
 }
 
 function setPerson() {

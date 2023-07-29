@@ -1,18 +1,18 @@
-﻿let imageClient = document.querySelector("#images__client");
-let defaultImageSelect = document.querySelector("#defaultImageSelect");
+﻿let imageClient = document.querySelector('#images__client');
+let defaultImageSelect = document.querySelector('#defaultImageSelect');
 let SizeImagesToDelete = 0;
 
 const MAX_HEIGHT = 250;
 const MAX_WIDTH = 250;
-const DEFAULT_SELECT_ENUM = "None";
+const DEFAULT_SELECT_ENUM = 'None';
 
-const canvas = document.createElement("canvas");
-const ctx = canvas.getContext("2d");
+const canvas = document.createElement('canvas');
+const ctx = canvas.getContext('2d');
 canvas.width = Math.floor(MAX_WIDTH);
 canvas.height = Math.floor(MAX_HEIGHT);
 
-const uploadFiles = document.getElementById("upload");
-uploadFiles.addEventListener("change", (event) => processNewImages(event));
+const uploadFiles = document.getElementById('upload');
+uploadFiles.addEventListener('change', (event) => processNewImages(event));
 
 function processNewImages(_event) {
   const selectedFiles = _event.target.files;
@@ -27,7 +27,7 @@ function processNewImages(_event) {
     newImage.name = selectedFile.name;
 
     const reader = new FileReader();
-    reader.addEventListener("load", () => {
+    reader.addEventListener('load', () => {
       newImage.src = reader.result;
     });
 
@@ -36,21 +36,16 @@ function processNewImages(_event) {
 }
 
 function deleteAllChildren() {
-  Array.from(imageClient.getElementsByClassName("image__client")).forEach(
-    function (element, index) {
-      const parent = element.parentNode;
-      imageClient.removeChild(parent);
-    }
-  );
+  Array.from(imageClient.getElementsByClassName('image__client')).forEach(function (element, index) {
+    const parent = element.parentNode;
+    imageClient.removeChild(parent);
+  });
 
   deleteNotExistentDefaultImage();
 }
 
 function deleteClientItemImage(itemImageId) {
-  Array.from(imageClient.getElementsByTagName("img")).forEach(function (
-    element,
-    index
-  ) {
+  Array.from(imageClient.getElementsByTagName('img')).forEach(function (element, index) {
     if (element.id == itemImageId) {
       const parent = element.parentNode;
       imageClient.removeChild(parent);
@@ -62,7 +57,7 @@ function deleteClientItemImage(itemImageId) {
 
 function getNewImage() {
   let image = new Image();
-  image.addEventListener("load", (event) => {
+  image.addEventListener('load', (event) => {
     drawImage(event.target);
     drawElements(event.target);
     drawNewDefaultImageSelect(event.target);
@@ -90,33 +85,33 @@ function drawElements(_newImage) {
 }
 
 function getSpan() {
-  let span = document.createElement("span");
-  span.setAttribute("class", "col-6 col-md-4");
+  let span = document.createElement('span');
+  span.setAttribute('class', 'col-6 col-md-4');
 
   return span;
 }
 
 function getDeleteLinkElement() {
-  let deleteLink = document.createElement("a");
-  deleteLink.setAttribute("id", 0);
-  deleteLink.setAttribute("arial-label", "Close");
+  let deleteLink = document.createElement('a');
+  deleteLink.setAttribute('id', 0);
+  deleteLink.setAttribute('arial-label', 'Close');
   deleteLink.setAttribute(
-    "class",
-    "close " +
-      "position-absolute " +
-      "translate-middle " +
-      "d - block " +
-      "badge " +
-      "badge-danger " +
-      "border border-light " +
-      "rounded-circle " +
-      "bg-danger " +
-      "p-2 " +
-      "opacity-75 " +
-      "text-decoration-none"
+    'class',
+    'close ' +
+      'position-absolute ' +
+      'translate-middle ' +
+      'd - block ' +
+      'badge ' +
+      'badge-danger ' +
+      'border border-light ' +
+      'rounded-circle ' +
+      'bg-danger ' +
+      'p-2 ' +
+      'opacity-75 ' +
+      'text-decoration-none'
   );
 
-  deleteLink.addEventListener("click", (event) => {
+  deleteLink.addEventListener('click', (event) => {
     deleteItemImage(event.target.id);
   });
 
@@ -124,20 +119,20 @@ function getDeleteLinkElement() {
 }
 
 function getSpanTimesElement() {
-  let spanTimes = document.createElement("span");
-  spanTimes.setAttribute("aria-hidden", "true");
-  spanTimes.innerHTML = "&times;";
+  let spanTimes = document.createElement('span');
+  spanTimes.setAttribute('aria-hidden', 'true');
+  spanTimes.innerHTML = '&times;';
 
   return spanTimes;
 }
 
 function getImageElement(_image) {
-  let img = document.createElement("img");
-  img.setAttribute("width", MAX_WIDTH);
-  img.setAttribute("height", MAX_HEIGHT);
-  img.setAttribute("class", "image__client");
-  img.setAttribute("alt", _image.name);
-  img.src = canvas.toDataURL("image/jpeg");
+  let img = document.createElement('img');
+  img.setAttribute('width', MAX_WIDTH);
+  img.setAttribute('height', MAX_HEIGHT);
+  img.setAttribute('class', 'image__client');
+  img.setAttribute('alt', _image.name);
+  img.src = canvas.toDataURL('image/jpeg');
   img.name = _image.name;
 
   return img;
@@ -146,14 +141,14 @@ function getImageElement(_image) {
 function clearUploadImage(_id) {
   if (!_id) return;
 
-  let uploadFiles = document.getElementById("upload");
-  uploadFiles.value = "";
+  let uploadFiles = document.getElementById('upload');
+  uploadFiles.value = '';
 
   deleteAllChildren();
 }
 
 function drawNewDefaultImageSelect(_newImage) {
-  var option = document.createElement("option");
+  var option = document.createElement('option');
   option.value = _newImage.name;
   option.text = _newImage.name;
   defaultImageSelect.appendChild(option);
@@ -166,23 +161,15 @@ function canDeleteDefaultImageSelect(_name) {
 function deleteNotExistentDefaultImage() {
   let imageNameList = [];
 
-  Array.from(imageClient.getElementsByTagName("img")).forEach(function (
-    element,
-    index
-  ) {
+  Array.from(imageClient.getElementsByTagName('img')).forEach(function (element, index) {
     imageNameList.push(element.name);
   });
 
-  Array.from(defaultImageSelect.getElementsByTagName("option")).forEach(
-    function (element, index) {
-      if (
-        !imageNameList.includes(element.value) &&
-        canDeleteDefaultImageSelect(element.value)
-      ) {
-        defaultImageSelect.removeChild(element);
-      }
+  Array.from(defaultImageSelect.getElementsByTagName('option')).forEach(function (element, index) {
+    if (!imageNameList.includes(element.value) && canDeleteDefaultImageSelect(element.value)) {
+      defaultImageSelect.removeChild(element);
     }
-  );
+  });
 }
 
 function createInputForDeletingImages(itemImageId) {
@@ -196,21 +183,34 @@ function createInputForDeletingImages(itemImageId) {
 }
 
 function deleteItemImage(itemImageId) {
+  const title = 'Deleting image!';
+
   if (itemImageId == 0) {
-    if (
-      confirm(
-        "Tem certeza de que deseja excluir TODAS as imagens adicionadas agora?"
-      )
-    ) {
-      // Não posso manipular o input do "type=file" para excluir somente a selecionada.
-      clearUploadImage(itemImageId);
-      deleteNotExistentDefaultImage();
-    }
+    openModal({ title: title, message: 'Are you sure that you would like to delete ALL recently uploaded images?' })
+      .then((result) => {
+        if (result) {
+          clearUploadImage(itemImageId);
+          deleteNotExistentDefaultImage();
+        } else {
+          //
+        }
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
   } else {
-    if (confirm('Tem certeza de que deseja excluir a Item Image ID: ' + itemImageId + ' ?')) {
-      createInputForDeletingImages(itemImageId);
-      deleteClientItemImage(itemImageId);
-      deleteNotExistentDefaultImage();
-    }
+    openModal({ title: title, message: 'Are you sure that you would like to delete the Item Image from ID: ' + itemImageId + ' ?' })
+      .then((result) => {
+        if (result) {
+          createInputForDeletingImages(itemImageId);
+          deleteClientItemImage(itemImageId);
+          deleteNotExistentDefaultImage();
+        } else {
+          console.log('User clicked "No"');
+        }
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
   }
 }
