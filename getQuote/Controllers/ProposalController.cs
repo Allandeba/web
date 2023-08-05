@@ -75,6 +75,19 @@ namespace getQuote.Controllers
             return View(proposal);
         }
 
+        public IActionResult ExportToPDF(int id)
+        {
+            string url = $"{Request.Scheme}://{Request.Host}{Request.PathBase}";
+            url = $"{url}/{ControllerContext.RouteData.Values["controller"]}/{nameof(Print)}/{id}";
+
+            ExportToPDFModel exportPDF = new();
+            return File(
+                exportPDF.GetPDF(url),
+                System.Net.Mime.MediaTypeNames.Application.Pdf,
+                $"Proposal-{id}.pdf"
+            );
+        }
+
         private async Task PopulateViewBagUpdate(ProposalModel proposal)
         {
             ViewBag.ProposalPerson = proposal.Person;
