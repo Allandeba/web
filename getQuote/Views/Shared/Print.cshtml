@@ -1,93 +1,66 @@
 ﻿@model ProposalModel
 
 @{
+    Layout = "_LayoutBase";
     ViewData["Title"] = "Print - " + Model.ProposalId;
 }
 
-<script>function gerarPDF() {
-        // Hide elements
-        let header = document.getElementsByTagName("header")[0];
-        console.log('header = ', header)
-        const HEADER_STYLE = header.style.display;
-        header.style.display = 'none';
-
-        let footer = document.getElementsByTagName("footer")[0];
-        const FOOTER_STYLE = footer.style.display;
-        footer.style.display = 'none';
-
-        let btnGerarPDF = document.getElementById("btnGerarPDF");
-        const BTN_GERAR_PDF_STYLE = btnGerarPDF.style.display;
-        btnGerarPDF.style.display = 'none';
-
-        window.print();
-
-        // Show elements
-        header.style.display = HEADER_STYLE;
-        footer.style.display = FOOTER_STYLE;
-        btnGerarPDF.style.display = BTN_GERAR_PDF_STYLE;
-
-    };</script>
-
-<div class="d-flex justify-content-center">
-    <button id="btnGerarPDF" onclick="gerarPDF()" class="btn btn-primary">GERAR PDF</button>
-</div>
-
-<header class="bg-dark py-5">
-    <div class="container px-4 px-lg-5 my-5">
+<div class="container-fluid">
+    <header class="bg-dark py-5 mb-4">
         <div class="text-center text-white">
             <h1 class="display-4 fw-bolder">@ViewData["Title"]</h1>
             <p class="lead fw-normal text-white-50 mb-0">Some information</p>
         </div>
-    </div>
-</header>
+    </header>
 
-<div class="container">
     <div class="row">
-        <div class="table-responsive mb-4">
-            <table id="proposalContentTable" class="table table-striped">
-                <thead class="thead-light">
-                    <tr>
-                        <th class="text-center">Item ID</th>
-                        <th class="text-center">Item Name</th>
-                        <th class="text-center">Quantity</th>
-                        <th class="text-center">Description</th>
-                        <th class="text-center">Value</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @{
-                        decimal totalValue = 0;
-                    }
-
-                    @foreach (var proposalContent in Model.ProposalContent)
-                    {
-                        <tr id="proposalContentRow_@proposalContent.ProposalContentId">
-                            <td class="text-center">@proposalContent.Item.ItemId</td>
-                            <td class="text-center">@proposalContent.Item.ItemName</td>
-                            <td class="text-center">@proposalContent.Quantity</td>
-                            <td class="text-center">@proposalContent.Item.Description</td>
-                            <td class="text-center">R$ @proposalContent.Item.Value</td>
+        <div class="col-md-12">
+            <div class="table-responsive mb-4">
+                <table id="proposalContentTable" class="table table-striped">
+                    <thead class="thead-light">
+                        <tr>
+                            <th class="text-center">Item ID</th>
+                            <th class="text-center">Item Name</th>
+                            <th class="text-center">Quantity</th>
+                            <th class="text-center">Description</th>
+                            <th class="text-center">Value</th>
                         </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            decimal totalValue = 0;
+                        }
 
-                        totalValue += proposalContent.Item.Value * proposalContent.Quantity;
-                    }
+                        @foreach (var proposalContent in Model.ProposalContent)
+                        {
+                            <tr id="proposalContentRow_@proposalContent.ProposalContentId">
+                                <td class="text-center">@proposalContent.Item.ItemId</td>
+                                <td class="text-center">@proposalContent.Item.ItemName</td>
+                                <td class="text-center">@proposalContent.Quantity</td>
+                                <td class="text-center">@proposalContent.Item.Description</td>
+                                <td class="text-center">R$ @proposalContent.Item.Value</td>
+                            </tr>
 
-                    <tr>
-                        <td colspan="4" class="text-end fw-bold">Total:</td>
-                        <td class="text-center fw-bold">R$ @((totalValue - Model.Discount).ToString())</td>
-                    </tr>
-                </tbody>
-            </table>
+                            totalValue += proposalContent.Item.Value * proposalContent.Quantity;
+                        }
+
+                        <tr>
+                            <td colspan="4" class="text-end fw-bold">Total:</td>
+                            <td class="text-center fw-bold">R$ @((totalValue - Model.Discount).ToString())</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 
-    <hr class="my-4">
-    <div class="text-center text-black">
-        <h1 class="display-4 fw-bolder">Catalog</h1>
+    <div class="bg-dark py-2">
+        <div class="text-center text-white">
+            <h1 class="display-4 fw-bolder">Catalog</h1>
+        </div>
     </div>
-    <hr class="my-4">
 
-    <div class="row justify-content-center">
+    <div class="row justify-content-center py-2">
         @foreach (var ProposalContent in Model.ProposalContent)
         {
             ItemImageModel image = ProposalContent.Item.GetMainImage();
@@ -105,7 +78,6 @@
                         <img id="@(image.ItemImageId)" name="@(image.FileName)" src="data:image/*;base64,@(Convert.ToBase64String(image.ImageFile))" alt="@(image.FileName)" class="img-fluid" />
                     }
                 }
-
             </div>
         }
     </div>
