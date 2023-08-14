@@ -1,9 +1,9 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 using SixLabors.ImageSharp.Formats.Jpeg;
 using Image = SixLabors.ImageSharp.Image;
+using getQuote.Framework;
 
 namespace getQuote.Models;
 
@@ -47,7 +47,7 @@ public class ItemModel
             {
                 ItemImageModel itemImage = new ItemImageModel();
                 itemImage.FileName = image.FileName;
-                itemImage.ImageFile = ResizeImage(image).ToArray();
+                itemImage.ImageFile = ImageUtils.ResizeImage(image).ToArray();
 
                 this.ItemImageList.Add(itemImage);
             }
@@ -70,22 +70,6 @@ public class ItemModel
                 }
             }
         }
-    }
-
-    private MemoryStream ResizeImage(IFormFile image)
-    {
-        using var ms = new MemoryStream();
-        image.CopyTo(ms);
-        ms.Position = 0;
-
-        using var imageToResize = Image.Load(ms);
-        imageToResize.Mutate(x => x.Resize(Constants.MaxImageWidth, Constants.MaxImageHeight));
-
-        using var outputStream = new MemoryStream();
-        imageToResize.Save(outputStream, new JpegEncoder());
-        outputStream.Position = 0;
-
-        return outputStream;
     }
 
     public virtual List<ItemImageModel>? ItemImageList { get; set; }

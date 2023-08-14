@@ -3,7 +3,8 @@
     public enum DocumentTypes : int
     {
         CPF,
-        RG
+        RG,
+        CNPJ
     }
 
     public enum SelectDefault
@@ -38,5 +39,10 @@
         None,
         Person,
         Proposal
+    }
+
+    public enum CompanyIncludes
+    {
+        None
     }
 }

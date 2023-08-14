@@ -9,20 +9,20 @@
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'https' " />
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'http' " />
   <ItemGroup>
-    <PackageReference Include="OpenIddict" Version="4.6.0" />
+    <PackageReference Include="OpenIddict" Version="4.7.0" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="7.0.0" />
     <PackageReference Include="DotNetEnv" Version="2.5.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.9">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.10">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.9">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.10">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="SixLabors.ImageSharp" Version="3.0.1" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageReference Include="Syncfusion.HtmlToPdfConverter.Net.Mac" Version="22.2.7" />
+    <PackageReference Include="Syncfusion.HtmlToPdfConverter.Net.Mac" Version="22.2.8" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="DAO\" />
@@ -32,6 +32,8 @@
     <None Remove="Business\" />
     <None Remove="Repository\" />
     <None Remove="Interfaces\" />
+    <None Remove="Framework\" />
+    <None Remove="Views\Company\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DAO\" />
@@ -41,5 +43,7 @@
     <Folder Include="Business\" />
     <Folder Include="Repository\" />
     <Folder Include="Interfaces\" />
+    <Folder Include="Framework\" />
+    <Folder Include="Views\Company\" />
   </ItemGroup>
 </Project>
