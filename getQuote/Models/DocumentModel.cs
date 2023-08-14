@@ -1,8 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Reflection;
-using Microsoft.AspNetCore.Server.IISIntegration;
-using Microsoft.EntityFrameworkCore;
 
 namespace getQuote.Models;
 

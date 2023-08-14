@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Syncfusion.HtmlConverter;
+﻿using Syncfusion.HtmlConverter;
 using Syncfusion.Pdf;
 
 namespace getQuote.Models;
