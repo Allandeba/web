@@ -47,7 +47,9 @@ public class ItemModel
             {
                 ItemImageModel itemImage = new ItemImageModel();
                 itemImage.FileName = image.FileName;
-                itemImage.ImageFile = ImageUtils.ResizeImage(image).ToArray();
+                itemImage.ImageFile = ImageUtils
+                    .ResizeImage(image, Constants.MaxImageWidth, Constants.MaxImageHeight)
+                    .ToArray();
 
                 this.ItemImageList.Add(itemImage);
             }

@@ -9,18 +9,21 @@ namespace getQuote
         private readonly PersonBusiness _personBusiness;
         private readonly ItemBusiness _itemBusiness;
         private readonly ProposalHistoryBusiness _proposalHistoryBusiness;
+        private readonly CompanyBusiness _companyBusiness;
 
         public ProposalBusiness(
             ProposalRepository ProposalRepository,
             PersonBusiness personBusiness,
             ItemBusiness itemBusiness,
-            ProposalHistoryBusiness proposalHistoryBusiness
+            ProposalHistoryBusiness proposalHistoryBusiness,
+            CompanyBusiness CompanyBusiness
         )
         {
             _repository = ProposalRepository;
             _personBusiness = personBusiness;
             _itemBusiness = itemBusiness;
             _proposalHistoryBusiness = proposalHistoryBusiness;
+            _companyBusiness = CompanyBusiness;
         }
 
         public async Task<IEnumerable<ProposalModel>> GetProposals()
@@ -237,6 +240,12 @@ namespace getQuote
                         }
                 )
                 .ToList<dynamic>();
+        }
+
+        public async Task<CompanyModel>? GetCompany()
+        {
+            CompanyIncludes[] includes = new CompanyIncludes[] { CompanyIncludes.None };
+            return await _companyBusiness?.GetAllAsync();
         }
     }
 }

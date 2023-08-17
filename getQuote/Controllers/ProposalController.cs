@@ -71,6 +71,7 @@ namespace getQuote.Controllers
 
         public async Task<IActionResult> Print(int id)
         {
+            ViewBag.Company = await _business.GetCompany();
             ProposalModel proposal = await _business.GetPrintByIdAsync(id);
             return View(proposal);
         }

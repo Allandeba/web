@@ -30,3 +30,13 @@ body {
   opacity: 0.6;
   cursor: default;
 }
+
+.header-img {
+  text-align: center;
+}
+
+.header-img img {
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+}

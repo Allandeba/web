@@ -43,7 +43,13 @@ public class CompanyModel
     {
         if (FormImageFile != null)
         {
-            ImageFile = ImageUtils.ResizeImage(FormImageFile).ToArray();
+            ImageFile = ImageUtils
+                .ResizeImage(
+                    FormImageFile,
+                    Constants.MaxImageLogoWidth,
+                    Constants.MaxImageLogoHeight
+                )
+                .ToArray();
         }
     }
 }
