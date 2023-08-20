@@ -124,6 +124,13 @@ namespace getQuote.Controllers
             return Redirect(encodedMessage);
         }
 
+        public async Task<IActionResult> Search(string? search)
+        {
+            TempData[Constants.SearchBoxData] = search ?? "";
+            IEnumerable<ProposalModel>? proposals = await _business.GetAllLikeAsync(search);
+            return View(nameof(Index), proposals);
+        }
+
         private async Task PopulateViewBagUpdate(ProposalModel proposal)
         {
             ViewBag.ProposalPerson = proposal.Person;

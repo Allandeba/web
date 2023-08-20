@@ -264,8 +264,21 @@ namespace getQuote
 
         public async Task<CompanyModel>? GetCompany()
         {
-            CompanyIncludes[] includes = new CompanyIncludes[] { CompanyIncludes.None };
             return await _companyBusiness?.GetAllAsync();
+        }
+
+        public async Task<IEnumerable<ProposalModel>> GetAllLikeAsync(string? search)
+        {
+            if (search == null)
+            {
+                return await GetProposals();
+            }
+
+            ProposalIncludes[] includes = new ProposalIncludes[] { ProposalIncludes.Person };
+            return await _repository.FindAsync(
+                p => p.Person.FirstName.Contains(search) || p.Person.LastName.Contains(search),
+                includes.Cast<System.Enum>().ToArray()
+            );
         }
     }
 }
