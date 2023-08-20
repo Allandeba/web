@@ -77,4 +77,11 @@ public class ItemController : BaseController
         await _business.RemoveAsync(id);
         return RedirectToAction(nameof(Index));
     }
+
+    public async Task<IActionResult> Search(string? search)
+    {
+        TempData[Constants.SearchBoxData] = search ?? "";
+        IEnumerable<ItemModel>? items = await _business.GetAllLikeAsync(search);
+        return View(nameof(Index), items);
+    }
 }

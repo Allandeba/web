@@ -111,5 +111,15 @@ namespace getQuote
         {
             return await _repository.FindAsync(where, includes.Cast<System.Enum>().ToArray());
         }
+
+        public async Task<IEnumerable<ItemModel>> GetAllLikeAsync(string? search)
+        {
+            if (search == null)
+            {
+                return await GetItems();
+            }
+
+            return await _repository.FindAsync(p => p.ItemName.Contains(search));
+        }
     }
 }
