@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using getQuote.Models;
+using System.Web;
+using System;
 
 namespace getQuote.Controllers
 {
@@ -69,14 +71,14 @@ namespace getQuote.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        public async Task<IActionResult> Print(int id)
+        public async Task<IActionResult> Print(Guid id)
         {
             ViewBag.Company = await _business.GetCompany();
-            ProposalModel proposal = await _business.GetPrintByIdAsync(id);
+            ProposalModel proposal = await _business.GetPrintByGUIDAsync(id);
             return View(proposal);
         }
 
-        public IActionResult ExportToPDF(int id)
+        public IActionResult ExportToPDF(Guid id)
         {
             string url = $"{Request.Scheme}://{Request.Host}{Request.PathBase}";
             url = $"{url}/{ControllerContext.RouteData.Values["controller"]}/{nameof(Print)}/{id}";
@@ -85,8 +87,41 @@ namespace getQuote.Controllers
             return File(
                 exportPDF.GetPDF(url),
                 System.Net.Mime.MediaTypeNames.Application.Pdf,
-                $"Proposal-{id}.pdf"
+                $"Proposal.pdf"
             );
+        }
+
+        public async Task<IActionResult> SendWhatsApp(Guid id)
+        {
+            ProposalModel? proposal = await _business.GetByGUIDAsync(id);
+            if (proposal == null)
+            {
+                return NotFound();
+            }
+            ;
+
+            CompanyModel company = await _business.GetCompany();
+            if (company == null)
+            {
+                return NotFound();
+            }
+            ;
+
+            string url = $"{Request.Scheme}://{Request.Host}{Request.PathBase}";
+            url =
+                $"{url}/{ControllerContext.RouteData.Values["controller"]}/{nameof(ExportToPDF)}/{id}";
+
+            string? number = proposal.Person?.Contact.Phone;
+            string msg =
+                $"Hello, this is an automatic message from {company.CompanyName}.\nYou can download your proposal form this link below:\n{url}";
+
+            string encodedMessage =
+                "https://api.whatsapp.com/send?phone="
+                + HttpUtility.UrlEncode(number)
+                + "&text="
+                + HttpUtility.UrlEncode(msg);
+
+            return Redirect(encodedMessage);
         }
 
         private async Task PopulateViewBagUpdate(ProposalModel proposal)

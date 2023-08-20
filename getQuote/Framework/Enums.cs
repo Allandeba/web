@@ -16,6 +16,7 @@
     {
         None,
         Person,
+        PersonContact,
         ProposalHistory,
         Item,
         ItemImageList

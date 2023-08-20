@@ -28,6 +28,10 @@ namespace getQuote
                         query = query.Include(p => p.Person);
                         break;
 
+                    case ProposalIncludes.PersonContact:
+                        query = query.Include(p => p.Person).ThenInclude(p => p.Contact);
+                        break;
+
                     case ProposalIncludes.ProposalHistory:
                         query = query.Include(ph => ph.ProposalHistory);
                         break;
@@ -61,6 +65,12 @@ namespace getQuote
         {
             IQueryable<ProposalModel> query = GetQuery(includes);
             return await query.FirstOrDefaultAsync(p => p.ProposalId == proposalId);
+        }
+
+        public async Task<ProposalModel> GetByGUIDAsync(Guid GUID, Enum[] includes)
+        {
+            IQueryable<ProposalModel> query = GetQuery(includes);
+            return await query.FirstOrDefaultAsync(p => p.GUID.Equals(GUID));
         }
 
         public async Task<ProposalContentModel> GetProposalContentByIdAsync(int proposalContentId)

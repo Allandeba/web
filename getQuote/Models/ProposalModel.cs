@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,6 +15,8 @@ public class ProposalModel
     [DataType(DataType.Currency)]
     [Precision(18, 2)]
     public decimal Discount { get; set; } = 0;
+
+    public Guid GUID { get; set; } = Guid.NewGuid();
 
     [Display(Name = "Person")]
     public int PersonId { get; set; } = 0;

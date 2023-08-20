@@ -1,8 +1,6 @@
-﻿using System.Reflection.Emit;
-using getQuote.Models;
+﻿using getQuote.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace getQuote.DAO
 {
@@ -79,6 +77,8 @@ namespace getQuote.DAO
                 .HasColumnType("timestamp")
                 .HasDefaultValueSql("CURRENT_TIMESTAMP")
                 .ValueGeneratedOnAddOrUpdate();
+
+            modelBuilder.Entity<ProposalModel>().HasIndex(p => p.GUID).IsUnique();
         }
 
         private void ItemInformation(ModelBuilder modelBuilder)

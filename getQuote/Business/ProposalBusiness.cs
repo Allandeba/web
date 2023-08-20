@@ -56,13 +56,33 @@ namespace getQuote
         {
             ProposalIncludes[] includes = new ProposalIncludes[]
             {
-                ProposalIncludes.Person,
+                ProposalIncludes.PersonContact,
                 ProposalIncludes.Item
             };
             return await _repository.GetByIdAsync(
                 proposalId,
                 includes.Cast<System.Enum>().ToArray()
             );
+        }
+
+        public async Task<ProposalModel> GetPrintByGUIDAsync(Guid GUID)
+        {
+            ProposalIncludes[] includes = new ProposalIncludes[]
+            {
+                ProposalIncludes.PersonContact,
+                ProposalIncludes.ItemImageList
+            };
+            return await _repository.GetByGUIDAsync(GUID, includes.Cast<System.Enum>().ToArray());
+        }
+
+        public async Task<ProposalModel> GetByGUIDAsync(Guid GUID)
+        {
+            ProposalIncludes[] includes = new ProposalIncludes[]
+            {
+                ProposalIncludes.PersonContact,
+                ProposalIncludes.Item
+            };
+            return await _repository.GetByGUIDAsync(GUID, includes.Cast<System.Enum>().ToArray());
         }
 
         public async Task<ProposalModel> GetPrintByIdAsync(int proposalId)
