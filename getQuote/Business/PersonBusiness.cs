@@ -83,5 +83,17 @@ namespace getQuote
 
             await _repository.RemoveAsync(person);
         }
+
+        public async Task<IEnumerable<PersonModel>> GetAllLikeAsync(string? search)
+        {
+            if (search == null)
+            {
+                return await GetPeople();
+            }
+
+            return await _repository.FindAsync(
+                p => p.FirstName.Contains(search) || p.LastName.Contains(search)
+            );
+        }
     }
 }

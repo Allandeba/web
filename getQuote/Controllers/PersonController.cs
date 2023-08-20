@@ -12,10 +12,16 @@ namespace getQuote.Controllers
             _business = business;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(IEnumerable<PersonModel>? people)
         {
-            IEnumerable<PersonModel> people = await _business.GetPeople();
-            return View(people);
+            if (people == null || people.Count() == 0)
+            {
+                return await Search(null);
+            }
+            else
+            {
+                return View(people);
+            }
         }
 
         public IActionResult Create()
@@ -62,6 +68,13 @@ namespace getQuote.Controllers
         {
             await _business.RemoveAsync(id);
             return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> Search(string? search)
+        {
+            ViewBag.Search = search;
+            IEnumerable<PersonModel>? people = await _business.GetAllLikeAsync(search);
+            return View(nameof(Index), people);
         }
     }
 }
