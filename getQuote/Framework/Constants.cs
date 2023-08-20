@@ -5,4 +5,6 @@
 
     public const int MaxImageLogoWidth = 400;
     public const int MaxImageLogoHeight = 150;
+
+    public const string SearchBoxData = "search";
 }

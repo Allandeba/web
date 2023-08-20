@@ -72,7 +72,7 @@ namespace getQuote.Controllers
 
         public async Task<IActionResult> Search(string? search)
         {
-            ViewBag.Search = search;
+            TempData[Constants.SearchBoxData] = search ?? "";
             IEnumerable<PersonModel>? people = await _business.GetAllLikeAsync(search);
             return View(nameof(Index), people);
         }
