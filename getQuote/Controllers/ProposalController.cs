@@ -57,6 +57,8 @@ namespace getQuote.Controllers
         {
             if (!ModelState.IsValid)
             {
+                await _business.IncludePerson(proposal);
+                await _business.IncludeItems(proposal);
                 await PopulateViewBagUpdate(proposal);
                 return View(proposal);
             }
@@ -112,11 +114,10 @@ namespace getQuote.Controllers
                 $"{url}/{ControllerContext.RouteData.Values["controller"]}/{nameof(ExportToPDF)}/{id}";
 
             string? number = proposal.Person?.Contact.Phone;
-            string msg =
-                $"Hello, this is an automatic message from {company.CompanyName}.\nYou can download your proposal form this link below:\n{url}";
+            string msg = string.Format(Messages.WhatsAppMessage, company.CompanyName, url);
 
             string encodedMessage =
-                "https://api.whatsapp.com/send?phone="
+                Constants.WhatsAppURL
                 + HttpUtility.UrlEncode(number)
                 + "&text="
                 + HttpUtility.UrlEncode(msg);

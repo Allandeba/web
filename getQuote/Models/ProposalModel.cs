@@ -9,10 +9,11 @@ public class ProposalModel
     [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity), Key()]
     public int ProposalId { get; set; }
 
-    [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "dd/MM/yyyy")]
+    [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = Constants.DateFormat)]
     public DateTime ModificationDate { get; set; } = DateTime.MinValue;
 
-    [DataType(DataType.Currency)]
+    [DataType(DataType.Currency, ErrorMessage = Messages.InvalidFormatValidation)]
+    [Range(0, int.MaxValue, ErrorMessage = Messages.MinValueValidation)]
     [Precision(18, 2)]
     public decimal Discount { get; set; } = 0;
 

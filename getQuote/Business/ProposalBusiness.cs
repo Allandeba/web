@@ -280,5 +280,19 @@ namespace getQuote
                 includes.Cast<System.Enum>().ToArray()
             );
         }
+
+        public async Task IncludePerson(ProposalModel proposal)
+        {
+            PersonModel person = await GetPersonByIdAsync(proposal.PersonId);
+            proposal.Person = person;
+        }
+
+        public async Task IncludeItems(ProposalModel proposal)
+        {
+            foreach (var proposalContent in proposal.ProposalContent)
+            {
+                proposalContent.Item = await _itemBusiness.GetByIdAsync(proposalContent.ItemId);
+            }
+        }
     }
 }
