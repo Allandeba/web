@@ -9,34 +9,34 @@ public class CompanyModel
     [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity), Key()]
     public int CompanyId { get; set; }
 
-    [Required]
+    [Required(ErrorMessage = Messages.EmptyTextValidation)]
     [Display(Name = "Company name")]
-    [MaxLength(50)]
+    [MaxLength(50, ErrorMessage = Messages.MaxLengthValidation)]
     public string CompanyName { get; set; } = String.Empty;
 
-    [Required]
-    [MaxLength(50)]
+    [Required(ErrorMessage = Messages.EmptyTextValidation)]
+    [MaxLength(20, ErrorMessage = Messages.MaxLengthValidation)]
     public string CNPJ { get; set; } = String.Empty;
 
-    [Required]
-    [MaxLength(150)]
+    [Required(ErrorMessage = Messages.EmptyTextValidation)]
+    [MaxLength(150, ErrorMessage = Messages.MaxLengthValidation)]
     public string Address { get; set; } = String.Empty;
 
-    [Required]
-    [MaxLength(50)]
-    [DataType(DataType.EmailAddress, ErrorMessage = "Invalid Email format.")]
+    [Required(ErrorMessage = Messages.EmptyTextValidation)]
+    [MaxLength(50, ErrorMessage = Messages.MaxLengthValidation)]
+    [DataType(DataType.EmailAddress, ErrorMessage = Messages.InvalidFormatValidation)]
     public string Email { get; set; } = String.Empty;
 
-    [Required]
-    [MaxLength(15)]
-    [DataType(DataType.PhoneNumber, ErrorMessage = "Invalid Phone format.")]
+    [Required(ErrorMessage = Messages.EmptyTextValidation)]
+    [MaxLength(15, ErrorMessage = Messages.MaxLengthValidation)]
+    [DataType(DataType.PhoneNumber, ErrorMessage = Messages.InvalidFormatValidation)]
     public string Phone { get; set; } = String.Empty;
 
     public byte[]? ImageFile { get; set; } = null!;
 
     [NotMapped]
     [Display(Name = "Company image")]
-    [DataType(DataType.Upload)]
+    [DataType(DataType.Upload, ErrorMessage = Messages.InvalidFormatValidation)]
     public IFormFile? FormImageFile { get; set; }
 
     public void SetNewImage()
