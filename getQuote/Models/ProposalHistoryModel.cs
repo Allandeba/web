@@ -36,18 +36,18 @@ public class ProposalHistoryModel
 
     public DateTime ModificationDate { get; set; } = DateTime.MinValue;
 
-    [Required]
-    [DataType(DataType.Currency)]
+    [Required(ErrorMessage = Messages.EmptyTextValidation)]
+    [DataType(DataType.Currency, ErrorMessage = Messages.InvalidFormatValidation)]
     [Precision(18, 2)]
     public decimal Discount { get; set; } = 0;
 
-    [Required]
+    [Required(ErrorMessage = Messages.EmptyTextValidation)]
     public virtual ProposalModel Proposal { get; set; }
 
-    [Required]
+    [Required(ErrorMessage = Messages.EmptyTextValidation)]
     public virtual PersonModel Person { get; set; }
 
-    [Required]
+    [Required(ErrorMessage = Messages.EmptyTextValidation)]
     [Column(TypeName = "jsonb")]
     public ProposalContentJSON ProposalContentJSON { get; set; } = new();
 }
