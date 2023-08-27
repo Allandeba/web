@@ -16,13 +16,13 @@
             {
                 <div class="mb-3 text-start">
                     <label asp-for="FirstName" class="form-label"></label>
-                    <input asp-for="FirstName" class="form-control" placeholder="" required>
+                    <input asp-for="FirstName" class="form-control" placeholder="">
                     <span asp-validation-for="FirstName" class="text-danger"></span>
                 </div>
 
                 <div class="mb-3 text-start">
                     <label asp-for="LastName" class="form-label"></label>
-                    <input asp-for="LastName" class="form-control" placeholder="" required>
+                    <input asp-for="LastName" class="form-control" placeholder="">
                     <span asp-validation-for="LastName" class="text-danger"></span>
                 </div>
 
@@ -34,13 +34,13 @@
 
                 <div class="mb-3 text-start">
                     <label asp-for="Contact.Phone" class="form-label"></label>
-                    <input asp-for="Contact.Phone" class="form-control" placeholder="+55 (49) 9 xxxx-xxxx" required>
+                    <input asp-for="Contact.Phone" class="form-control" placeholder="+55 (49) 9 xxxx-xxxx">
                     <span asp-validation-for="Contact.Phone" class="text-danger"></span>
                 </div>
 
                 <div class="mb-3 text-start">
                     <label asp-for="Document.DocumentType"></label>
-                    <select asp-for="Document.DocumentType" asp-items="@Html.GetEnumSelectList<DocumentTypes>()" class="form-select" required>
+                    <select asp-for="Document.DocumentType" asp-items="@Html.GetEnumSelectList<DocumentTypes>()" class="form-select">
                         <option>--Choose--</option>
                     </select>
                     <span asp-validation-for="Document.DocumentType" class="text-danger"></span>
@@ -48,7 +48,7 @@
 
                 <div class="mb-3 text-start">
                     <label asp-for="Document.Document" class="form-label"></label>
-                    <input asp-for="Document.Document" class="form-control" placeholder="" required>
+                    <input asp-for="Document.Document" class="form-control" placeholder="">
                     <span asp-validation-for="Document.Document" class="text-danger"></span>
                 </div>
 
