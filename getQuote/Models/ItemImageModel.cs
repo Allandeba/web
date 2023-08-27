@@ -1,8 +1,5 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.AspNetCore.Server.IISIntegration;
-using Microsoft.EntityFrameworkCore;
 
 namespace getQuote.Models;
 
@@ -11,11 +8,11 @@ public class ItemImageModel
     [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity), Key()]
     public int ItemImageId { get; set; }
 
-    [Required]
+    [Required(ErrorMessage = Messages.EmptyTextValidation)]
     public bool Main { get; set; } = false;
 
-    [Required]
-    [MaxLength(100)]
+    [Required(ErrorMessage = Messages.EmptyTextValidation)]
+    [MaxLength(100, ErrorMessage = Messages.MaxLengthValidation)]
     public string FileName { get; set; } = String.Empty;
 
     [Display(Name = "Upload Image")]

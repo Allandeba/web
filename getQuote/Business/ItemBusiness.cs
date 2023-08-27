@@ -121,5 +121,11 @@ namespace getQuote
 
             return await _repository.FindAsync(p => p.ItemName.Contains(search));
         }
+
+        public async Task IncludeImages(ItemModel item)
+        {
+            ItemModel itemDB = await GetByIdAsync(item.ItemId);
+            item.ItemImageList = itemDB.ItemImageList;
+        }
     }
 }

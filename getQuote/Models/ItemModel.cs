@@ -1,8 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
-using SixLabors.ImageSharp.Formats.Jpeg;
-using Image = SixLabors.ImageSharp.Image;
 using getQuote.Framework;
 
 namespace getQuote.Models;
@@ -12,23 +10,24 @@ public class ItemModel
     [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity), Key()]
     public int ItemId { get; set; }
 
-    [Required]
+    [Required(ErrorMessage = Messages.EmptyTextValidation)]
     [Display(Name = "Item name")]
-    [MaxLength(50)]
+    [MaxLength(50, ErrorMessage = Messages.MaxLengthValidation)]
     public string ItemName { get; set; } = String.Empty;
 
-    [Required]
+    [Required(ErrorMessage = Messages.EmptyTextValidation)]
+    [Range(0, int.MaxValue, ErrorMessage = Messages.MinValueValidation)]
+    [DataType(DataType.Currency, ErrorMessage = Messages.InvalidFormatValidation)]
     [Precision(18, 2)]
-    [DataType(DataType.Currency, ErrorMessage = "Invalid currency format.")]
     public decimal Value { get; set; } = 0;
 
-    [Required]
-    [MaxLength(250)]
+    [Required(ErrorMessage = Messages.EmptyTextValidation)]
+    [MaxLength(250, ErrorMessage = Messages.MaxLengthValidation)]
     public string Description { get; set; } = String.Empty;
 
     [NotMapped]
     [Display(Name = "Upload Image")]
-    [DataType(DataType.Upload)]
+    [DataType(DataType.Upload, ErrorMessage = Messages.InvalidFormatValidation)]
     public List<IFormFile> ImageFiles { get; set; } = new();
 
     [NotMapped]

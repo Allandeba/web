@@ -21,19 +21,19 @@
 
                 <div class="mb-3 text-start">
                     <label asp-for="ItemName" class="form-label"></label>
-                    <input asp-for="ItemName" class="form-control" placeholder="" required>
+                    <input asp-for="ItemName" class="form-control" placeholder="">
                     <span asp-validation-for="ItemName" class="text-danger"></span>
                 </div>
 
                 <div class="mb-3 text-start">
                     <label asp-for="Value" class="form-label"></label>
-                    <input asp-for="Value" class="form-control" placeholder="" required>
+                    <input asp-for="Value" class="form-control" placeholder="">
                     <span asp-validation-for="Value" class="text-danger"></span>
                 </div>
 
                 <div class="mb-3 text-start">
                     <label asp-for="Description" class="form-label"></label>
-                    <textarea asp-for="Description" class="form-control" placeholder="" required></textarea>
+                    <textarea asp-for="Description" class="form-control" placeholder=""></textarea>
                     <span asp-validation-for="Description" class="text-danger"></span>
                 </div>
 
@@ -41,7 +41,8 @@
                     <label asp-for="DefaultImage" class="form-label"></label>
                     <select asp-for="DefaultImage" class="form-select" id="defaultImageSelect">
                         <option value="@(SelectDefault.None)">@(SelectDefault.None.ToString())</option>
-                        @foreach (var image in Model.ItemImageList)
+
+                        @foreach (ItemImageModel image in Model.ItemImageList)
                         {
                             @if (image.Main)
                             {
@@ -62,7 +63,7 @@
                 </div>
 
                 <div class="row g-3" id="images__client">
-                    @foreach (var image in Model.ItemImageList)
+                    @foreach (ItemImageModel image in Model.ItemImageList)
                     {
                         <span class="col-6 col-md-4">
                             @*If changed, remember to change the creation of the span in uploadImageUtils.js*@

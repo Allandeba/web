@@ -65,6 +65,7 @@ public class ItemController : BaseController
 
         if (!ModelState.IsValid)
         {
+            await _business.IncludeImages(item);
             return View(item);
         }
 
