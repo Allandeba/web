@@ -14,6 +14,7 @@ namespace getQuote.Controllers
 
         public async Task<IActionResult> Print(int id)
         {
+            ViewBag.Company = await _business.GetCompany();
             ProposalModel proposal = await _business.GetProposalFromHistory(id);
             return View(proposal);
         }
@@ -27,7 +28,7 @@ namespace getQuote.Controllers
             return File(
                 exportPDF.GetPDF(url),
                 System.Net.Mime.MediaTypeNames.Application.Pdf,
-                $"ProposalHistory-{id}.pdf"
+                $"ProposalHistory.pdf"
             );
         }
     }

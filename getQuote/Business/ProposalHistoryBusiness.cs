@@ -1,5 +1,4 @@
 ﻿using getQuote.Models;
-using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace getQuote
 {
@@ -8,14 +7,17 @@ namespace getQuote
         private readonly ProposalHistoryRepository _repository;
 
         private readonly ItemBusiness _itemBusiness;
+        private readonly CompanyBusiness _companyBusiness;
 
         public ProposalHistoryBusiness(
             ProposalHistoryRepository ProposalHistoryRepository,
-            ItemBusiness itemBusiness
+            ItemBusiness itemBusiness,
+            CompanyBusiness CompanyBusiness
         )
         {
             _repository = ProposalHistoryRepository;
             _itemBusiness = itemBusiness;
+            _companyBusiness = CompanyBusiness;
         }
 
         public async Task<ProposalModel> GetProposalFromHistory(int proposalHistoryId)
@@ -79,6 +81,11 @@ namespace getQuote
                 proposalHistoryId,
                 includes.Cast<System.Enum>().ToArray()
             );
+        }
+
+        public async Task<CompanyModel>? GetCompany()
+        {
+            return await _companyBusiness?.GetAllAsync();
         }
     }
 }
