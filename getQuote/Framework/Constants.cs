@@ -7,4 +7,8 @@
     public const int MaxImageLogoHeight = 150;
 
     public const string SearchBoxData = "search";
+
+    public const string DateFormat = "dd/MM/yyyy";
+
+    public const string WhatsAppURL = "https://api.whatsapp.com/send?phone=";
 }
