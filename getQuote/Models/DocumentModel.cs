@@ -8,12 +8,12 @@ public class DocumentModel
     [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity), Key()]
     public int DocumentId { get; set; }
 
-    [Required]
+    [Required(ErrorMessage = Messages.EmptyTextValidation)]
     [Display(Name = "Document type")]
     public DocumentTypes DocumentType { get; set; }
 
-    [Required]
-    [MaxLength(50)]
+    [Required(ErrorMessage = Messages.EmptyTextValidation)]
+    [MaxLength(50, ErrorMessage = Messages.MaxLengthValidation)]
     public string Document { get; set; } = string.Empty;
 
     public int PersonId { get; set; }
