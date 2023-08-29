@@ -8,6 +8,7 @@
 {
     <script src="@Url.Content("~/js/submitHelper.js")"></script>
     <script src="@Url.Content("~/js/imagePreview.js")"></script>
+    <script src="@Url.Content("~/js/formatHelper.js")"></script>
 }
 
 <div class="container">
@@ -33,13 +34,17 @@
 
                 <div class="mb-3 text-start">
                     <label asp-for="Phone" class="form-label"></label>
-                    <input asp-for="Phone" class="form-control" placeholder="+55 (49) 9 xxxx-xxxx">
+                    <input id="Contact_Phone" asp-for="Phone" class="form-control" placeholder="+55 (49) 9 xxxx-xxxx">
                     <span asp-validation-for="Phone" class="text-danger"></span>
                 </div>
 
                 <div class="mb-3 text-start">
+                    <select id="Document_DocumentType" hidden>
+                        <option value="2" selected>CNPJ</option>
+                    </select>
+
                     <label asp-for="CNPJ" class="form-label"></label>
-                    <input asp-for="CNPJ" class="form-control" placeholder="">
+                    <input id="Document_Document" asp-for="CNPJ" class="form-control" placeholder="">
                     <span asp-validation-for="CNPJ" class="text-danger"></span>
                 </div>
 

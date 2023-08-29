@@ -28,7 +28,7 @@ public class CompanyModel
     public string Email { get; set; } = String.Empty;
 
     [Required(ErrorMessage = Messages.EmptyTextValidation)]
-    [MaxLength(15, ErrorMessage = Messages.MaxLengthValidation)]
+    [MaxLength(25, ErrorMessage = Messages.MaxLengthValidation)]
     [DataType(DataType.PhoneNumber, ErrorMessage = Messages.InvalidFormatValidation)]
     public string Phone { get; set; } = String.Empty;
 
