@@ -22,8 +22,8 @@
     </PackageReference>
     <PackageReference Include="SixLabors.ImageSharp" Version="3.0.1" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageReference Include="Syncfusion.HtmlToPdfConverter.Net.Mac" Version="22.2.9" />
-    <PackageReference Include="Syncfusion.HtmlToPdfConverter.Net.Windows" Version="22.2.9" />
+    <PackageReference Include="Syncfusion.HtmlToPdfConverter.Net.Mac" Version="22.2.11" />
+    <PackageReference Include="Syncfusion.HtmlToPdfConverter.Net.Windows" Version="22.2.11" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="DAO\" />
