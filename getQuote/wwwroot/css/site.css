@@ -40,3 +40,22 @@ body {
   background-repeat: no-repeat;
   background-position: center center;
 }
+
+.zoom-effect {
+  transition: transform 0.2s;
+}
+
+.zoom-effect:hover,
+.zoom-effect:active {
+  transform: scale(1.1);
+}
+
+a {
+  color: #202020;
+  text-decoration: none !important;
+}
+
+a:hover,
+a:active {
+  color: #202020;
+}

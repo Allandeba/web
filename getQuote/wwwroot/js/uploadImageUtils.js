@@ -107,8 +107,7 @@ function getDeleteLinkElement() {
       'rounded-circle ' +
       'bg-danger ' +
       'p-2 ' +
-      'opacity-75 ' +
-      'text-decoration-none'
+      'opacity-75 '
   );
 
   deleteLink.addEventListener('click', (event) => {
