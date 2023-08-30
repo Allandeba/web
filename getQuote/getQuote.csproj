@@ -35,6 +35,7 @@
     <None Remove="Interfaces\" />
     <None Remove="Framework\" />
     <None Remove="Views\Company\" />
+    <None Remove="Views\Configuration\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DAO\" />
@@ -46,5 +47,6 @@
     <Folder Include="Interfaces\" />
     <Folder Include="Framework\" />
     <Folder Include="Views\Company\" />
+    <Folder Include="Views\Configuration\" />
   </ItemGroup>
 </Project>
