@@ -55,6 +55,8 @@ function setProposalContentQuantityContent(quantityCell) {
   input.id = 'item-quantity';
   input.value = '1';
   input.name = 'ProposalContent[' + getActualRow() + '].Quantity';
+  input.type = 'number';
+  input.step = '0.01';
   input.addEventListener('change', function () {
     calculateTotalValue();
   });
