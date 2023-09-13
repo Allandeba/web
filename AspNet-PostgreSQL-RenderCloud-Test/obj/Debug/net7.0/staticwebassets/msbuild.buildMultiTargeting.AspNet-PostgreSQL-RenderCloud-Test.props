@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="../build/AspNet-PostgreSQL-RenderCloud-Test.props" />
+</Project>
