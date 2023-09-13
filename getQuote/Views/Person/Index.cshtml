@@ -45,7 +45,7 @@
                         </a>
 
                         <a asp-controller="Person" asp-action="Update" asp-route-id="@item.PersonId" class="d-flex align-items-center w-100">
-                            <img src="@Url.Content("~/img/person.png")" alt="user icon" width="32" height="32" class="rounded-circle flex-shrink-0">
+                            <object class="svg-person" alt="user icon" width="32" height="32" class="rounded-circle flex-shrink-0"></object>
 
                             <div class="flex-grow-1 ms-3">
                                 <h6 class="mb-0">@item.PersonName</h6>
