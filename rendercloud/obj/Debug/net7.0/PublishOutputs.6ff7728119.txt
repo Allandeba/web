@@ -1,0 +1,7 @@
+/Users/allandebastiani/Documents/GitHub/web/rendercloud/publish/web
+/Users/allandebastiani/Documents/GitHub/web/rendercloud/publish/appsettings.Development.json
+/Users/allandebastiani/Documents/GitHub/web/rendercloud/publish/appsettings.json
+/Users/allandebastiani/Documents/GitHub/web/rendercloud/publish/web.dll
+/Users/allandebastiani/Documents/GitHub/web/rendercloud/publish/web.deps.json
+/Users/allandebastiani/Documents/GitHub/web/rendercloud/publish/web.runtimeconfig.json
+/Users/allandebastiani/Documents/GitHub/web/rendercloud/publish/web.pdb

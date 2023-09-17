@@ -6,7 +6,6 @@
 /Users/allandebastiani/Documents/GitHub/web/rendercloud/bin/Debug/net7.0/web.runtimeconfig.json
 /Users/allandebastiani/Documents/GitHub/web/rendercloud/bin/Debug/net7.0/web.dll
 /Users/allandebastiani/Documents/GitHub/web/rendercloud/bin/Debug/net7.0/web.pdb
-/Users/allandebastiani/Documents/GitHub/web/rendercloud/obj/Debug/net7.0/web.csproj.AssemblyReference.cache
 /Users/allandebastiani/Documents/GitHub/web/rendercloud/obj/Debug/net7.0/web.GeneratedMSBuildEditorConfig.editorconfig
 /Users/allandebastiani/Documents/GitHub/web/rendercloud/obj/Debug/net7.0/web.AssemblyInfoInputs.cache
 /Users/allandebastiani/Documents/GitHub/web/rendercloud/obj/Debug/net7.0/web.AssemblyInfo.cs
