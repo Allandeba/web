@@ -44,7 +44,7 @@
                         </a>
 
                         <a asp-controller="Proposal" asp-action="Update" asp-route-id="@proposal.ProposalId" class="d-flex align-items-center w-100">
-                            <object class="svg-proposal" alt="proposal icon" width="32" height="32" class="rounded-circle flex-shrink-0"></object>
+                            <object class="svg svg-proposal" alt="proposal icon" width="32" height="32" class="rounded-circle flex-shrink-0"></object>
 
                             <div class="flex-grow-1 ms-3">
                                 <h6 class="mb-0">@proposal.ProposalId - @proposal.Person.PersonName</h6>
@@ -55,13 +55,13 @@
                         <div class="d-flex flex-column flex-sm-row">
                             <div class="mb-3 mb-sm-0 me-sm-3">
                                 <a asp-controller="Proposal" asp-action="SendWhatsApp" asp-route-id="@proposal.GUID" target="_blank">
-                                    <object class="svg-whatsapp" alt="whatsapp icon" width="16" height="16" class="rounded-circle flex-shrink-0"></object>
+                                    <object class="svg svg-whatsapp" alt="whatsapp icon" width="16" height="16" class="rounded-circle flex-shrink-0"></object>
                                 </a>
                             </div>
 
                             <div class="mb-3 mb-sm-0 me-sm-3">
                                 <a asp-controller="Proposal" asp-action="ExportToPDF" asp-route-id="@proposal.GUID">
-                                    <object class="svg-printer" alt="print icon" width="16" height="16" class="rounded-circle flex-shrink-0"></object>
+                                    <object class="svg svg-printer" alt="print icon" width="16" height="16" class="rounded-circle flex-shrink-0"></object>
                                 </a>
                             </div>
 
@@ -69,7 +69,7 @@
                             {
                                 <div class="dropdown mb-3 mb-sm-0 me-sm-3">
                                     <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <object class="svg-proposal-history" alt="history icon" width="16" height="16" class="rounded-circle flex-shrink-0"></object>
+                                        <object class="svg svg-proposal-history" alt="history icon" width="16" height="16" class="rounded-circle flex-shrink-0"></object>
                                     </a>
 
                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
