@@ -22,14 +22,16 @@ public class Program
 
         // Add SyncfusionKey
         var syncfusionKey = Environment.GetEnvironmentVariable("SYNC_FUSION_LICENSING");
-        if (syncfusionKey == null) { 
+        if (syncfusionKey == null)
+        {
             syncfusionKey = builder.Configuration.GetConnectionString("SYNC_FUSION_LICENSING");
         }
         Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense(syncfusionKey);
 
         // Add MySQL connection.
         var connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION");
-        if (connectionString == null) {
+        if (connectionString == null)
+        {
             connectionString = builder.Configuration.GetConnectionString("DB_CONNECTION");
         }
         builder.Services.AddDbContext<ApplicationDBContext>(
