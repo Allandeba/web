@@ -60,7 +60,7 @@
                             </div>
 
                             <div class="mb-3 mb-sm-0 me-sm-3">
-                                <a asp-controller="Proposal" asp-action="ExportToPDF" asp-route-id="@proposal.GUID">
+                                <a asp-controller="Proposal" asp-action="ExportToPDF" asp-route-id="@proposal.GUID" target="_blank">
                                     <object class="svg svg-printer" alt="print icon" width="16" height="16" class="rounded-circle flex-shrink-0"></object>
                                 </a>
                             </div>
@@ -76,7 +76,7 @@
                                         @foreach (var proposalHistory in proposal.ProposalHistory.OrderByDescending(x => x.ProposalHistoryId))
                                         {
                                             <li>
-                                                <a asp-controller="ProposalHistory" asp-action="ExportToPDF" asp-route-id="@proposalHistory.ProposalHistoryId" class="dropdown-item d-flex align-items-center">
+                                                <a asp-controller="ProposalHistory" asp-action="ExportToPDF" asp-route-id="@proposalHistory.ProposalHistoryId" class="dropdown-item d-flex align-items-center" target="_blank">
                                                     <span class="text-muted">@($"{proposalHistory.ProposalHistoryId} - Modified {proposalHistory.ModificationDate.ToString("dd/MM/yyyy")}")</span>
                                                 </a>
                                             </li>
