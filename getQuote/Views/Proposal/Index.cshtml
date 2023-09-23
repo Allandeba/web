@@ -68,18 +68,20 @@
                             @if (proposal.ProposalHistory != null && proposal.ProposalHistory.Count > 0)
                             {
                                 <div class="dropdown mb-3 mb-sm-0 me-sm-3">
-                                    <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-expanded="false">
+                                    <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                                         <object class="svg svg-proposal-history" alt="history icon" width="16" height="16" class="rounded-circle flex-shrink-0"></object>
                                     </a>
 
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                         @foreach (var proposalHistory in proposal.ProposalHistory.OrderByDescending(x => x.ProposalHistoryId))
                                         {
-                                            <a asp-controller="ProposalHistory" asp-action="ExportToPDF" asp-route-id="@proposalHistory.ProposalHistoryId" class="dropdown-item d-flex align-items-center">
-                                                <span class="text-muted">@($"{proposalHistory.ProposalHistoryId} - Modified {proposalHistory.ModificationDate.ToString("dd/MM/yyyy")}")</span>
-                                            </a>
+                                            <li>
+                                                <a asp-controller="ProposalHistory" asp-action="ExportToPDF" asp-route-id="@proposalHistory.ProposalHistoryId" class="dropdown-item d-flex align-items-center">
+                                                    <span class="text-muted">@($"{proposalHistory.ProposalHistoryId} - Modified {proposalHistory.ModificationDate.ToString("dd/MM/yyyy")}")</span>
+                                                </a>
+                                            </li>
                                         }
-                                    </div>
+                                    </ul>
                                 </div>
                             }
                         </div>
