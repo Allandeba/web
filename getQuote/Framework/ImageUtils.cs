@@ -1,5 +1,5 @@
-﻿using Image = SixLabors.ImageSharp.Image;
-using SixLabors.ImageSharp.Formats.Png;
+﻿using SixLabors.ImageSharp.Formats.Png;
+using Image = SixLabors.ImageSharp.Image;
 
 namespace getQuote.Framework;
 

@@ -1,5 +1,5 @@
-﻿using System.Linq.Expressions;
-using getQuote.Models;
+﻿using getQuote.Models;
+using System.Linq.Expressions;
 
 namespace getQuote
 {

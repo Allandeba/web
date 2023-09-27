@@ -1,6 +1,6 @@
-﻿using System.Diagnostics;
-using getQuote.Models;
+﻿using getQuote.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
 
 namespace getQuote.Controllers
 {

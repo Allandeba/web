@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using getQuote.Models;
+﻿using getQuote.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace getQuote.Controllers
 {

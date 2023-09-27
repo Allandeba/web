@@ -1,7 +1,7 @@
-﻿using System.Linq.Expressions;
-using getQuote.DAO;
+﻿using getQuote.DAO;
 using getQuote.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace getQuote
 {

@@ -1,6 +1,7 @@
-﻿using System.Text.Json.Serialization;
-using getQuote.DAO;
+﻿using getQuote.DAO;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text.Json.Serialization;
 
 namespace getQuote;
 
@@ -22,7 +23,7 @@ public class Program
 
         // Add SyncfusionKey
         var syncfusionKey = Environment.GetEnvironmentVariable("SYNC_FUSION_LICENSING");
-        if (syncfusionKey == null)
+        if (syncfusionKey.IsNullOrEmpty())
         {
             syncfusionKey = builder.Configuration.GetConnectionString("SYNC_FUSION_LICENSING");
         }
@@ -30,7 +31,7 @@ public class Program
 
         // Add MySQL connection.
         var connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION");
-        if (connectionString == null)
+        if (connectionString.IsNullOrEmpty())
         {
             connectionString = builder.Configuration.GetConnectionString("DB_CONNECTION");
         }
@@ -38,6 +39,7 @@ public class Program
             options =>
                 options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString))
         );
+
         builder.Services.AddScoped<CatalogRepository>();
         builder.Services.AddScoped<CatalogBusiness>();
         builder.Services.AddScoped<ItemRepository>();

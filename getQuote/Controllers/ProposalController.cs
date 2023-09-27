@@ -1,7 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using getQuote.Models;
+﻿using getQuote.Models;
+using Microsoft.AspNetCore.Mvc;
 using System.Web;
-using System;
 
 namespace getQuote.Controllers
 {
