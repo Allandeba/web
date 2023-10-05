@@ -1,4 +1,5 @@
-﻿using getQuote.Models;
+﻿using System.Reflection.Metadata.Ecma335;
+using getQuote.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
@@ -18,6 +19,7 @@ namespace getQuote.DAO
         public DbSet<ProposalContentModel> ProposalContent { get; set; }
         public DbSet<ProposalHistoryModel> ProposalHistory { get; set; }
         public DbSet<CompanyModel> Company { get; set; }
+        public DbSet<LoginModel> Login { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -27,6 +29,7 @@ namespace getQuote.DAO
             ProposalInformation(modelBuilder);
             ItemInformation(modelBuilder);
             ProposalHistoryInformation(modelBuilder);
+            LoginInformation(modelBuilder);
         }
 
         private void PersonInformation(ModelBuilder modelBuilder)
@@ -120,6 +123,11 @@ namespace getQuote.DAO
                             );
                     }
                 );
+        }
+
+        private void LoginInformation(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<LoginModel>().HasIndex(p => p.Username).IsUnique();
         }
     }
 }

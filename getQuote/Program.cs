@@ -1,4 +1,5 @@
 ﻿using getQuote.DAO;
+using getQuote.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text.Json.Serialization;
@@ -52,6 +53,8 @@ public class Program
         builder.Services.AddScoped<ProposalHistoryBusiness>();
         builder.Services.AddScoped<CompanyBusiness>();
         builder.Services.AddScoped<CompanyRepository>();
+        builder.Services.AddScoped<LoginBusiness>();
+        builder.Services.AddScoped<LoginRepository>();
 
         var app = builder.Build();
 
@@ -70,7 +73,9 @@ public class Program
 
         app.UseAuthorization();
 
-        app.MapControllerRoute(name: "default", pattern: "{controller=Home}/{action=Index}/{id?}");
+        app.MapControllerRoute(name: "default", pattern: "{controller=Login}/{action=Index}/{id?}");
+
+        app.InitializeDB();
 
         app.Run();
     }
