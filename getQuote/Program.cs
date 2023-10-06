@@ -1,5 +1,9 @@
-﻿using getQuote.DAO;
+﻿using getQuote.Controllers;
+using getQuote.DAO;
 using getQuote.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text.Json.Serialization;
@@ -21,6 +25,17 @@ public class Program
             .AddJsonOptions(
                 x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles
             );
+        builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+            .AddCookie(options => {
+                options.LoginPath = "/" + nameof(LoginController.Login);
+                options.ExpireTimeSpan = TimeSpan.FromHours(8);
+                options.Cookie.Name = "authCookie";
+            });
+        builder.Services.AddAuthorization(options => {
+            options.FallbackPolicy = new AuthorizationPolicyBuilder()
+                .RequireAuthenticatedUser()
+                .Build();
+        });
 
         // Add SyncfusionKey
         var syncfusionKey = Environment.GetEnvironmentVariable("SYNC_FUSION_LICENSING");
@@ -71,6 +86,7 @@ public class Program
 
         app.UseRouting();
 
+        app.UseAuthentication();
         app.UseAuthorization();
 
         app.MapControllerRoute(name: "default", pattern: "{controller=Login}/{action=Index}/{id?}");

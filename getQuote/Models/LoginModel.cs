@@ -18,4 +18,8 @@ public class LoginModel
     [Display(Name = "Password")]
     [MaxLength(50, ErrorMessage = Messages.MaxLengthValidation)]
     public string Password { get; set; } = string.Empty;
+    
+    [NotMapped]
+    [Display(Name = "Remember me")]
+    public Boolean Remember { get; set; } = false;
 }
