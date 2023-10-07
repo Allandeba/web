@@ -10,7 +10,7 @@ namespace getQuote.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<decimal>(
+            _ = migrationBuilder.AddColumn<decimal>(
                 name: "Discount",
                 table: "Proposal",
                 type: "decimal(18,2)",
@@ -24,7 +24,7 @@ namespace getQuote.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(name: "Discount", table: "Proposal");
+            _ = migrationBuilder.DropColumn(name: "Discount", table: "Proposal");
         }
     }
 }

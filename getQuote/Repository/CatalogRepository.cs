@@ -2,7 +2,7 @@
 using getQuote.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace getQuote
+namespace getQuote.Repository
 {
     public class CatalogRepository
     {

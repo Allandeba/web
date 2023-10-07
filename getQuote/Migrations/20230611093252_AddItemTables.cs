@@ -11,7 +11,7 @@ namespace getQuote.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder
+            _ = migrationBuilder
                 .CreateTable(
                     name: "Item",
                     columns: table =>
@@ -35,12 +35,12 @@ namespace getQuote.Migrations
                         },
                     constraints: table =>
                     {
-                        table.PrimaryKey("PK_Item", x => x.ItemId);
+                        _ = table.PrimaryKey("PK_Item", x => x.ItemId);
                     }
                 )
                 .Annotation("MySql:CharSet", "utf8mb4");
 
-            migrationBuilder
+            _ = migrationBuilder
                 .CreateTable(
                     name: "ItemImage",
                     columns: table =>
@@ -65,8 +65,8 @@ namespace getQuote.Migrations
                         },
                     constraints: table =>
                     {
-                        table.PrimaryKey("PK_ItemImage", x => x.ItemImageId);
-                        table.ForeignKey(
+                        _ = table.PrimaryKey("PK_ItemImage", x => x.ItemImageId);
+                        _ = table.ForeignKey(
                             name: "FK_ItemImage_Item_ItemId",
                             column: x => x.ItemId,
                             principalTable: "Item",
@@ -76,7 +76,7 @@ namespace getQuote.Migrations
                 )
                 .Annotation("MySql:CharSet", "utf8mb4");
 
-            migrationBuilder.CreateIndex(
+            _ = migrationBuilder.CreateIndex(
                 name: "IX_ItemImage_ItemId",
                 table: "ItemImage",
                 column: "ItemId"
@@ -86,9 +86,9 @@ namespace getQuote.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(name: "ItemImage");
+            _ = migrationBuilder.DropTable(name: "ItemImage");
 
-            migrationBuilder.DropTable(name: "Item");
+            _ = migrationBuilder.DropTable(name: "Item");
         }
     }
 }

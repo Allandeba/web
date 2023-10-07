@@ -1,4 +1,5 @@
-﻿using getQuote.Models;
+﻿using getQuote.Business;
+using getQuote.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace getQuote.Controllers
@@ -14,14 +15,7 @@ namespace getQuote.Controllers
 
         public async Task<IActionResult> Index(IEnumerable<PersonModel>? people)
         {
-            if (people == null || people.Count() == 0)
-            {
-                return await Search(null);
-            }
-            else
-            {
-                return View(people);
-            }
+            return people == null || people.Count() == 0 ? await Search(null) : View(people);
         }
 
         public IActionResult Create()

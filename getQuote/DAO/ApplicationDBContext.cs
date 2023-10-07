@@ -1,4 +1,4 @@
-﻿using System.Reflection.Metadata.Ecma335;
+﻿using getQuote.Framework;
 using getQuote.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
@@ -36,20 +36,20 @@ namespace getQuote.DAO
 
         private void PersonInformation(ModelBuilder modelBuilder)
         {
-            modelBuilder
+            _ = modelBuilder
                 .Entity<PersonModel>()
                 .Property(p => p.CreationDate)
                 .HasColumnType("timestamp")
                 .HasDefaultValueSql("CURRENT_TIMESTAMP")
                 .ValueGeneratedOnAdd();
 
-            modelBuilder
+            _ = modelBuilder
                 .Entity<PersonModel>()
                 .HasOne(PersonModel => PersonModel.Document)
                 .WithOne(d => d.Person)
                 .HasForeignKey<DocumentModel>(d => d.PersonId);
 
-            modelBuilder
+            _ = modelBuilder
                 .Entity<PersonModel>()
                 .HasOne(PersonModel => PersonModel.Contact)
                 .WithOne(c => c.Person)
@@ -58,7 +58,7 @@ namespace getQuote.DAO
 
         private void DocumentInformation(ModelBuilder modelBuilder)
         {
-            modelBuilder
+            _ = modelBuilder
                 .Entity<DocumentModel>()
                 .HasOne(d => d.Person)
                 .WithOne(p => p.Document)
@@ -67,7 +67,7 @@ namespace getQuote.DAO
 
         private void ContactInformation(ModelBuilder modelBuilder)
         {
-            modelBuilder
+            _ = modelBuilder
                 .Entity<ContactModel>()
                 .HasOne(d => d.Person)
                 .WithOne(p => p.Contact)
@@ -76,30 +76,30 @@ namespace getQuote.DAO
 
         private void ProposalInformation(ModelBuilder modelBuilder)
         {
-            modelBuilder
+            _ = modelBuilder
                 .Entity<ProposalModel>()
                 .Property(p => p.ModificationDate)
                 .HasColumnType("timestamp")
                 .HasDefaultValueSql("CURRENT_TIMESTAMP")
                 .ValueGeneratedOnAddOrUpdate();
 
-            modelBuilder.Entity<ProposalModel>().HasIndex(p => p.GUID).IsUnique();
+            _ = modelBuilder.Entity<ProposalModel>().HasIndex(p => p.GUID).IsUnique();
         }
 
         private void ItemInformation(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<ItemModel>().HasIndex(p => p.ItemName).IsUnique();
+            _ = modelBuilder.Entity<ItemModel>().HasIndex(p => p.ItemName).IsUnique();
         }
 
         private void ProposalHistoryInformation(ModelBuilder modelBuilder)
         {
-            modelBuilder
+            _ = modelBuilder
                 .Entity<ProposalHistoryModel>()
                 .OwnsOne(
                     ph => ph.ProposalContentJSON,
                     ownedNavigationBuilder =>
                     {
-                        ownedNavigationBuilder
+                        _ = ownedNavigationBuilder
                             .Property(pc => pc.ProposalContentItems)
                             .HasConversion(
                                 v => Newtonsoft.Json.JsonConvert.SerializeObject(v),
@@ -129,19 +129,19 @@ namespace getQuote.DAO
 
         private void LoginInformation(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<LoginModel>().HasIndex(p => p.Username).IsUnique();
+            _ = modelBuilder.Entity<LoginModel>().HasIndex(p => p.Username).IsUnique();
         }
 
         private void LoginLogInformation(ModelBuilder modelBuilder)
         {
-            var enumValues = Enum.GetValues(typeof(LoginLogStatus))
+            List<string> enumValues = Enum.GetValues(typeof(LoginLogStatus))
                 .Cast<LoginLogStatus>()
-                .Select(e => $"{(int)e}-{e.ToString()}")
+                .Select(e => $"{(int)e}-{e}")
                 .ToList();
 
             string comment = string.Join(",", enumValues);
 
-            modelBuilder.Entity<LoginLogModel>().Property(l => l.Status).HasComment(comment);
+            _ = modelBuilder.Entity<LoginLogModel>().Property(l => l.Status).HasComment(comment);
         }
     }
 }

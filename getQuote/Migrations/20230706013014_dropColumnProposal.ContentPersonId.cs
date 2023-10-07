@@ -10,21 +10,21 @@ namespace getQuote.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(name: "FK_Proposal_Person_PersonId", table: "Proposal");
+            _ = migrationBuilder.DropForeignKey(name: "FK_Proposal_Person_PersonId", table: "Proposal");
 
-            migrationBuilder.RenameColumn(
+            _ = migrationBuilder.RenameColumn(
                 name: "PersonId",
                 table: "Proposal",
                 newName: "PersonId1"
             );
 
-            migrationBuilder.RenameIndex(
+            _ = migrationBuilder.RenameIndex(
                 name: "IX_Proposal_PersonId",
                 table: "Proposal",
                 newName: "IX_Proposal_PersonId1"
             );
 
-            migrationBuilder.AddForeignKey(
+            _ = migrationBuilder.AddForeignKey(
                 name: "FK_Proposal_Person_PersonId1",
                 table: "Proposal",
                 column: "PersonId1",
@@ -36,24 +36,24 @@ namespace getQuote.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
+            _ = migrationBuilder.DropForeignKey(
                 name: "FK_Proposal_Person_PersonId1",
                 table: "Proposal"
             );
 
-            migrationBuilder.RenameColumn(
+            _ = migrationBuilder.RenameColumn(
                 name: "PersonId1",
                 table: "Proposal",
                 newName: "PersonId"
             );
 
-            migrationBuilder.RenameIndex(
+            _ = migrationBuilder.RenameIndex(
                 name: "IX_Proposal_PersonId1",
                 table: "Proposal",
                 newName: "IX_Proposal_PersonId"
             );
 
-            migrationBuilder.AddForeignKey(
+            _ = migrationBuilder.AddForeignKey(
                 name: "FK_Proposal_Person_PersonId",
                 table: "Proposal",
                 column: "PersonId",

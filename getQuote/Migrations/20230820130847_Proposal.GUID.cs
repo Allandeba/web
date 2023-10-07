@@ -10,7 +10,7 @@ namespace getQuote.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<Guid>(
+            _ = migrationBuilder.AddColumn<Guid>(
                 name: "GUID",
                 table: "Proposal",
                 type: "char(36)",
@@ -19,7 +19,7 @@ namespace getQuote.Migrations
                 collation: "ascii_general_ci"
             );
 
-            migrationBuilder.CreateIndex(
+            _ = migrationBuilder.CreateIndex(
                 name: "IX_Proposal_GUID",
                 table: "Proposal",
                 column: "GUID",
@@ -30,9 +30,9 @@ namespace getQuote.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropIndex(name: "IX_Proposal_GUID", table: "Proposal");
+            _ = migrationBuilder.DropIndex(name: "IX_Proposal_GUID", table: "Proposal");
 
-            migrationBuilder.DropColumn(name: "GUID", table: "Proposal");
+            _ = migrationBuilder.DropColumn(name: "GUID", table: "Proposal");
         }
     }
 }

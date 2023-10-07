@@ -21,5 +21,5 @@ public class LoginModel
 
     [NotMapped]
     [Display(Name = "Remember me")]
-    public Boolean Remember { get; set; } = false;
+    public bool Remember { get; set; } = false;
 }

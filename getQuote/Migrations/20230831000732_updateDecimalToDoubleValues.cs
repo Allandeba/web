@@ -10,7 +10,7 @@ namespace getQuote.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AlterColumn<double>(
+            _ = migrationBuilder.AlterColumn<double>(
                 name: "Quantity",
                 table: "ProposalContent",
                 type: "double",
@@ -19,7 +19,7 @@ namespace getQuote.Migrations
                 oldType: "int"
             );
 
-            migrationBuilder.AlterColumn<double>(
+            _ = migrationBuilder.AlterColumn<double>(
                 name: "Discount",
                 table: "Proposal",
                 type: "double",
@@ -32,7 +32,7 @@ namespace getQuote.Migrations
                 oldScale: 2
             );
 
-            migrationBuilder.AlterColumn<double>(
+            _ = migrationBuilder.AlterColumn<double>(
                 name: "Value",
                 table: "Item",
                 type: "double",
@@ -45,7 +45,7 @@ namespace getQuote.Migrations
                 oldScale: 2
             );
 
-            migrationBuilder
+            _ = migrationBuilder
                 .AlterColumn<string>(
                     name: "Phone",
                     table: "Contact",
@@ -59,7 +59,7 @@ namespace getQuote.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4")
                 .OldAnnotation("MySql:CharSet", "utf8mb4");
 
-            migrationBuilder
+            _ = migrationBuilder
                 .AlterColumn<string>(
                     name: "Phone",
                     table: "Company",
@@ -73,7 +73,7 @@ namespace getQuote.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4")
                 .OldAnnotation("MySql:CharSet", "utf8mb4");
 
-            migrationBuilder
+            _ = migrationBuilder
                 .AlterColumn<string>(
                     name: "CNPJ",
                     table: "Company",
@@ -91,7 +91,7 @@ namespace getQuote.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AlterColumn<int>(
+            _ = migrationBuilder.AlterColumn<int>(
                 name: "Quantity",
                 table: "ProposalContent",
                 type: "int",
@@ -100,7 +100,7 @@ namespace getQuote.Migrations
                 oldType: "double"
             );
 
-            migrationBuilder.AlterColumn<decimal>(
+            _ = migrationBuilder.AlterColumn<decimal>(
                 name: "Discount",
                 table: "Proposal",
                 type: "decimal(18,2)",
@@ -113,7 +113,7 @@ namespace getQuote.Migrations
                 oldScale: 2
             );
 
-            migrationBuilder.AlterColumn<decimal>(
+            _ = migrationBuilder.AlterColumn<decimal>(
                 name: "Value",
                 table: "Item",
                 type: "decimal(18,2)",
@@ -126,7 +126,7 @@ namespace getQuote.Migrations
                 oldScale: 2
             );
 
-            migrationBuilder
+            _ = migrationBuilder
                 .AlterColumn<string>(
                     name: "Phone",
                     table: "Contact",
@@ -140,7 +140,7 @@ namespace getQuote.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4")
                 .OldAnnotation("MySql:CharSet", "utf8mb4");
 
-            migrationBuilder
+            _ = migrationBuilder
                 .AlterColumn<string>(
                     name: "Phone",
                     table: "Company",
@@ -154,7 +154,7 @@ namespace getQuote.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4")
                 .OldAnnotation("MySql:CharSet", "utf8mb4");
 
-            migrationBuilder
+            _ = migrationBuilder
                 .AlterColumn<string>(
                     name: "CNPJ",
                     table: "Company",

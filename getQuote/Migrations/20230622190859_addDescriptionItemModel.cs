@@ -10,7 +10,7 @@ namespace getQuote.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder
+            _ = migrationBuilder
                 .AddColumn<string>(
                     name: "Description",
                     table: "Item",
@@ -25,7 +25,7 @@ namespace getQuote.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(name: "Description", table: "Item");
+            _ = migrationBuilder.DropColumn(name: "Description", table: "Item");
         }
     }
 }

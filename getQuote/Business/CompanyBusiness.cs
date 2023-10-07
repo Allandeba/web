@@ -1,7 +1,9 @@
-﻿using getQuote.Models;
+﻿using getQuote.Framework;
+using getQuote.Models;
+using getQuote.Repository;
 using System.Linq.Expressions;
 
-namespace getQuote
+namespace getQuote.Business
 {
     public class CompanyBusiness
     {
@@ -22,7 +24,7 @@ namespace getQuote
             CompanyIncludes[] includes = new CompanyIncludes[] { CompanyIncludes.None };
             return await _repository.GetByIdAsync(
                 companyId,
-                includes.Cast<System.Enum>().ToArray()
+                includes.Cast<Enum>().ToArray()
             );
         }
 
@@ -31,7 +33,7 @@ namespace getQuote
             CompanyIncludes[] includes = new CompanyIncludes[] { CompanyIncludes.None };
             CompanyModel existentCompany = await _repository.GetByIdAsync(
                 company.CompanyId,
-                includes.Cast<System.Enum>().ToArray()
+                includes.Cast<Enum>().ToArray()
             );
 
             if (existentCompany != null)
@@ -56,7 +58,7 @@ namespace getQuote
             CompanyIncludes[] includes = new CompanyIncludes[] { CompanyIncludes.None };
             CompanyModel company = await _repository.GetByIdAsync(
                 companyId,
-                includes.Cast<System.Enum>().ToArray()
+                includes.Cast<Enum>().ToArray()
             );
             if (company == null)
             {
@@ -79,14 +81,14 @@ namespace getQuote
             CompanyIncludes[] includes
         )
         {
-            return await _repository.FindAsync(where, includes.Cast<System.Enum>().ToArray());
+            return await _repository.FindAsync(where, includes.Cast<Enum>().ToArray());
         }
 
         public async Task<CompanyModel?> GetAllAsync()
         {
             CompanyIncludes[] includes = new CompanyIncludes[] { CompanyIncludes.None };
             IEnumerable<CompanyModel> companies = await _repository.GetAllAsync(
-                includes.Cast<System.Enum>().ToArray()
+                includes.Cast<Enum>().ToArray()
             );
             return companies?.FirstOrDefault();
         }

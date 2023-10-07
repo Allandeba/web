@@ -11,7 +11,7 @@ namespace getQuote.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder
+            _ = migrationBuilder
                 .CreateTable(
                     name: "Login",
                     columns: table =>
@@ -32,12 +32,12 @@ namespace getQuote.Migrations
                         },
                     constraints: table =>
                     {
-                        table.PrimaryKey("PK_Login", x => x.LoginId);
+                        _ = table.PrimaryKey("PK_Login", x => x.LoginId);
                     }
                 )
                 .Annotation("MySql:CharSet", "utf8mb4");
 
-            migrationBuilder.CreateIndex(
+            _ = migrationBuilder.CreateIndex(
                 name: "IX_Login_Username",
                 table: "Login",
                 column: "Username",
@@ -48,7 +48,7 @@ namespace getQuote.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(name: "Login");
+            _ = migrationBuilder.DropTable(name: "Login");
         }
     }
 }

@@ -1,9 +1,10 @@
 ﻿using getQuote.DAO;
+using getQuote.Framework;
 using getQuote.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
-namespace getQuote
+namespace getQuote.Repository
 {
     public class ItemRepository : IRepository<ItemModel>
     {
@@ -69,26 +70,26 @@ namespace getQuote
 
         public async Task AddAsync(ItemModel item)
         {
-            await _context.Item.AddAsync(item);
-            await _context.SaveChangesAsync();
+            _ = await _context.Item.AddAsync(item);
+            _ = await _context.SaveChangesAsync();
         }
 
         public async Task UpdateAsync(ItemModel item)
         {
-            _context.Item.Update(item);
-            await _context.SaveChangesAsync();
+            _ = _context.Item.Update(item);
+            _ = await _context.SaveChangesAsync();
         }
 
         public async Task RemoveAsync(ItemModel item)
         {
-            _context.Item.Remove(item);
-            await _context.SaveChangesAsync();
+            _ = _context.Item.Remove(item);
+            _ = await _context.SaveChangesAsync();
         }
 
         public async Task RemoveItemImageAsync(ItemImageModel itemImage)
         {
-            _context.ItemImage.Remove(itemImage);
-            await _context.SaveChangesAsync();
+            _ = _context.ItemImage.Remove(itemImage);
+            _ = await _context.SaveChangesAsync();
         }
     }
 }

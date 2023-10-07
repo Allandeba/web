@@ -10,7 +10,7 @@ namespace getQuote.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.RenameColumn(
+            _ = migrationBuilder.RenameColumn(
                 name: "ProposalContentArray",
                 table: "ProposalHistory",
                 newName: "ProposalContentJSON_ProposalContentItems"
@@ -20,7 +20,7 @@ namespace getQuote.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.RenameColumn(
+            _ = migrationBuilder.RenameColumn(
                 name: "ProposalContentJSON_ProposalContentItems",
                 table: "ProposalHistory",
                 newName: "ProposalContentArray"

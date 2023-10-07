@@ -30,8 +30,5 @@ public class PersonModel
 
     public virtual List<ProposalModel>? Proposal { get; set; }
 
-    public string PersonName
-    {
-        get { return this.FirstName + ' ' + this.LastName; }
-    }
+    public string PersonName => FirstName + ' ' + LastName;
 }

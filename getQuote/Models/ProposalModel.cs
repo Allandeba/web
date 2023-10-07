@@ -30,7 +30,7 @@ public class ProposalModel
     public List<int> GetIdProposalContentList()
     {
         List<int> proposalContentIdList = new();
-        foreach (var ProposalContent in this.ProposalContent)
+        foreach (ProposalContentModel ProposalContent in ProposalContent)
         {
             proposalContentIdList.Add(ProposalContent.ProposalContentId);
         }

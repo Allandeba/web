@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Metadata;
+﻿using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
@@ -12,7 +11,7 @@ namespace getQuote.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder
+            _ = migrationBuilder
                 .CreateTable(
                     name: "LoginLog",
                     columns: table =>
@@ -45,7 +44,7 @@ namespace getQuote.Migrations
                         },
                     constraints: table =>
                     {
-                        table.PrimaryKey("PK_LoginLog", x => x.LoginLogId);
+                        _ = table.PrimaryKey("PK_LoginLog", x => x.LoginLogId);
                     }
                 )
                 .Annotation("MySql:CharSet", "utf8mb4");
@@ -54,7 +53,7 @@ namespace getQuote.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(name: "LoginLog");
+            _ = migrationBuilder.DropTable(name: "LoginLog");
         }
     }
 }

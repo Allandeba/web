@@ -13,7 +13,7 @@ public class ItemModel
     [Required(ErrorMessage = Messages.EmptyTextValidation)]
     [Display(Name = "Item name")]
     [MaxLength(50, ErrorMessage = Messages.MaxLengthValidation)]
-    public string ItemName { get; set; } = String.Empty;
+    public string ItemName { get; set; } = string.Empty;
 
     [Required(ErrorMessage = Messages.EmptyTextValidation)]
     [Range(0, int.MaxValue, ErrorMessage = Messages.MinValueValidation)]
@@ -24,7 +24,7 @@ public class ItemModel
 
     [Required(ErrorMessage = Messages.EmptyTextValidation)]
     [MaxLength(250, ErrorMessage = Messages.MaxLengthValidation)]
-    public string Description { get; set; } = String.Empty;
+    public string Description { get; set; } = string.Empty;
 
     [NotMapped]
     [Display(Name = "Upload Image")]
@@ -33,43 +33,38 @@ public class ItemModel
 
     [NotMapped]
     [Display(Name = "Default image")]
-    public String DefaultImage { get; set; } = String.Empty;
+    public string DefaultImage { get; set; } = string.Empty;
 
     [NotMapped]
     public List<int>? IdImagesToDelete { get; set; } = new();
 
     public void SetItemImageList()
     {
-        if (this.ImageFiles != null && this.ImageFiles.Count > 0)
+        if (ImageFiles != null && ImageFiles.Count > 0)
         {
-            this.ItemImageList = new List<ItemImageModel>();
-            foreach (var image in this.ImageFiles)
+            ItemImageList = new List<ItemImageModel>();
+            foreach (IFormFile image in ImageFiles)
             {
-                ItemImageModel itemImage = new ItemImageModel();
-                itemImage.FileName = image.FileName;
-                itemImage.ImageFile = ImageUtils
+                ItemImageModel itemImage = new()
+                {
+                    FileName = image.FileName,
+                    ImageFile = ImageUtils
                     .ResizeImage(image, Constants.MaxImageWidth, Constants.MaxImageHeight)
-                    .ToArray();
+                    .ToArray()
+                };
 
-                this.ItemImageList.Add(itemImage);
+                ItemImageList.Add(itemImage);
             }
         }
     }
 
-    public void SetDefaultImage(String defaultImageFileName)
+    public void SetDefaultImage(string defaultImageFileName)
     {
-        if (this.ItemImageList != null && this.ItemImageList.Count > 0)
+        if (ItemImageList != null && ItemImageList.Count > 0)
         {
-            foreach (var image in this.ItemImageList)
+            foreach (ItemImageModel image in ItemImageList)
             {
-                if (defaultImageFileName == SelectDefault.None.ToString())
-                {
-                    image.Main = false;
-                }
-                else
-                {
-                    image.Main = image.FileName == defaultImageFileName;
-                }
+                image.Main = defaultImageFileName != SelectDefault.None.ToString() && image.FileName == defaultImageFileName;
             }
         }
     }

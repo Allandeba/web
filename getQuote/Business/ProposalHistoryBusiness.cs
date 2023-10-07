@@ -1,6 +1,8 @@
-﻿using getQuote.Models;
+﻿using getQuote.Framework;
+using getQuote.Models;
+using getQuote.Repository;
 
-namespace getQuote
+namespace getQuote.Business
 {
     public class ProposalHistoryBusiness
     {
@@ -24,23 +26,23 @@ namespace getQuote
         {
             ProposalHistoryModel proposalHistory = await GetByIdAsync(proposalHistoryId);
 
-            ProposalModel proposal = new ProposalModel
+            ProposalModel proposal = new()
             {
                 Person = proposalHistory.Person,
                 ProposalContent = new List<ProposalContentModel>(),
             };
 
             IEnumerable<ItemModel> items = await GetAllItemsAsync(proposalHistory);
-            proposalHistory.ProposalContentJSON.ProposalContentItems.OrderBy(p => p.ItemId);
-            items.OrderBy(i => i.ItemId);
+            _ = proposalHistory.ProposalContentJSON.ProposalContentItems.OrderBy(p => p.ItemId);
+            _ = items.OrderBy(i => i.ItemId);
 
             for (int i = 0; i < items.Count(); i++)
             {
-                ProposalContentModel proposalContent = new ProposalContentModel
+                ProposalContentModel proposalContent = new()
                 {
                     Proposal = proposal,
                     Item = items.ElementAt(i),
-                    Quantity = Int32.Parse(
+                    Quantity = int.Parse(
                         proposalHistory.ProposalContentJSON.ProposalContentItems[i].Quantity
                     ),
                 };
@@ -79,7 +81,7 @@ namespace getQuote
 
             return await _repository.GetByIdAsync(
                 proposalHistoryId,
-                includes.Cast<System.Enum>().ToArray()
+                includes.Cast<Enum>().ToArray()
             );
         }
 

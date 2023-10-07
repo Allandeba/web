@@ -11,7 +11,7 @@ namespace getQuote.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AlterColumn<byte[]>(
+            _ = migrationBuilder.AlterColumn<byte[]>(
                 name: "ImageFile",
                 table: "ItemImage",
                 type: "longblob",
@@ -20,7 +20,7 @@ namespace getQuote.Migrations
                 oldType: "longblob"
             );
 
-            migrationBuilder
+            _ = migrationBuilder
                 .CreateTable(
                     name: "Proposal",
                     columns: table =>
@@ -46,8 +46,8 @@ namespace getQuote.Migrations
                         },
                     constraints: table =>
                     {
-                        table.PrimaryKey("PK_Proposal", x => x.ProposalId);
-                        table.ForeignKey(
+                        _ = table.PrimaryKey("PK_Proposal", x => x.ProposalId);
+                        _ = table.ForeignKey(
                             name: "FK_Proposal_Person_PersonId",
                             column: x => x.PersonId,
                             principalTable: "Person",
@@ -57,7 +57,7 @@ namespace getQuote.Migrations
                 )
                 .Annotation("MySql:CharSet", "utf8mb4");
 
-            migrationBuilder
+            _ = migrationBuilder
                 .CreateTable(
                     name: "ProposalContent",
                     columns: table =>
@@ -74,14 +74,14 @@ namespace getQuote.Migrations
                         },
                     constraints: table =>
                     {
-                        table.PrimaryKey("PK_ProposalContent", x => x.ProposalContentId);
-                        table.ForeignKey(
+                        _ = table.PrimaryKey("PK_ProposalContent", x => x.ProposalContentId);
+                        _ = table.ForeignKey(
                             name: "FK_ProposalContent_Item_ItemId",
                             column: x => x.ItemId,
                             principalTable: "Item",
                             principalColumn: "ItemId"
                         );
-                        table.ForeignKey(
+                        _ = table.ForeignKey(
                             name: "FK_ProposalContent_Proposal_ProposalId",
                             column: x => x.ProposalId,
                             principalTable: "Proposal",
@@ -91,19 +91,19 @@ namespace getQuote.Migrations
                 )
                 .Annotation("MySql:CharSet", "utf8mb4");
 
-            migrationBuilder.CreateIndex(
+            _ = migrationBuilder.CreateIndex(
                 name: "IX_Proposal_PersonId",
                 table: "Proposal",
                 column: "PersonId"
             );
 
-            migrationBuilder.CreateIndex(
+            _ = migrationBuilder.CreateIndex(
                 name: "IX_ProposalContent_ItemId",
                 table: "ProposalContent",
                 column: "ItemId"
             );
 
-            migrationBuilder.CreateIndex(
+            _ = migrationBuilder.CreateIndex(
                 name: "IX_ProposalContent_ProposalId",
                 table: "ProposalContent",
                 column: "ProposalId"
@@ -113,11 +113,11 @@ namespace getQuote.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(name: "ProposalContent");
+            _ = migrationBuilder.DropTable(name: "ProposalContent");
 
-            migrationBuilder.DropTable(name: "Proposal");
+            _ = migrationBuilder.DropTable(name: "Proposal");
 
-            migrationBuilder.AlterColumn<byte[]>(
+            _ = migrationBuilder.AlterColumn<byte[]>(
                 name: "ImageFile",
                 table: "ItemImage",
                 type: "longblob",

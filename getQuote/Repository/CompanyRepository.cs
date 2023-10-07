@@ -1,9 +1,10 @@
 ﻿using getQuote.DAO;
+using getQuote.Framework;
 using getQuote.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
-namespace getQuote
+namespace getQuote.Repository
 {
     public class CompanyRepository : IRepository<CompanyModel>
     {
@@ -62,20 +63,20 @@ namespace getQuote
 
         public async Task AddAsync(CompanyModel company)
         {
-            await _context.Company.AddAsync(company);
-            await _context.SaveChangesAsync();
+            _ = await _context.Company.AddAsync(company);
+            _ = await _context.SaveChangesAsync();
         }
 
         public async Task UpdateAsync(CompanyModel company)
         {
-            _context.Company.Update(company);
-            await _context.SaveChangesAsync();
+            _ = _context.Company.Update(company);
+            _ = await _context.SaveChangesAsync();
         }
 
         public async Task RemoveAsync(CompanyModel company)
         {
-            _context.Company.Remove(company);
-            await _context.SaveChangesAsync();
+            _ = _context.Company.Remove(company);
+            _ = await _context.SaveChangesAsync();
         }
     }
 }

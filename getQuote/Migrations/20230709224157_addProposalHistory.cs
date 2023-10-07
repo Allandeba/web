@@ -11,7 +11,7 @@ namespace getQuote.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder
+            _ = migrationBuilder
                 .CreateTable(
                     name: "ProposalHistory",
                     columns: table =>
@@ -41,15 +41,15 @@ namespace getQuote.Migrations
                         },
                     constraints: table =>
                     {
-                        table.PrimaryKey("PK_ProposalHistory", x => x.ProposalHistoryId);
-                        table.ForeignKey(
+                        _ = table.PrimaryKey("PK_ProposalHistory", x => x.ProposalHistoryId);
+                        _ = table.ForeignKey(
                             name: "FK_ProposalHistory_Person_PersonId",
                             column: x => x.PersonId,
                             principalTable: "Person",
                             principalColumn: "PersonId",
                             onDelete: ReferentialAction.Cascade
                         );
-                        table.ForeignKey(
+                        _ = table.ForeignKey(
                             name: "FK_ProposalHistory_Proposal_ProposalId",
                             column: x => x.ProposalId,
                             principalTable: "Proposal",
@@ -60,13 +60,13 @@ namespace getQuote.Migrations
                 )
                 .Annotation("MySql:CharSet", "utf8mb4");
 
-            migrationBuilder.CreateIndex(
+            _ = migrationBuilder.CreateIndex(
                 name: "IX_ProposalHistory_PersonId",
                 table: "ProposalHistory",
                 column: "PersonId"
             );
 
-            migrationBuilder.CreateIndex(
+            _ = migrationBuilder.CreateIndex(
                 name: "IX_ProposalHistory_ProposalId",
                 table: "ProposalHistory",
                 column: "ProposalId"
@@ -76,7 +76,7 @@ namespace getQuote.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(name: "ProposalHistory");
+            _ = migrationBuilder.DropTable(name: "ProposalHistory");
         }
     }
 }

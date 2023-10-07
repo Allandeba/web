@@ -1,4 +1,4 @@
-﻿static class Constants
+﻿internal static class Constants
 {
     public const int MaxImageWidth = 250;
     public const int MaxImageHeight = 250;

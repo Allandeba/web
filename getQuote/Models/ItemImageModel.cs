@@ -13,11 +13,11 @@ public class ItemImageModel
 
     [Required(ErrorMessage = Messages.EmptyTextValidation)]
     [MaxLength(100, ErrorMessage = Messages.MaxLengthValidation)]
-    public string FileName { get; set; } = String.Empty;
+    public string FileName { get; set; } = string.Empty;
 
     [Display(Name = "Upload Image")]
     public byte[] ImageFile { get; set; } = Array.Empty<byte>();
 
     public int ItemId { get; set; }
-    public virtual ItemModel Item { get; set; }
+    public virtual required ItemModel Item { get; set; }
 }

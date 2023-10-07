@@ -10,37 +10,37 @@ namespace getQuote.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(name: "FK_Contact_Person_PersonId", table: "Contact");
+            _ = migrationBuilder.DropForeignKey(name: "FK_Contact_Person_PersonId", table: "Contact");
 
-            migrationBuilder.DropForeignKey(name: "FK_Document_Person_PersonId", table: "Document");
+            _ = migrationBuilder.DropForeignKey(name: "FK_Document_Person_PersonId", table: "Document");
 
-            migrationBuilder.DropForeignKey(
+            _ = migrationBuilder.DropForeignKey(
                 name: "FK_Proposal_Person_PersonId1",
                 table: "Proposal"
             );
 
-            migrationBuilder.DropForeignKey(
+            _ = migrationBuilder.DropForeignKey(
                 name: "FK_ProposalContent_Item_ItemId1",
                 table: "ProposalContent"
             );
 
-            migrationBuilder.DropForeignKey(
+            _ = migrationBuilder.DropForeignKey(
                 name: "FK_ProposalContent_Proposal_ProposalId",
                 table: "ProposalContent"
             );
 
-            migrationBuilder.DropIndex(
+            _ = migrationBuilder.DropIndex(
                 name: "IX_ProposalContent_ItemId1",
                 table: "ProposalContent"
             );
 
-            migrationBuilder.DropIndex(name: "IX_Proposal_PersonId1", table: "Proposal");
+            _ = migrationBuilder.DropIndex(name: "IX_Proposal_PersonId1", table: "Proposal");
 
-            migrationBuilder.DropColumn(name: "ItemId1", table: "ProposalContent");
+            _ = migrationBuilder.DropColumn(name: "ItemId1", table: "ProposalContent");
 
-            migrationBuilder.DropColumn(name: "PersonId1", table: "Proposal");
+            _ = migrationBuilder.DropColumn(name: "PersonId1", table: "Proposal");
 
-            migrationBuilder.AlterColumn<int>(
+            _ = migrationBuilder.AlterColumn<int>(
                 name: "ProposalId",
                 table: "ProposalContent",
                 type: "int",
@@ -51,7 +51,7 @@ namespace getQuote.Migrations
                 oldNullable: true
             );
 
-            migrationBuilder.AddColumn<int>(
+            _ = migrationBuilder.AddColumn<int>(
                 name: "ItemId",
                 table: "ProposalContent",
                 type: "int",
@@ -59,7 +59,7 @@ namespace getQuote.Migrations
                 defaultValue: 0
             );
 
-            migrationBuilder.AddColumn<int>(
+            _ = migrationBuilder.AddColumn<int>(
                 name: "PersonId",
                 table: "Proposal",
                 type: "int",
@@ -67,7 +67,7 @@ namespace getQuote.Migrations
                 defaultValue: 0
             );
 
-            migrationBuilder.AlterColumn<int>(
+            _ = migrationBuilder.AlterColumn<int>(
                 name: "PersonId",
                 table: "Document",
                 type: "int",
@@ -78,7 +78,7 @@ namespace getQuote.Migrations
                 oldNullable: true
             );
 
-            migrationBuilder.AlterColumn<int>(
+            _ = migrationBuilder.AlterColumn<int>(
                 name: "PersonId",
                 table: "Contact",
                 type: "int",
@@ -89,19 +89,19 @@ namespace getQuote.Migrations
                 oldNullable: true
             );
 
-            migrationBuilder.CreateIndex(
+            _ = migrationBuilder.CreateIndex(
                 name: "IX_ProposalContent_ItemId",
                 table: "ProposalContent",
                 column: "ItemId"
             );
 
-            migrationBuilder.CreateIndex(
+            _ = migrationBuilder.CreateIndex(
                 name: "IX_Proposal_PersonId",
                 table: "Proposal",
                 column: "PersonId"
             );
 
-            migrationBuilder.AddForeignKey(
+            _ = migrationBuilder.AddForeignKey(
                 name: "FK_Contact_Person_PersonId",
                 table: "Contact",
                 column: "PersonId",
@@ -110,7 +110,7 @@ namespace getQuote.Migrations
                 onDelete: ReferentialAction.Cascade
             );
 
-            migrationBuilder.AddForeignKey(
+            _ = migrationBuilder.AddForeignKey(
                 name: "FK_Document_Person_PersonId",
                 table: "Document",
                 column: "PersonId",
@@ -119,7 +119,7 @@ namespace getQuote.Migrations
                 onDelete: ReferentialAction.Cascade
             );
 
-            migrationBuilder.AddForeignKey(
+            _ = migrationBuilder.AddForeignKey(
                 name: "FK_Proposal_Person_PersonId",
                 table: "Proposal",
                 column: "PersonId",
@@ -128,7 +128,7 @@ namespace getQuote.Migrations
                 onDelete: ReferentialAction.Cascade
             );
 
-            migrationBuilder.AddForeignKey(
+            _ = migrationBuilder.AddForeignKey(
                 name: "FK_ProposalContent_Item_ItemId",
                 table: "ProposalContent",
                 column: "ItemId",
@@ -137,7 +137,7 @@ namespace getQuote.Migrations
                 onDelete: ReferentialAction.Cascade
             );
 
-            migrationBuilder.AddForeignKey(
+            _ = migrationBuilder.AddForeignKey(
                 name: "FK_ProposalContent_Proposal_ProposalId",
                 table: "ProposalContent",
                 column: "ProposalId",
@@ -150,31 +150,31 @@ namespace getQuote.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(name: "FK_Contact_Person_PersonId", table: "Contact");
+            _ = migrationBuilder.DropForeignKey(name: "FK_Contact_Person_PersonId", table: "Contact");
 
-            migrationBuilder.DropForeignKey(name: "FK_Document_Person_PersonId", table: "Document");
+            _ = migrationBuilder.DropForeignKey(name: "FK_Document_Person_PersonId", table: "Document");
 
-            migrationBuilder.DropForeignKey(name: "FK_Proposal_Person_PersonId", table: "Proposal");
+            _ = migrationBuilder.DropForeignKey(name: "FK_Proposal_Person_PersonId", table: "Proposal");
 
-            migrationBuilder.DropForeignKey(
+            _ = migrationBuilder.DropForeignKey(
                 name: "FK_ProposalContent_Item_ItemId",
                 table: "ProposalContent"
             );
 
-            migrationBuilder.DropForeignKey(
+            _ = migrationBuilder.DropForeignKey(
                 name: "FK_ProposalContent_Proposal_ProposalId",
                 table: "ProposalContent"
             );
 
-            migrationBuilder.DropIndex(name: "IX_ProposalContent_ItemId", table: "ProposalContent");
+            _ = migrationBuilder.DropIndex(name: "IX_ProposalContent_ItemId", table: "ProposalContent");
 
-            migrationBuilder.DropIndex(name: "IX_Proposal_PersonId", table: "Proposal");
+            _ = migrationBuilder.DropIndex(name: "IX_Proposal_PersonId", table: "Proposal");
 
-            migrationBuilder.DropColumn(name: "ItemId", table: "ProposalContent");
+            _ = migrationBuilder.DropColumn(name: "ItemId", table: "ProposalContent");
 
-            migrationBuilder.DropColumn(name: "PersonId", table: "Proposal");
+            _ = migrationBuilder.DropColumn(name: "PersonId", table: "Proposal");
 
-            migrationBuilder.AlterColumn<int>(
+            _ = migrationBuilder.AlterColumn<int>(
                 name: "ProposalId",
                 table: "ProposalContent",
                 type: "int",
@@ -183,21 +183,21 @@ namespace getQuote.Migrations
                 oldType: "int"
             );
 
-            migrationBuilder.AddColumn<int>(
+            _ = migrationBuilder.AddColumn<int>(
                 name: "ItemId1",
                 table: "ProposalContent",
                 type: "int",
                 nullable: true
             );
 
-            migrationBuilder.AddColumn<int>(
+            _ = migrationBuilder.AddColumn<int>(
                 name: "PersonId1",
                 table: "Proposal",
                 type: "int",
                 nullable: true
             );
 
-            migrationBuilder.AlterColumn<int>(
+            _ = migrationBuilder.AlterColumn<int>(
                 name: "PersonId",
                 table: "Document",
                 type: "int",
@@ -206,7 +206,7 @@ namespace getQuote.Migrations
                 oldType: "int"
             );
 
-            migrationBuilder.AlterColumn<int>(
+            _ = migrationBuilder.AlterColumn<int>(
                 name: "PersonId",
                 table: "Contact",
                 type: "int",
@@ -215,19 +215,19 @@ namespace getQuote.Migrations
                 oldType: "int"
             );
 
-            migrationBuilder.CreateIndex(
+            _ = migrationBuilder.CreateIndex(
                 name: "IX_ProposalContent_ItemId1",
                 table: "ProposalContent",
                 column: "ItemId1"
             );
 
-            migrationBuilder.CreateIndex(
+            _ = migrationBuilder.CreateIndex(
                 name: "IX_Proposal_PersonId1",
                 table: "Proposal",
                 column: "PersonId1"
             );
 
-            migrationBuilder.AddForeignKey(
+            _ = migrationBuilder.AddForeignKey(
                 name: "FK_Contact_Person_PersonId",
                 table: "Contact",
                 column: "PersonId",
@@ -235,7 +235,7 @@ namespace getQuote.Migrations
                 principalColumn: "PersonId"
             );
 
-            migrationBuilder.AddForeignKey(
+            _ = migrationBuilder.AddForeignKey(
                 name: "FK_Document_Person_PersonId",
                 table: "Document",
                 column: "PersonId",
@@ -243,7 +243,7 @@ namespace getQuote.Migrations
                 principalColumn: "PersonId"
             );
 
-            migrationBuilder.AddForeignKey(
+            _ = migrationBuilder.AddForeignKey(
                 name: "FK_Proposal_Person_PersonId1",
                 table: "Proposal",
                 column: "PersonId1",
@@ -251,7 +251,7 @@ namespace getQuote.Migrations
                 principalColumn: "PersonId"
             );
 
-            migrationBuilder.AddForeignKey(
+            _ = migrationBuilder.AddForeignKey(
                 name: "FK_ProposalContent_Item_ItemId1",
                 table: "ProposalContent",
                 column: "ItemId1",
@@ -259,7 +259,7 @@ namespace getQuote.Migrations
                 principalColumn: "ItemId"
             );
 
-            migrationBuilder.AddForeignKey(
+            _ = migrationBuilder.AddForeignKey(
                 name: "FK_ProposalContent_Proposal_ProposalId",
                 table: "ProposalContent",
                 column: "ProposalId",

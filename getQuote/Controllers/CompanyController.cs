@@ -1,4 +1,4 @@
-﻿using getQuote;
+﻿using getQuote.Business;
 using getQuote.Controllers;
 using getQuote.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -15,12 +15,9 @@ public class CompanyController : BaseController
     public async Task<IActionResult> Manipulate()
     {
         CompanyModel? existentCompany = await _business.GetAllAsync();
-        if (existentCompany != null)
-        {
-            return RedirectToAction(nameof(Update), new { id = existentCompany.CompanyId });
-        }
-
-        return RedirectToAction(nameof(Create));
+        return existentCompany != null
+            ? RedirectToAction(nameof(Update), new { id = existentCompany.CompanyId })
+            : (IActionResult)RedirectToAction(nameof(Create));
     }
 
     public IActionResult Create()

@@ -10,11 +10,11 @@ namespace getQuote.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(name: "FK_ItemImage_Item_ItemId", table: "ItemImage");
+            _ = migrationBuilder.DropForeignKey(name: "FK_ItemImage_Item_ItemId", table: "ItemImage");
 
-            migrationBuilder.DropForeignKey(name: "FK_Proposal_Person_PersonId", table: "Proposal");
+            _ = migrationBuilder.DropForeignKey(name: "FK_Proposal_Person_PersonId", table: "Proposal");
 
-            migrationBuilder.AlterColumn<int>(
+            _ = migrationBuilder.AlterColumn<int>(
                 name: "PersonId",
                 table: "Proposal",
                 type: "int",
@@ -25,7 +25,7 @@ namespace getQuote.Migrations
                 oldNullable: true
             );
 
-            migrationBuilder.AlterColumn<int>(
+            _ = migrationBuilder.AlterColumn<int>(
                 name: "ItemId",
                 table: "ItemImage",
                 type: "int",
@@ -36,7 +36,7 @@ namespace getQuote.Migrations
                 oldNullable: true
             );
 
-            migrationBuilder.AlterColumn<byte[]>(
+            _ = migrationBuilder.AlterColumn<byte[]>(
                 name: "ImageFile",
                 table: "ItemImage",
                 type: "longblob",
@@ -47,7 +47,7 @@ namespace getQuote.Migrations
                 oldNullable: true
             );
 
-            migrationBuilder.AddForeignKey(
+            _ = migrationBuilder.AddForeignKey(
                 name: "FK_ItemImage_Item_ItemId",
                 table: "ItemImage",
                 column: "ItemId",
@@ -56,7 +56,7 @@ namespace getQuote.Migrations
                 onDelete: ReferentialAction.Cascade
             );
 
-            migrationBuilder.AddForeignKey(
+            _ = migrationBuilder.AddForeignKey(
                 name: "FK_Proposal_Person_PersonId",
                 table: "Proposal",
                 column: "PersonId",
@@ -69,11 +69,11 @@ namespace getQuote.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(name: "FK_ItemImage_Item_ItemId", table: "ItemImage");
+            _ = migrationBuilder.DropForeignKey(name: "FK_ItemImage_Item_ItemId", table: "ItemImage");
 
-            migrationBuilder.DropForeignKey(name: "FK_Proposal_Person_PersonId", table: "Proposal");
+            _ = migrationBuilder.DropForeignKey(name: "FK_Proposal_Person_PersonId", table: "Proposal");
 
-            migrationBuilder.AlterColumn<int>(
+            _ = migrationBuilder.AlterColumn<int>(
                 name: "PersonId",
                 table: "Proposal",
                 type: "int",
@@ -82,7 +82,7 @@ namespace getQuote.Migrations
                 oldType: "int"
             );
 
-            migrationBuilder.AlterColumn<int>(
+            _ = migrationBuilder.AlterColumn<int>(
                 name: "ItemId",
                 table: "ItemImage",
                 type: "int",
@@ -91,7 +91,7 @@ namespace getQuote.Migrations
                 oldType: "int"
             );
 
-            migrationBuilder.AlterColumn<byte[]>(
+            _ = migrationBuilder.AlterColumn<byte[]>(
                 name: "ImageFile",
                 table: "ItemImage",
                 type: "longblob",
@@ -100,7 +100,7 @@ namespace getQuote.Migrations
                 oldType: "longblob"
             );
 
-            migrationBuilder.AddForeignKey(
+            _ = migrationBuilder.AddForeignKey(
                 name: "FK_ItemImage_Item_ItemId",
                 table: "ItemImage",
                 column: "ItemId",
@@ -108,7 +108,7 @@ namespace getQuote.Migrations
                 principalColumn: "ItemId"
             );
 
-            migrationBuilder.AddForeignKey(
+            _ = migrationBuilder.AddForeignKey(
                 name: "FK_Proposal_Person_PersonId",
                 table: "Proposal",
                 column: "PersonId",

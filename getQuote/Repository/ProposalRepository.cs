@@ -1,9 +1,10 @@
 ﻿using getQuote.DAO;
+using getQuote.Framework;
 using getQuote.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
-namespace getQuote
+namespace getQuote.Repository
 {
     public class ProposalRepository : IRepository<ProposalModel>
     {
@@ -105,26 +106,26 @@ namespace getQuote
 
         public async Task AddAsync(ProposalModel Proposal)
         {
-            await _context.Proposal.AddAsync(Proposal);
-            await _context.SaveChangesAsync();
+            _ = await _context.Proposal.AddAsync(Proposal);
+            _ = await _context.SaveChangesAsync();
         }
 
         public async Task UpdateAsync(ProposalModel Proposal)
         {
-            _context.Proposal.Update(Proposal);
-            await _context.SaveChangesAsync();
+            _ = _context.Proposal.Update(Proposal);
+            _ = await _context.SaveChangesAsync();
         }
 
         public async Task RemoveAsync(ProposalModel Proposal)
         {
-            _context.Proposal.Remove(Proposal);
-            await _context.SaveChangesAsync();
+            _ = _context.Proposal.Remove(Proposal);
+            _ = await _context.SaveChangesAsync();
         }
 
         public async Task RemoveProposalContentAsync(ProposalContentModel proposalContent)
         {
-            _context.ProposalContent.Remove(proposalContent);
-            await _context.SaveChangesAsync();
+            _ = _context.ProposalContent.Remove(proposalContent);
+            _ = await _context.SaveChangesAsync();
         }
     }
 }

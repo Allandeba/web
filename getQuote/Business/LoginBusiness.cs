@@ -1,7 +1,8 @@
 ﻿using getQuote.Framework;
 using getQuote.Models;
+using getQuote.Repository;
 
-namespace getQuote
+namespace getQuote.Business
 {
     public class LoginBusiness
     {

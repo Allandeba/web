@@ -11,9 +11,9 @@ namespace getQuote.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AlterDatabase().Annotation("MySql:CharSet", "utf8mb4");
+            _ = migrationBuilder.AlterDatabase().Annotation("MySql:CharSet", "utf8mb4");
 
-            migrationBuilder
+            _ = migrationBuilder
                 .CreateTable(
                     name: "Person",
                     columns: table =>
@@ -43,12 +43,12 @@ namespace getQuote.Migrations
                         },
                     constraints: table =>
                     {
-                        table.PrimaryKey("PK_Person", x => x.PersonId);
+                        _ = table.PrimaryKey("PK_Person", x => x.PersonId);
                     }
                 )
                 .Annotation("MySql:CharSet", "utf8mb4");
 
-            migrationBuilder
+            _ = migrationBuilder
                 .CreateTable(
                     name: "Contact",
                     columns: table =>
@@ -70,8 +70,8 @@ namespace getQuote.Migrations
                         },
                     constraints: table =>
                     {
-                        table.PrimaryKey("PK_Contact", x => x.ContactId);
-                        table.ForeignKey(
+                        _ = table.PrimaryKey("PK_Contact", x => x.ContactId);
+                        _ = table.ForeignKey(
                             name: "FK_Contact_Person_PersonId",
                             column: x => x.PersonId,
                             principalTable: "Person",
@@ -81,7 +81,7 @@ namespace getQuote.Migrations
                 )
                 .Annotation("MySql:CharSet", "utf8mb4");
 
-            migrationBuilder
+            _ = migrationBuilder
                 .CreateTable(
                     name: "Document",
                     columns: table =>
@@ -101,8 +101,8 @@ namespace getQuote.Migrations
                         },
                     constraints: table =>
                     {
-                        table.PrimaryKey("PK_Document", x => x.DocumentId);
-                        table.ForeignKey(
+                        _ = table.PrimaryKey("PK_Document", x => x.DocumentId);
+                        _ = table.ForeignKey(
                             name: "FK_Document_Person_PersonId",
                             column: x => x.PersonId,
                             principalTable: "Person",
@@ -112,14 +112,14 @@ namespace getQuote.Migrations
                 )
                 .Annotation("MySql:CharSet", "utf8mb4");
 
-            migrationBuilder.CreateIndex(
+            _ = migrationBuilder.CreateIndex(
                 name: "IX_Contact_PersonId",
                 table: "Contact",
                 column: "PersonId",
                 unique: true
             );
 
-            migrationBuilder.CreateIndex(
+            _ = migrationBuilder.CreateIndex(
                 name: "IX_Document_PersonId",
                 table: "Document",
                 column: "PersonId",
@@ -130,11 +130,11 @@ namespace getQuote.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(name: "Contact");
+            _ = migrationBuilder.DropTable(name: "Contact");
 
-            migrationBuilder.DropTable(name: "Document");
+            _ = migrationBuilder.DropTable(name: "Document");
 
-            migrationBuilder.DropTable(name: "Person");
+            _ = migrationBuilder.DropTable(name: "Person");
         }
     }
 }

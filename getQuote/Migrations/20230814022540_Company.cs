@@ -11,7 +11,7 @@ namespace getQuote.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder
+            _ = migrationBuilder
                 .CreateTable(
                     name: "Company",
                     columns: table =>
@@ -46,7 +46,7 @@ namespace getQuote.Migrations
                         },
                     constraints: table =>
                     {
-                        table.PrimaryKey("PK_Company", x => x.CompanyId);
+                        _ = table.PrimaryKey("PK_Company", x => x.CompanyId);
                     }
                 )
                 .Annotation("MySql:CharSet", "utf8mb4");
@@ -55,7 +55,7 @@ namespace getQuote.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(name: "Company");
+            _ = migrationBuilder.DropTable(name: "Company");
         }
     }
 }

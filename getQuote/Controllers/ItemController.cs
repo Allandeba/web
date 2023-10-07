@@ -1,4 +1,4 @@
-﻿using getQuote;
+﻿using getQuote.Business;
 using getQuote.Controllers;
 using getQuote.Models;
 using Microsoft.AspNetCore.Mvc;

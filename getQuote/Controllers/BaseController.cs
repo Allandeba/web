@@ -9,7 +9,7 @@ namespace getQuote.Controllers
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
-            var errorViewModel = new ErrorViewModel
+            ErrorViewModel errorViewModel = new()
             {
                 RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
             };

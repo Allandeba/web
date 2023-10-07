@@ -1,7 +1,9 @@
-﻿using getQuote.Models;
+﻿using getQuote.Framework;
+using getQuote.Models;
+using getQuote.Repository;
 using System.Linq.Expressions;
 
-namespace getQuote
+namespace getQuote.Business
 {
     public class ItemBusiness
     {
@@ -16,7 +18,7 @@ namespace getQuote
         {
             ItemIncludes[] includes = new ItemIncludes[] { ItemIncludes.None };
             IEnumerable<ItemModel> items = await _repository.GetAllAsync(
-                includes.Cast<System.Enum>().ToArray()
+                includes.Cast<Enum>().ToArray()
             );
             return items.OrderByDescending(i => i.ItemId);
         }
@@ -29,7 +31,7 @@ namespace getQuote
         public async Task<ItemModel> GetByIdAsync(int itemId)
         {
             ItemIncludes[] includes = new ItemIncludes[] { ItemIncludes.ItemImage };
-            return await _repository.GetByIdAsync(itemId, includes.Cast<System.Enum>().ToArray());
+            return await _repository.GetByIdAsync(itemId, includes.Cast<Enum>().ToArray());
         }
 
         public async Task UpdateAsync(ItemModel item)
@@ -37,7 +39,7 @@ namespace getQuote
             ItemIncludes[] includes = new ItemIncludes[] { ItemIncludes.ItemImage };
             ItemModel existentItem = await _repository.GetByIdAsync(
                 item.ItemId,
-                includes.Cast<System.Enum>().ToArray()
+                includes.Cast<Enum>().ToArray()
             );
 
             if (existentItem != null)
@@ -77,7 +79,7 @@ namespace getQuote
                 );
                 if (itemImage != null)
                 {
-                    existentItem.ItemImageList?.Remove(itemImage);
+                    _ = (existentItem.ItemImageList?.Remove(itemImage));
                 }
                 ;
             }
@@ -88,7 +90,7 @@ namespace getQuote
             ItemIncludes[] includes = new ItemIncludes[] { ItemIncludes.ItemImage };
             ItemModel item = await _repository.GetByIdAsync(
                 itemId,
-                includes.Cast<System.Enum>().ToArray()
+                includes.Cast<Enum>().ToArray()
             );
             if (item == null)
             {
@@ -109,17 +111,12 @@ namespace getQuote
             ItemIncludes[] includes
         )
         {
-            return await _repository.FindAsync(where, includes.Cast<System.Enum>().ToArray());
+            return await _repository.FindAsync(where, includes.Cast<Enum>().ToArray());
         }
 
         public async Task<IEnumerable<ItemModel>> GetAllLikeAsync(string? search)
         {
-            if (search == null)
-            {
-                return await GetItems();
-            }
-
-            return await _repository.FindAsync(p => p.ItemName.Contains(search));
+            return search == null ? await GetItems() : await _repository.FindAsync(p => p.ItemName.Contains(search));
         }
 
         public async Task IncludeImages(ItemModel item)

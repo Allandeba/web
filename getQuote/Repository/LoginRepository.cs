@@ -2,7 +2,7 @@
 using getQuote.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace getQuote
+namespace getQuote.Repository
 {
     public class LoginRepository
     {
@@ -20,8 +20,8 @@ namespace getQuote
 
         public async Task SaveLoginLog(LoginLogModel loginLog)
         {
-            await _context.LoginLog.AddAsync(loginLog);
-            await _context.SaveChangesAsync();
+            _ = await _context.LoginLog.AddAsync(loginLog);
+            _ = await _context.SaveChangesAsync();
         }
     }
 }

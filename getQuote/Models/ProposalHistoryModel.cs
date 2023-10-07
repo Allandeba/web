@@ -7,8 +7,8 @@ namespace getQuote.Models;
 [Owned]
 public class ProposalContentItems
 {
-    public string ItemId { get; set; }
-    public string Quantity { get; set; }
+    public required string ItemId { get; set; }
+    public required string Quantity { get; set; }
 }
 
 [Owned]
@@ -19,9 +19,9 @@ public class ProposalContentJSON
     public List<int> GetItemIds()
     {
         List<int> itemIds = new();
-        foreach (var proposalContentItem in ProposalContentItems)
+        foreach (ProposalContentItems proposalContentItem in ProposalContentItems)
         {
-            itemIds.Add(Int32.Parse(proposalContentItem.ItemId));
+            itemIds.Add(int.Parse(proposalContentItem.ItemId));
         }
 
         return itemIds;
@@ -42,10 +42,10 @@ public class ProposalHistoryModel
     public decimal Discount { get; set; } = 0;
 
     [Required(ErrorMessage = Messages.EmptyTextValidation)]
-    public virtual ProposalModel Proposal { get; set; }
+    public virtual required ProposalModel Proposal { get; set; }
 
     [Required(ErrorMessage = Messages.EmptyTextValidation)]
-    public virtual PersonModel Person { get; set; }
+    public virtual required PersonModel Person { get; set; }
 
     [Required(ErrorMessage = Messages.EmptyTextValidation)]
     [Column(TypeName = "jsonb")]

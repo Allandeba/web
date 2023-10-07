@@ -1,7 +1,9 @@
-﻿using getQuote.Models;
+﻿using getQuote.Framework;
+using getQuote.Models;
+using getQuote.Repository;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace getQuote
+namespace getQuote.Business
 {
     public class ProposalBusiness
     {
@@ -34,7 +36,7 @@ namespace getQuote
                 ProposalIncludes.ProposalHistory
             };
             IEnumerable<ProposalModel> proposals = await _repository.GetAllAsync(
-                includes.Cast<System.Enum>().ToArray()
+                includes.Cast<Enum>().ToArray()
             );
             return proposals.OrderByDescending(p => p.ProposalId);
         }
@@ -43,7 +45,7 @@ namespace getQuote
         {
             proposal.Person = await GetPersonByIdAsync(proposal.PersonId);
 
-            foreach (var proposalContent in proposal.ProposalContent)
+            foreach (ProposalContentModel proposalContent in proposal.ProposalContent)
             {
                 proposalContent.Item = await _itemBusiness.GetByIdAsync(proposalContent.ItemId);
             }
@@ -61,7 +63,7 @@ namespace getQuote
             };
             return await _repository.GetByIdAsync(
                 proposalId,
-                includes.Cast<System.Enum>().ToArray()
+                includes.Cast<Enum>().ToArray()
             );
         }
 
@@ -72,7 +74,7 @@ namespace getQuote
                 ProposalIncludes.PersonContact,
                 ProposalIncludes.ItemImageList
             };
-            return await _repository.GetByGUIDAsync(GUID, includes.Cast<System.Enum>().ToArray());
+            return await _repository.GetByGUIDAsync(GUID, includes.Cast<Enum>().ToArray());
         }
 
         public async Task<ProposalModel> GetByGUIDAsync(Guid GUID)
@@ -82,7 +84,7 @@ namespace getQuote
                 ProposalIncludes.PersonContact,
                 ProposalIncludes.Item
             };
-            return await _repository.GetByGUIDAsync(GUID, includes.Cast<System.Enum>().ToArray());
+            return await _repository.GetByGUIDAsync(GUID, includes.Cast<Enum>().ToArray());
         }
 
         public async Task<ProposalModel> GetPrintByIdAsync(int proposalId)
@@ -94,7 +96,7 @@ namespace getQuote
             };
             return await _repository.GetByIdAsync(
                 proposalId,
-                includes.Cast<System.Enum>().ToArray()
+                includes.Cast<Enum>().ToArray()
             );
         }
 
@@ -114,7 +116,7 @@ namespace getQuote
             };
             ProposalModel? existentProposal = await _repository.GetByIdAsync(
                 proposal.ProposalId,
-                includes.Cast<System.Enum>().ToArray()
+                includes.Cast<Enum>().ToArray()
             );
 
             if (existentProposal == null)
@@ -137,7 +139,7 @@ namespace getQuote
             };
             ProposalModel? proposal = await _repository.GetByIdAsync(
                 proposalId,
-                includes.Cast<System.Enum>().ToArray()
+                includes.Cast<Enum>().ToArray()
             );
             if (proposal == null)
             {
@@ -164,17 +166,21 @@ namespace getQuote
 
         private async Task CreateProposalHistoryAsync(ProposalModel existentProposal)
         {
-            ProposalHistoryModel ProposalHistory = new();
-            ProposalHistory.ModificationDate = existentProposal.ModificationDate;
-            ProposalHistory.Person = existentProposal.Person;
-            ProposalHistory.Proposal = existentProposal;
+            ProposalHistoryModel ProposalHistory = new()
+            {
+                ModificationDate = existentProposal.ModificationDate,
+                Person = existentProposal.Person,
+                Proposal = existentProposal
+            };
 
             ProposalContentJSON proposalContentJSON = new();
             foreach (ProposalContentModel proposalContent in existentProposal.ProposalContent)
             {
-                ProposalContentItems proposalContentItems = new();
-                proposalContentItems.ItemId = proposalContent.ItemId.ToString();
-                proposalContentItems.Quantity = proposalContent.Quantity.ToString();
+                ProposalContentItems proposalContentItems = new()
+                {
+                    ItemId = proposalContent.ItemId.ToString(),
+                    Quantity = proposalContent.Quantity.ToString()
+                };
                 proposalContentJSON.ProposalContentItems.Add(proposalContentItems);
             }
 
@@ -230,7 +236,7 @@ namespace getQuote
                 );
             foreach (ProposalContentModel existentProposalContent in proposalContentToExclude)
             {
-                existentProposal.ProposalContent.Remove(existentProposalContent);
+                _ = existentProposal.ProposalContent.Remove(existentProposalContent);
             }
         }
 
@@ -254,9 +260,9 @@ namespace getQuote
                     i =>
                         new
                         {
-                            ItemId = i.ItemId,
-                            ItemName = i.ItemName,
-                            Value = i.Value,
+                            i.ItemId,
+                            i.ItemName,
+                            i.Value,
                         }
                 )
                 .ToList<dynamic>();
@@ -277,7 +283,7 @@ namespace getQuote
             ProposalIncludes[] includes = new ProposalIncludes[] { ProposalIncludes.Person };
             return await _repository.FindAsync(
                 p => p.Person.FirstName.Contains(search) || p.Person.LastName.Contains(search),
-                includes.Cast<System.Enum>().ToArray()
+                includes.Cast<Enum>().ToArray()
             );
         }
 
@@ -289,7 +295,7 @@ namespace getQuote
 
         public async Task IncludeItems(ProposalModel proposal)
         {
-            foreach (var proposalContent in proposal.ProposalContent)
+            foreach (ProposalContentModel proposalContent in proposal.ProposalContent)
             {
                 proposalContent.Item = await _itemBusiness.GetByIdAsync(proposalContent.ItemId);
             }

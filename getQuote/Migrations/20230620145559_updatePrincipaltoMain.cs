@@ -10,13 +10,13 @@ namespace getQuote.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.RenameColumn(name: "Principal", table: "ItemImage", newName: "Main");
+            _ = migrationBuilder.RenameColumn(name: "Principal", table: "ItemImage", newName: "Main");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.RenameColumn(name: "Main", table: "ItemImage", newName: "Principal");
+            _ = migrationBuilder.RenameColumn(name: "Main", table: "ItemImage", newName: "Principal");
         }
     }
 }

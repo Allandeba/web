@@ -1,6 +1,7 @@
 ﻿using getQuote.Models;
+using getQuote.Repository;
 
-namespace getQuote
+namespace getQuote.Business
 {
     public class CatalogBusiness
     {

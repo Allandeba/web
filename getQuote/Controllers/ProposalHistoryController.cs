@@ -1,4 +1,5 @@
-﻿using getQuote.Models;
+﻿using getQuote.Business;
+using getQuote.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace getQuote.Controllers

@@ -1,6 +1,8 @@
-﻿using getQuote.Models;
+﻿using getQuote.Framework;
+using getQuote.Models;
+using getQuote.Repository;
 
-namespace getQuote
+namespace getQuote.Business
 {
     public class PersonBusiness
     {
@@ -15,7 +17,7 @@ namespace getQuote
         {
             PersonIncludes[] includes = new PersonIncludes[] { PersonIncludes.None };
             IEnumerable<PersonModel> people = await _repository.GetAllAsync(
-                includes.Cast<System.Enum>().ToArray()
+                includes.Cast<Enum>().ToArray()
             );
             return people.OrderByDescending(p => p.PersonId);
         }
@@ -32,7 +34,7 @@ namespace getQuote
                 PersonIncludes.Contact,
                 PersonIncludes.Document
             };
-            return await _repository.GetByIdAsync(personId, includes.Cast<System.Enum>().ToArray());
+            return await _repository.GetByIdAsync(personId, includes.Cast<Enum>().ToArray());
         }
 
         public async Task UpdateAsync(PersonModel person)
@@ -44,7 +46,7 @@ namespace getQuote
             };
             PersonModel? existentPerson = await _repository.GetByIdAsync(
                 person.PersonId,
-                includes.Cast<System.Enum>().ToArray()
+                includes.Cast<Enum>().ToArray()
             );
 
             if (existentPerson == null)
@@ -73,7 +75,7 @@ namespace getQuote
             };
             PersonModel? person = await _repository.GetByIdAsync(
                 personId,
-                includes.Cast<System.Enum>().ToArray()
+                includes.Cast<Enum>().ToArray()
             );
             if (person == null)
             {
@@ -86,12 +88,9 @@ namespace getQuote
 
         public async Task<IEnumerable<PersonModel>> GetAllLikeAsync(string? search)
         {
-            if (search == null)
-            {
-                return await GetPeople();
-            }
-
-            return await _repository.FindAsync(
+            return search == null
+                ? await GetPeople()
+                : await _repository.FindAsync(
                 p => p.FirstName.Contains(search) || p.LastName.Contains(search)
             );
         }

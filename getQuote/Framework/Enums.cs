@@ -1,4 +1,4 @@
-﻿namespace getQuote.Models
+﻿namespace getQuote.Framework
 {
     public enum DocumentTypes : int
     {
