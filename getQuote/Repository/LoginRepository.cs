@@ -17,5 +17,10 @@ namespace getQuote
         {
             return await _context.Login.FirstOrDefaultAsync(l => l.Username.Equals(username));
         }
+
+        public async Task SaveLoginLog(LoginLogModel loginLog) {
+            await _context.LoginLog.AddAsync(loginLog);
+            await _context.SaveChangesAsync();
+        }
     }
 }

@@ -20,6 +20,7 @@ namespace getQuote.DAO
         public DbSet<ProposalHistoryModel> ProposalHistory { get; set; }
         public DbSet<CompanyModel> Company { get; set; }
         public DbSet<LoginModel> Login { get; set; }
+        public DbSet<LoginLogModel> LoginLog { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -30,6 +31,7 @@ namespace getQuote.DAO
             ItemInformation(modelBuilder);
             ProposalHistoryInformation(modelBuilder);
             LoginInformation(modelBuilder);
+            LoginLogInformation(modelBuilder);
         }
 
         private void PersonInformation(ModelBuilder modelBuilder)
@@ -128,6 +130,18 @@ namespace getQuote.DAO
         private void LoginInformation(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<LoginModel>().HasIndex(p => p.Username).IsUnique();
+        }
+
+        private void LoginLogInformation(ModelBuilder modelBuilder)
+        {
+            var enumValues = Enum.GetValues(typeof(LoginLogStatus))
+                .Cast<LoginLogStatus>()
+                .Select(e => $"{(int)e}-{e.ToString()}")
+                .ToList();
+
+            string comment = string.Join(",", enumValues);
+
+            modelBuilder.Entity<LoginLogModel>().Property(l => l.Status).HasComment(comment);
         }
     }
 }

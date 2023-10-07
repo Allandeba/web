@@ -46,4 +46,11 @@
     {
         None
     }
+
+    public enum LoginLogStatus
+    {
+        None,
+        Failed,
+        Success
+    }
 }

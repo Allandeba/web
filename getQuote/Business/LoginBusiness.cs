@@ -24,5 +24,11 @@ namespace getQuote
                 throw new Exception("Password not valid!"); 
             }
         }
+
+        public async Task SaveLoginLog(LoginLogModel loginLog) {
+            Cryptography cryptography = new();
+            loginLog.Password = cryptography.GetHash(loginLog.Password);
+            await _repository.SaveLoginLog(loginLog);
+        }
     }
 }
