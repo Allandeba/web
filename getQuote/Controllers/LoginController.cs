@@ -16,6 +16,7 @@ namespace getQuote.Controllers
         {
             _business = business;
         }
+
         [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
@@ -24,16 +25,18 @@ namespace getQuote.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        
         public async Task<IActionResult> Login(LoginModel login)
         {
             if (!ModelState.IsValid)
             {
                 return View(nameof(Index));
             }
-            try {
+            try
+            {
                 await _business.Login(login);
-            } catch (Exception exception) {
+            }
+            catch (Exception exception)
+            {
                 await _business.SaveLoginLog(GetLoginLog(login, LoginLogStatus.Failed));
                 throw exception;
             }
@@ -51,20 +54,29 @@ namespace getQuote.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private async Task StartAuthentication(LoginModel login) {
-            var claims = new List<Claim> {
+        private async Task StartAuthentication(LoginModel login)
+        {
+            var claims = new List<Claim>
+            {
                 new Claim(ClaimTypes.Name, login.Username),
                 new Claim(ClaimTypes.Role, "User"),
             };
 
-            ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+            ClaimsIdentity claimsIdentity = new ClaimsIdentity(
+                claims,
+                CookieAuthenticationDefaults.AuthenticationScheme
+            );
             ClaimsPrincipal claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
-            AuthenticationProperties authenticationProperties = new AuthenticationProperties() { IsPersistent = login.Remember };
+            AuthenticationProperties authenticationProperties = new AuthenticationProperties()
+            {
+                IsPersistent = login.Remember
+            };
 
             await HttpContext.SignInAsync(claimsPrincipal, authenticationProperties);
         }
 
-        private LoginLogModel GetLoginLog(LoginModel login, LoginLogStatus loginLogStatus) {
+        private LoginLogModel GetLoginLog(LoginModel login, LoginLogStatus loginLogStatus)
+        {
             LoginLogModel loginLog = new();
             loginLog.Username = login.Username;
             loginLog.Password = login.Password;

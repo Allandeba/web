@@ -25,13 +25,16 @@ public class Program
             .AddJsonOptions(
                 x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles
             );
-        builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-            .AddCookie(options => {
+        builder.Services
+            .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+            .AddCookie(options =>
+            {
                 options.LoginPath = "/" + nameof(LoginController.Login);
                 options.ExpireTimeSpan = TimeSpan.FromHours(8);
                 options.Cookie.Name = "authCookie";
             });
-        builder.Services.AddAuthorization(options => {
+        builder.Services.AddAuthorization(options =>
+        {
             options.FallbackPolicy = new AuthorizationPolicyBuilder()
                 .RequireAuthenticatedUser()
                 .Build();

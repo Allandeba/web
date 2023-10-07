@@ -7,8 +7,10 @@ namespace getQuote.Framework
 {
     public class Cryptography
     {
-        public string GetHash(string text) {
-            if (text.IsNullOrEmpty()) {
+        public string GetHash(string text)
+        {
+            if (text.IsNullOrEmpty())
+            {
                 throw new Exception("Cryptography.GetHash() must not be null or empty");
             }
 
